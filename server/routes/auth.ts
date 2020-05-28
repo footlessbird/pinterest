@@ -3,16 +3,14 @@ import passport from "passport";
 import handle from "../handlers";
 
 const router = Router();
+const { currentUser, login, register, logout, test } = handle;
 
-// router.get("/github", passport.authenticate("github"));
+const noSessionForLocal = passport.authenticate("local", { session: false });
+
 router.get(
   "/github",
   passport.authenticate("github", { scope: ["user:email"] })
 );
-
-router.get("/google/callback", passport.authenticate("google"), (req, res) => {
-  res.redirect("/");
-});
 
 router.get(
   "/github/callback",
@@ -23,8 +21,10 @@ router.get(
   }
 );
 
-router.post("/register", handle.register);
-router.get("/current_user", handle.currentUser);
-router.get("/logout", handle.logout);
+router.get("/current_user", currentUser);
+router.post("/login", noSessionForLocal, login);
+router.post("/register", register);
+router.get("/logout", logout);
+router.get("/test", test);
 
 export default router;

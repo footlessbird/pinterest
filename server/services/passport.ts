@@ -6,16 +6,21 @@ import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as GitHubStrategy } from "passport-github2";
 import User from "../models/user";
 
+/*
 passport.serializeUser((user, done) => {
   done(null, user.id);
+  console.log("serializedUser id ", user.id);
   console.log("serializeUser", user);
 });
 
 passport.deserializeUser(async (id, done) => {
+  console.log("deserializeUser run");
   const user = await User.findById(id);
+  console.log("user is ", user);
   done(null, user);
   console.log("deserializeUser", user);
 });
+*/
 
 passport.use(
   new LocalStrategy(
@@ -26,9 +31,17 @@ passport.use(
     async function (email, password, done) {
       try {
         const user = await User.findOne({ email: email });
-        if (!user) return done(null, false, { message: "user not found" });
+        if (!user)
+          return done(null, false, { message: "We could not find the user." });
+        // This password validation logic should be replaced with User's member function soon
         const result = await bcrypt.compare(password, user.password);
-        if (result) return done(null, user);
+        if (!result) {
+          return done(null, false, {
+            message: "Please type correct password.",
+          });
+        } else {
+          return done(null, user);
+        }
       } catch (err) {
         console.error(err);
         return done(err);
