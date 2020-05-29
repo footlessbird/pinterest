@@ -1,9 +1,12 @@
+import dotenv from "dotenv";
+dotenv.config();
 import jwt from "jsonwebtoken";
 import User from "../models/user";
 
 const currentUser = (req, res, next) => {
   console.log("current_user ", req.user);
-  res.send(req.user);
+  // res.send(req.user);
+  res.json(req.user);
 };
 
 const logout = (req, res) => {
@@ -17,6 +20,7 @@ const login = (req, res, next) => {
   console.log("login user ", req.user);
   const user = req.user;
   if (!user) throw new Error("User does not exist");
+  // const secretOrKey = process.env.SECRET;
   const token = jwt.sign({ id: user.id }, process.env.SECRET, {
     expiresIn: 3600,
   });
@@ -34,7 +38,7 @@ const login = (req, res, next) => {
 const register = async (req, res, next) => {
   console.log("register handler called");
   try {
-    const { id, email, username, password } = req.body;
+    const { email, username, password } = req.body;
     if (!email || !password)
       return res
         .status(422)
@@ -45,7 +49,6 @@ const register = async (req, res, next) => {
       return res.status(422).send({ message: "Email is already in use." });
 
     const newUser = new User({
-      id,
       email,
       username,
       password,
@@ -54,10 +57,10 @@ const register = async (req, res, next) => {
     const savedUser = await newUser.save();
     if (!savedUser) throw new Error("Something went wrong to save the user.");
 
-    const token = jwt.sign({ id, username }, process.env.SECRET);
+    // const token = jwt.sign({ id: savedUser.id }, process.env.SECRET);
 
     return res.status(200).json({
-      token,
+      // token,
       user: {
         id: savedUser.id,
         email: savedUser.email,

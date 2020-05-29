@@ -4,6 +4,8 @@ import passport from "passport";
 import bcrypt from "bcryptjs";
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as GitHubStrategy } from "passport-github2";
+import { Strategy as JwtStrategy } from "passport-jwt";
+import { ExtractJwt } from "passport-jwt";
 import User from "../models/user";
 
 /*
@@ -21,6 +23,29 @@ passport.deserializeUser(async (id, done) => {
   console.log("deserializeUser", user);
 });
 */
+
+const jwtOptions = {
+  // jwtFromRequest: ExtractJwt.fromHeader("authorization"),
+  // jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("jwt"),
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: process.env.SECRET,
+};
+
+passport.use(
+  new JwtStrategy(jwtOptions, async function (payload, done) {
+    console.log("jwt payload", payload);
+
+    try {
+      const user = await User.findById(payload.id);
+      if (!user) {
+        return done(null, false, { message: "We could not find the user." });
+      }
+      if (user) done(null, user);
+    } catch (err) {
+      throw new Error(err);
+    }
+  })
+);
 
 passport.use(
   new LocalStrategy(

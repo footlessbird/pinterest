@@ -6,6 +6,7 @@ const router = Router();
 const { currentUser, login, register, logout, test } = handle;
 
 const noSessionForLocal = passport.authenticate("local", { session: false });
+const noSessionForJwt = passport.authenticate("jwt", { session: false });
 
 router.get(
   "/github",
@@ -21,7 +22,7 @@ router.get(
   }
 );
 
-router.get("/current_user", currentUser);
+router.get("/current_user", noSessionForJwt, currentUser);
 router.post("/login", noSessionForLocal, login);
 router.post("/register", register);
 router.get("/logout", logout);
