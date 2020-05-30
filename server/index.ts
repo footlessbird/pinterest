@@ -6,6 +6,10 @@ import passport from "passport";
 import "./services/passport";
 import routes from "./routes";
 
+export type TRequest = {
+  [key: string]: any;
+};
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 

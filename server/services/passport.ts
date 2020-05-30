@@ -3,7 +3,7 @@ dotenv.config();
 import passport from "passport";
 import bcrypt from "bcryptjs";
 import { Strategy as LocalStrategy } from "passport-local";
-import { Strategy as GitHubStrategy } from "passport-github2";
+// import { Strategy as GitHubStrategy } from "passport-github2";
 import { Strategy as JwtStrategy } from "passport-jwt";
 import { ExtractJwt } from "passport-jwt";
 import User from "../models/user";
@@ -32,6 +32,8 @@ const jwtOptions = {
 };
 
 passport.use(
+  // payload from "const token = jwt.sign({ id: userId }, process.env.SECRET, "
+  // assuming "jwt.sign({id: userId})" registerd in the payload object
   new JwtStrategy(jwtOptions, async function (payload, done) {
     console.log("jwt payload", payload);
 
@@ -75,6 +77,7 @@ passport.use(
   )
 );
 
+/*
 passport.use(
   new GitHubStrategy(
     {
@@ -104,3 +107,4 @@ passport.use(
     }
   )
 );
+*/
