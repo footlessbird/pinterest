@@ -1,3 +1,4 @@
 import auth from "./auth";
+import pin from "./pin";
 
-export default { auth };
+export default { auth, pin };

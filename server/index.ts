@@ -27,7 +27,8 @@ app.get("/", (req, res) => {
   });
 });
 
-app.use("/auth", routes.auth);
+app.use("/api/auth", routes.auth);
+app.use("/api/pins", routes.pin);
 
 app.listen(PORT, () => {
   console.log(`app is running on port ${PORT}`);

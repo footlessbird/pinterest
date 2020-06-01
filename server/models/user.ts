@@ -6,6 +6,7 @@ export type UserModel = Document & {
   email: string;
   password: string;
   username: string;
+  pins: Schema.Types.ObjectId[];
   comparePassword: (attempt: string, next?: any) => Promise<any>;
 };
 
@@ -17,6 +18,7 @@ const userSchema = new Schema({
   email: String,
   password: String,
   username: String,
+  pins: [{ type: Schema.Types.ObjectId, ref: "Poll" }],
 });
 
 // before saving a model, this function will run
