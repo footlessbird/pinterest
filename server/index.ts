@@ -1,7 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
-import "./models/db";
+import "./models";
 import passport from "passport";
 import "./services/passport";
 import routes from "./routes";
