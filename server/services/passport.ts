@@ -37,6 +37,8 @@ passport.use(
       passwordField: "password",
     },
     async function (email, password, done) {
+      console.log("email from the client", email);
+      console.log("password from the client", password);
       try {
         const user = await User.findOne({ email: email });
         if (!user)
