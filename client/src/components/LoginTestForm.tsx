@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { loginUserAsync } from "../actions";
+import {
+  loginUserAsync,
+  LOCAL_LOGIN_REQUEST,
+  GITHUB_LOGIN_REQUEST,
+} from "../actions";
 
 function LoginTestForm() {
   const dispatch = useDispatch();
@@ -9,17 +13,31 @@ function LoginTestForm() {
     email: "",
     password: "",
   });
+
   const handleChange = (e) => {
     setValues({
       ...values,
       [e.target.name]: e.target.value,
     });
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch({
+      type: LOCAL_LOGIN_REQUEST,
+      data: {
+        email,
+        password,
+      },
+    });
+  };
+
   const { email, password } = values;
 
   return (
     <div>
-      <form onSubmit={() => dispatch(loginUserAsync.request(values))}>
+      {/* <form onSubmit={() => dispatch(loginUserAsync.request(values))}> */}
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="email"
@@ -34,8 +52,12 @@ function LoginTestForm() {
           name="password"
           onChange={handleChange}
         />
-        <button>Login</button>
+        <button type="submit">Login</button>
       </form>
+      {/* <a href="/api/auth/github">Login with Github</a> */}
+      {/* <button onClick={() => dispatch({ type: GITHUB_LOGIN_REQUEST })}>
+        Login with Github
+      </button> */}
     </div>
   );
 }

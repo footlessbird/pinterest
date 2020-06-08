@@ -5,6 +5,7 @@ import axios from "axios";
 import User from "../models/user";
 
 const currentUser = (req, res, next) => {
+  console.log("currentUser called");
   console.log("current_user ", req.user);
   // res.send(req.user);
   res.json(req.user);
@@ -16,6 +17,7 @@ const logout = (req, res) => {
 };
 
 const github = (req, res) => {
+  console.log("back-end github api called");
   const clientId = process.env.GITHUB_CLIENT_ID;
   res.redirect(
     `https://github.com/login/oauth/authorize?client_id=${clientId}`
