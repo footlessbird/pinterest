@@ -1,9 +1,16 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserAsync, GET_USER_REQUEST } from "../actions";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 
 import LoginTestForm from "../components/LoginTestForm";
 import { RootState } from "../reducers";
+import GithubLogin from "./GithubLogin";
 
 function App() {
   const dispatch = useDispatch();
@@ -17,8 +24,14 @@ function App() {
 
   return (
     <div>
-      {isAuthenticated ? <h1>Welcome {user.username}</h1> : null}
-      <LoginTestForm />
+      <Router>
+        {isAuthenticated ? <h1>Welcome {user.username}</h1> : null}
+        <LoginTestForm />
+        <Switch>
+          {/* <Route component={LoginTestForm} /> */}
+          <Route path="/githublogin" component={GithubLogin} />
+        </Switch>
+      </Router>
     </div>
   );
 }

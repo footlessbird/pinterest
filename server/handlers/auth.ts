@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 import axios from "axios";
+import qs from "querystring";
 
 import User from "../models/user";
 
@@ -22,6 +23,16 @@ const github = (req, res) => {
   res.redirect(
     `https://github.com/login/oauth/authorize?client_id=${clientId}`
   );
+
+  /*
+  const url = "https://github.com/login/oauth/authorize?";
+  const query = qs.stringify({
+    client_id: clientId,
+    redirect_uri: process.env.GITHUB_CALLBACK_URL,
+  });
+  const githubAuthUrl = url + query;
+  res.send(githubAuthUrl);
+  */
 };
 
 const githubCallback = async (req, res, next) => {

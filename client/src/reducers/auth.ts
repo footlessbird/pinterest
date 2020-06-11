@@ -23,6 +23,7 @@ const initialState = {
   isAuthenticated: false,
   user: null,
   error: null,
+  githubAuthUrl: null,
 };
 
 /*
@@ -114,19 +115,20 @@ export default (state = initialState, action) => {
       return {
         ...state,
         error: null,
-        user: {},
+        user: null,
       };
     case GITHUB_LOGIN_SUCCESS:
       return {
         ...state,
         error: null,
         user: action.data,
+        githubAuthUrl: action.data,
       };
     case GITHUB_LOGIN_FAILURE:
       return {
         ...state,
         error: action.error,
-        user: {},
+        user: null,
       };
     default:
       return state;

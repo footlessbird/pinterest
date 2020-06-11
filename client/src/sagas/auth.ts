@@ -101,6 +101,7 @@ function* watchLocalLogin() {
 
 function githubLoginAPI() {
   return axios.get("/api/auth/github");
+  // return axios.get("/api/auth/github").then((url) => axios.get(url.data));
 }
 
 function* githubLogin() {

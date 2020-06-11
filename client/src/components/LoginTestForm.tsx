@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 import {
   loginUserAsync,
@@ -9,6 +11,10 @@ import {
 
 function LoginTestForm() {
   const dispatch = useDispatch();
+  useEffect(() => {
+    console.log(window.location.href);
+  }, [window.location.href]);
+
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -54,10 +60,21 @@ function LoginTestForm() {
         />
         <button type="submit">Login</button>
       </form>
-      {/* <a href="/api/auth/github">Login with Github</a> */}
+      <a href="/api/auth/github">Login with Github</a>
       {/* <button onClick={() => dispatch({ type: GITHUB_LOGIN_REQUEST })}>
         Login with Github
       </button> */}
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          axios
+            .get("/api/auth/github")
+            .then((res) => (window.location.href = res.data))
+            .catch((e) => console.error(e));
+        }}
+      >
+        Login with Github
+      </button>
     </div>
   );
 }

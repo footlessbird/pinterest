@@ -1,0 +1,15 @@
+{
+  "name": "pinterest-clone",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "client:build": "cd client && yarn build",
+    "server:build": "cd server && yarn build",
+    "build": "yarn run client:build && yarn run server:build",
+    "server": "cd server && yarn start",
+    "dev": "yarn run build && yarn run server"
+  },
+  "repository": "https://github.com/footlessbird/pinterest-clone.git",
+  "author": "footlessbird <arslongavitabrevis0818@gmail.com>",
+  "license": "MIT"
+}
