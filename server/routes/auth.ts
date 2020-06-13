@@ -22,7 +22,9 @@ const noSessionForJwt = passport.authenticate("jwt", { session: false });
 
 router.post("/register", register);
 router.get("/github", github);
-router.get("/github/callback", githubCallback, setUserWithToken);
+// router.get("/github_callback", githubCallback);
+// router.post("/github_callback", githubCallback);
+router.post("/github_callback", githubCallback, setUserWithToken);
 router.post("/login", noSessionForLocal, login, setUserWithToken);
 router.get("/current_user", noSessionForJwt, currentUser);
 router.get("/logout", logout);

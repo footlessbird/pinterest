@@ -36,10 +36,13 @@ const github = (req, res) => {
 };
 
 const githubCallback = async (req, res, next) => {
+  console.log("back-end githubCallback called");
+  console.log("githubCode", req.body.githubCode);
+
   const body = {
     client_id: process.env.GITHUB_CLIENT_ID,
     client_secret: process.env.GITHUB_CLIENT_SECRET,
-    code: req.query.code,
+    code: req.body.githubCode,
   };
   const opts = { headers: { accept: "application/json" } };
 

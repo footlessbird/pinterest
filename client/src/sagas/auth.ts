@@ -21,6 +21,9 @@ import {
   GITHUB_LOGIN_REQUEST,
   GITHUB_LOGIN_SUCCESS,
   GITHUB_LOGIN_FAILURE,
+  GET_GITHUB_USER_REQUEST,
+  GET_GITHUB_USER_SUCCESS,
+  GET_GITHUB_USER_FAILURE,
 } from "../actions";
 import API from "../services/api";
 import axios from "axios";
@@ -68,7 +71,7 @@ function localLoginAPI(loginData) {
 }
 
 function* localLogin(action) {
-  console.log("loginUser worker function called");
+  // console.log("loginUser worker function called");
   // try {
   //   const res = yield call(loginUserAPI, action.data);
   //   localStorage.setItem("token", res.data.token);
@@ -99,6 +102,9 @@ function* watchLocalLogin() {
   yield takeLatest(LOCAL_LOGIN_REQUEST, localLogin);
 }
 
+// 깃헙사용자를 가져오려면 access token이 필요함
+// access token을 가져오려면 code가 필요함
+// 아래 githubLogin 사가는 code를 가져오기 위한 로직
 function githubLoginAPI() {
   return axios.get("/api/auth/github");
   // return axios.get("/api/auth/github").then((url) => axios.get(url.data));
@@ -108,6 +114,7 @@ function* githubLogin() {
   try {
     const result = yield call(githubLoginAPI);
     console.log("githubLogin result", result);
+    localStorage.setItem("token", result.data.token);
     yield put({
       type: GITHUB_LOGIN_SUCCESS,
       data: result.data,
@@ -121,8 +128,44 @@ function* githubLogin() {
 }
 
 function* watchGithubLogin() {
-  console.log("watchGithubLogin called");
+  // console.log("watchGithubLogin called");
   yield takeLatest(GITHUB_LOGIN_REQUEST, githubLogin);
+}
+
+function getGithubUserAPI() {
+  console.log("getGithubUserAPI called");
+  const githubCode = { githubCode: localStorage.getItem("code") };
+  console.log("code is ", githubCode);
+  if (!githubCode) {
+    throw new Error("could not retrive a code from Github");
+  } else {
+    // return axios.get("/api/auth/github_callback", { data: githubCode });
+
+    // one : the http method should be set to POST instead of GET since you want to send something.
+    // https://stackoverflow.com/questions/52561124/body-data-not-sent-in-axios-request
+    return axios.post("/api/auth/github_callback", githubCode);
+  }
+}
+
+function* getGithubUser() {
+  try {
+    const result = yield call(getGithubUserAPI);
+    console.log("getGithubUser", result.data);
+    yield put({
+      type: GET_GITHUB_USER_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: GET_GITHUB_USER_FAILURE,
+      data: err,
+    });
+  }
+}
+
+function* watchGetGithubUser() {
+  // console.log("watchGetGithubUser called");
+  yield takeLatest(GET_GITHUB_USER_REQUEST, getGithubUser);
 }
 
 export default function* userSaga() {
@@ -130,5 +173,6 @@ export default function* userSaga() {
     fork(watchGetUser),
     fork(watchLocalLogin),
     fork(watchGithubLogin),
+    fork(watchGetGithubUser),
   ]);
 }

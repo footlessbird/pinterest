@@ -64,7 +64,7 @@ function LoginTestForm() {
       {/* <button onClick={() => dispatch({ type: GITHUB_LOGIN_REQUEST })}>
         Login with Github
       </button> */}
-      <button
+      {/* <button
         onClick={(e) => {
           e.preventDefault();
           axios
@@ -74,7 +74,8 @@ function LoginTestForm() {
         }}
       >
         Login with Github
-      </button>
+      </button> */}
+      {/* <Link to="/api/auth/github">Login with Github</Link> */}
     </div>
   );
 }
