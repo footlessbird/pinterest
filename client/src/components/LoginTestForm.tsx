@@ -8,12 +8,10 @@ import {
   LOCAL_LOGIN_REQUEST,
   GITHUB_LOGIN_REQUEST,
 } from "../actions";
+import { RootState } from "../reducers";
 
 function LoginTestForm() {
   const dispatch = useDispatch();
-  useEffect(() => {
-    console.log(window.location.href);
-  }, [window.location.href]);
 
   const [values, setValues] = useState({
     email: "",
@@ -61,6 +59,7 @@ function LoginTestForm() {
         <button type="submit">Login</button>
       </form>
       <a href="/api/auth/github">Login with Github</a>
+
       {/* <button onClick={() => dispatch({ type: GITHUB_LOGIN_REQUEST })}>
         Login with Github
       </button> */}

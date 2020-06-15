@@ -3,9 +3,9 @@ import produce from "immer";
 
 import {
   TUser,
-  GET_USER_REQUEST,
-  GET_USER_SUCCESS,
-  GET_USER_FAILURE,
+  GET_CURRENT_USER_REQUEST,
+  GET_CURRENT_USER_SUCCESS,
+  GET_CURRENT_USER_FAILURE,
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FAILURE,
@@ -15,15 +15,16 @@ import {
   GITHUB_LOGIN_REQUEST,
   GITHUB_LOGIN_SUCCESS,
   GITHUB_LOGIN_FAILURE,
+  GET_GITHUB_USER_REQUEST,
+  GET_GITHUB_USER_SUCCESS,
+  GET_GITHUB_USER_FAILURE,
 } from "../actions";
-import { stat } from "fs";
 
 const initialState = {
   isLoading: false,
   isAuthenticated: false,
   user: null,
   error: null,
-  githubAuthUrl: null,
 };
 
 /*
@@ -63,7 +64,7 @@ const userReducer = createReducer(INITIAL_STATE, {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_USER_REQUEST:
+    case GET_CURRENT_USER_REQUEST:
       return {
         ...state,
         isLoading: true,
@@ -71,7 +72,7 @@ export default (state = initialState, action) => {
         user: null,
         error: null,
       };
-    case GET_USER_SUCCESS:
+    case GET_CURRENT_USER_SUCCESS:
       return {
         ...state,
         isLoading: false,
@@ -79,7 +80,7 @@ export default (state = initialState, action) => {
         user: action.data,
         error: null,
       };
-    case GET_USER_FAILURE:
+    case GET_CURRENT_USER_FAILURE:
       return {
         ...state,
         isLoading: false,
@@ -111,28 +112,33 @@ export default (state = initialState, action) => {
         user: null,
         error: action.error,
       };
-    case GITHUB_LOGIN_REQUEST:
+
+    case GET_GITHUB_USER_REQUEST:
       return {
         ...state,
+        isLoading: true,
+        isAuthenticated: false,
         error: null,
         user: null,
       };
-    case GITHUB_LOGIN_SUCCESS:
+    case GET_GITHUB_USER_SUCCESS:
       return {
         ...state,
+        isLoading: false,
+        isAuthenticated: true,
         error: null,
         user: action.data,
-        githubAuthUrl: action.data,
       };
-    case GITHUB_LOGIN_FAILURE:
+    case GET_GITHUB_USER_FAILURE:
       return {
         ...state,
+        isLoading: false,
+        isAuthenticated: false,
         error: action.error,
         user: null,
       };
+
     default:
       return state;
   }
 };
-
-// export default userReducer;

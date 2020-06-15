@@ -18,7 +18,7 @@ const logout = (req, res) => {
 };
 
 const github = (req, res) => {
-  console.log("back-end github api called");
+  console.log("***back-end github api called***");
   const clientId = process.env.GITHUB_CLIENT_ID;
   res.redirect(
     `https://github.com/login/oauth/authorize?client_id=${clientId}`
@@ -36,7 +36,7 @@ const github = (req, res) => {
 };
 
 const githubCallback = async (req, res, next) => {
-  console.log("back-end githubCallback called");
+  console.log("***back-end githubCallback called***");
   console.log("githubCode", req.body.githubCode);
 
   const body = {

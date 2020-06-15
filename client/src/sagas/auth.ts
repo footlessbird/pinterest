@@ -11,11 +11,11 @@ import {
   getUserAsync,
   loginUserAsync,
   registerUserAsync,
-  GET_USER_REQUEST,
+  GET_CURRENT_USER_REQUEST,
   LOCAL_LOGIN_REQUEST,
   REGISTER_USER_REQUEST,
-  GET_USER_SUCCESS,
-  GET_USER_FAILURE,
+  GET_CURRENT_USER_SUCCESS,
+  GET_CURRENT_USER_FAILURE,
   LOCAL_LOGIN_SUCCESS,
   LOCAL_LOGIN_FAILURE,
   GITHUB_LOGIN_REQUEST,
@@ -32,6 +32,8 @@ import axios from "axios";
 function getUserAPI() {
   console.log("sending token...", localStorage.getItem("token"));
   const token = localStorage.getItem("token");
+  if (token === null || token === undefined)
+    throw new Error("No token provided");
   return axios.get("/api/auth/current_user", {
     headers: { authorization: `Bearer ${token}` },
   });
@@ -48,19 +50,19 @@ function* getUser() {
   try {
     const result = yield call(getUserAPI);
     yield put({
-      type: GET_USER_SUCCESS,
+      type: GET_CURRENT_USER_SUCCESS,
       data: result.data,
     });
   } catch (err) {
     yield put({
-      type: GET_USER_FAILURE,
+      type: GET_CURRENT_USER_FAILURE,
       error: err,
     });
   }
 }
 
 function* watchGetUser() {
-  yield takeEvery(GET_USER_REQUEST, getUser);
+  yield takeEvery(GET_CURRENT_USER_REQUEST, getUser);
 }
 
 // local login
@@ -84,8 +86,10 @@ function* localLogin(action) {
 
   try {
     const result = yield call(localLoginAPI, action.data);
+    localStorage.setItem("loginMethod", "local");
     localStorage.setItem("token", result.data.token);
-    console.log("login result", result);
+
+    console.log("local login result", result);
     yield put({
       type: LOCAL_LOGIN_SUCCESS,
       data: result.data,
@@ -102,9 +106,7 @@ function* watchLocalLogin() {
   yield takeLatest(LOCAL_LOGIN_REQUEST, localLogin);
 }
 
-// 깃헙사용자를 가져오려면 access token이 필요함
-// access token을 가져오려면 code가 필요함
-// 아래 githubLogin 사가는 code를 가져오기 위한 로직
+/*
 function githubLoginAPI() {
   return axios.get("/api/auth/github");
   // return axios.get("/api/auth/github").then((url) => axios.get(url.data));
@@ -114,7 +116,7 @@ function* githubLogin() {
   try {
     const result = yield call(githubLoginAPI);
     console.log("githubLogin result", result);
-    localStorage.setItem("token", result.data.token);
+    // localStorage.setItem("token", result.data.token);
     yield put({
       type: GITHUB_LOGIN_SUCCESS,
       data: result.data,
@@ -131,6 +133,7 @@ function* watchGithubLogin() {
   // console.log("watchGithubLogin called");
   yield takeLatest(GITHUB_LOGIN_REQUEST, githubLogin);
 }
+*/
 
 function getGithubUserAPI() {
   console.log("getGithubUserAPI called");
@@ -151,6 +154,9 @@ function* getGithubUser() {
   try {
     const result = yield call(getGithubUserAPI);
     console.log("getGithubUser", result.data);
+    localStorage.setItem("loginMethod", "github");
+    localStorage.setItem("token", result.data.token);
+
     yield put({
       type: GET_GITHUB_USER_SUCCESS,
       data: result.data,
@@ -172,7 +178,7 @@ export default function* userSaga() {
   yield all([
     fork(watchGetUser),
     fork(watchLocalLogin),
-    fork(watchGithubLogin),
+    // fork(watchGithubLogin),
     fork(watchGetGithubUser),
   ]);
 }

@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserAsync, GET_USER_REQUEST } from "../actions";
+import { getUserAsync, GET_CURRENT_USER_REQUEST, TUser } from "../actions";
 import {
   BrowserRouter as Router,
   Route,
@@ -10,25 +10,53 @@ import {
 
 import LoginTestForm from "../components/LoginTestForm";
 import { RootState } from "../reducers";
-import GithubLogin from "./GithubLogin";
+import GithubLogin from "../components/GithubLogin";
+import NavigationMenu from "../components/NavigationMenu";
 
 function App() {
   const dispatch = useDispatch();
-  const auth: any = useSelector((state: RootState) => state.auth);
+  const auth = useSelector((state: RootState) => state.auth);
   const { isLoading, isAuthenticated, user } = auth;
+
   useEffect(() => {
     // dispatch(getUserAsync.request());
-    dispatch({ type: GET_USER_REQUEST });
-    console.log(auth);
+    const loginMethod = localStorage.getItem("loginMethod");
+    console.log("loginMethod?? ", loginMethod);
+    const token = localStorage.getItem("token");
+    if (loginMethod === "local") {
+      if (token !== undefined || token !== null || token !== "") {
+        dispatch({ type: GET_CURRENT_USER_REQUEST });
+        console.log("auth??", auth);
+      } else {
+        throw new Error("no token");
+      }
+    } else if (loginMethod === "github") {
+      const githubCode = localStorage.getItem("code");
+      if (token !== undefined || token !== null || token !== "") {
+        if (
+          githubCode !== undefined ||
+          githubCode !== null ||
+          githubCode !== ""
+        ) {
+          dispatch({ type: GET_CURRENT_USER_REQUEST });
+          console.log("auth??", auth);
+        } else {
+          throw new Error("somwthing went wrong with github code");
+        }
+      } else {
+        throw new Error("somwthing went wrong with token");
+      }
+    } else {
+      return;
+    }
   }, []);
 
   return (
     <div>
       <Router>
-        {isAuthenticated ? <h1>Welcome {user.username}</h1> : null}
+        <NavigationMenu auth={auth} />
         <LoginTestForm />
         <Switch>
-          {/* <Route component={LoginTestForm} /> */}
           <Route path="/githublogin" component={GithubLogin} />
         </Switch>
       </Router>
