@@ -21,15 +21,12 @@ import {
   GITHUB_LOGIN_REQUEST,
   GITHUB_LOGIN_SUCCESS,
   GITHUB_LOGIN_FAILURE,
-  GET_GITHUB_USER_REQUEST,
-  GET_GITHUB_USER_SUCCESS,
-  GET_GITHUB_USER_FAILURE,
 } from "../actions";
 import API from "../services/api";
 import axios from "axios";
 
 // current_user
-function getUserAPI() {
+function getCurrentUserAPI() {
   console.log("sending token...", localStorage.getItem("token"));
   const token = localStorage.getItem("token");
   if (token === null || token === undefined)
@@ -39,7 +36,7 @@ function getUserAPI() {
   });
 }
 
-function* getUser() {
+function* getCurrentUser() {
   // try {
   //   const res = yield call(getUserAPI);
   //   yield put(getUserAsync.success(res.data));
@@ -48,7 +45,7 @@ function* getUser() {
   //   yield put(getUserAsync.failure(err));
   // }
   try {
-    const result = yield call(getUserAPI);
+    const result = yield call(getCurrentUserAPI);
     yield put({
       type: GET_CURRENT_USER_SUCCESS,
       data: result.data,
@@ -61,8 +58,8 @@ function* getUser() {
   }
 }
 
-function* watchGetUser() {
-  yield takeEvery(GET_CURRENT_USER_REQUEST, getUser);
+function* watchGetCurrentUser() {
+  yield takeEvery(GET_CURRENT_USER_REQUEST, getCurrentUser);
 }
 
 // local login
@@ -135,7 +132,7 @@ function* watchGithubLogin() {
 }
 */
 
-function getGithubUserAPI() {
+function githubLoginAPI() {
   console.log("getGithubUserAPI called");
   const githubCode = { githubCode: localStorage.getItem("code") };
   console.log("code is ", githubCode);
@@ -150,35 +147,35 @@ function getGithubUserAPI() {
   }
 }
 
-function* getGithubUser() {
+function* githubLogin() {
   try {
-    const result = yield call(getGithubUserAPI);
+    const result = yield call(githubLoginAPI);
     console.log("getGithubUser", result.data);
     localStorage.setItem("loginMethod", "github");
     localStorage.setItem("token", result.data.token);
 
     yield put({
-      type: GET_GITHUB_USER_SUCCESS,
+      type: GITHUB_LOGIN_SUCCESS,
       data: result.data,
     });
   } catch (err) {
     yield put({
-      type: GET_GITHUB_USER_FAILURE,
+      type: GITHUB_LOGIN_FAILURE,
       data: err,
     });
   }
 }
 
-function* watchGetGithubUser() {
+function* watchGithubLogin() {
   // console.log("watchGetGithubUser called");
-  yield takeLatest(GET_GITHUB_USER_REQUEST, getGithubUser);
+  yield takeLatest(GITHUB_LOGIN_REQUEST, githubLogin);
 }
 
 export default function* userSaga() {
   yield all([
-    fork(watchGetUser),
+    fork(watchGetCurrentUser),
     fork(watchLocalLogin),
     // fork(watchGithubLogin),
-    fork(watchGetGithubUser),
+    fork(watchGithubLogin),
   ]);
 }

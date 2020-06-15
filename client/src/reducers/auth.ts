@@ -15,9 +15,6 @@ import {
   GITHUB_LOGIN_REQUEST,
   GITHUB_LOGIN_SUCCESS,
   GITHUB_LOGIN_FAILURE,
-  GET_GITHUB_USER_REQUEST,
-  GET_GITHUB_USER_SUCCESS,
-  GET_GITHUB_USER_FAILURE,
 } from "../actions";
 
 const initialState = {
@@ -113,7 +110,7 @@ export default (state = initialState, action) => {
         error: action.error,
       };
 
-    case GET_GITHUB_USER_REQUEST:
+    case GITHUB_LOGIN_REQUEST:
       return {
         ...state,
         isLoading: true,
@@ -121,7 +118,7 @@ export default (state = initialState, action) => {
         error: null,
         user: null,
       };
-    case GET_GITHUB_USER_SUCCESS:
+    case GITHUB_LOGIN_SUCCESS:
       return {
         ...state,
         isLoading: false,
@@ -129,7 +126,7 @@ export default (state = initialState, action) => {
         error: null,
         user: action.data,
       };
-    case GET_GITHUB_USER_FAILURE:
+    case GITHUB_LOGIN_FAILURE:
       return {
         ...state,
         isLoading: false,
