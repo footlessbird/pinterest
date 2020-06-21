@@ -1,8 +1,9 @@
 import axios from "axios";
 
-const host = "http://localhost:5000/api";
+// const host = "http://localhost:5000/api";
 
-export const setToken = (token) => {
+export const setToken = () => {
+  const token = localStorage.getItem("token");
   if (token) {
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   } else {
@@ -11,7 +12,9 @@ export const setToken = (token) => {
 };
 
 export const call = async (method, path, data?) => {
-  const response = await axios[method](`${host}/${path}`, data);
+  // const response = await axios[method](`${host}/${path}`, data);
+
+  const response = await axios[method](`/api/${path}`, data);
   return response.data;
 };
 

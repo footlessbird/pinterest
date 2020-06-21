@@ -38,7 +38,7 @@ export const getUserAsync = createAsyncAction(
   GET_CURRENT_USER_REQUEST,
   GET_CURRENT_USER_SUCCESS,
   GET_CURRENT_USER_FAILURE
-)<undefined, TUser, AxiosError>();
+)<undefined, TUser, AxiosError>(); // <요청, 성공, 실패>
 
 export const loginUserAsync = createAsyncAction(
   LOCAL_LOGIN_REQUEST,

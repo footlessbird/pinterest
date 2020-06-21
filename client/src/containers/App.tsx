@@ -7,11 +7,12 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-
+import { setToken } from "../services/api";
 import LoginTestForm from "../components/LoginTestForm";
 import { RootState } from "../reducers";
 import GithubLogin from "../components/GithubLogin";
 import NavigationMenu from "../components/NavigationMenu";
+import CreatePin from "../components/CreatePin";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,6 +24,10 @@ function App() {
     const loginMethod = localStorage.getItem("loginMethod");
     console.log("loginMethod?? ", loginMethod);
     const token = localStorage.getItem("token");
+    if (token) {
+      setToken();
+    }
+
     if (loginMethod === "local") {
       if (token !== undefined || token !== null || token !== "") {
         dispatch({ type: GET_CURRENT_USER_REQUEST });
@@ -56,6 +61,7 @@ function App() {
       <Router>
         <NavigationMenu auth={auth} />
         <LoginTestForm />
+        <CreatePin />
         <Switch>
           <Route path="/githublogin" component={GithubLogin} />
         </Switch>

@@ -31,9 +31,11 @@ function getCurrentUserAPI() {
   const token = localStorage.getItem("token");
   if (token === null || token === undefined)
     throw new Error("No token provided");
-  return axios.get("/api/auth/current_user", {
-    headers: { authorization: `Bearer ${token}` },
-  });
+  // return axios.get("/api/auth/current_user", {
+  //   headers: { authorization: `Bearer ${token}` },
+  // });
+  API.setToken();
+  return axios.get("/api/auth/current_user");
 }
 
 function* getCurrentUser() {
