@@ -1,4 +1,4 @@
-import { createAsyncAction } from "typesafe-actions";
+import { createAsyncAction, createAction } from "typesafe-actions";
 import { AxiosError } from "axios";
 
 export const AUTH_USER_REQUEST = "AUTH_USER_REQUEST";
@@ -20,6 +20,12 @@ export const GITHUB_LOGIN_FAILURE = "GITHUB_LOGIN_FAILURE";
 export const REGISTER_USER_REQUEST = "REGISTER_USER_REQUEST";
 export const REGISTER_USER_SUCCESS = "REGISTER_USER_SUCCESS";
 export const REGISTER_USER_FAILURE = "REGISTER_USER_FAILURE";
+
+export const LOGOUT_USER = "LOGOUT_USER";
+
+export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+export const LOGOUT_FAILURE = "LOGOUT_FAILURE";
 
 /*
 export const GET_GITHUB_USER_REQUEST = "GET_GITHUB_USER_REQUEST";
@@ -50,4 +56,14 @@ export const registerUserAsync = createAsyncAction(
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FAILURE
-)<string, TUser, AxiosError>();
+)<object, TUser, AxiosError>();
+
+/*
+export const logoutUserAsync = createAsyncAction(
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILURE
+)<null, null, AxiosError>(); // logoutUserAsync.request() 들어갈 인자가 없으므로 undefined
+*/
+
+export const logoutUser = createAction(LOGOUT_USER)();

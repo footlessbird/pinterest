@@ -15,6 +15,10 @@ import {
   GITHUB_LOGIN_REQUEST,
   GITHUB_LOGIN_SUCCESS,
   GITHUB_LOGIN_FAILURE,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILURE,
+  LOGOUT_USER,
 } from "../actions";
 
 const initialState = {
@@ -132,6 +136,16 @@ export default (state = initialState, action) => {
         isLoading: false,
         isAuthenticated: false,
         error: action.error,
+        user: null,
+      };
+
+    case LOGOUT_USER:
+      localStorage.clear();
+      return {
+        ...state,
+        isLoading: false,
+        isAuthenticated: false,
+        error: null,
         user: null,
       };
 

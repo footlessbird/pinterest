@@ -21,9 +21,13 @@ import {
   GITHUB_LOGIN_REQUEST,
   GITHUB_LOGIN_SUCCESS,
   GITHUB_LOGIN_FAILURE,
+  LOGOUT_REQUEST,
+  LOGOUT_USER,
 } from "../actions";
+import createAsyncSaga from "../utils/createAsyncSaga";
 import API from "../services/api";
 import axios from "axios";
+import { action } from "typesafe-actions";
 
 // current_user
 function getCurrentUserAPI() {
@@ -31,11 +35,11 @@ function getCurrentUserAPI() {
   const token = localStorage.getItem("token");
   if (token === null || token === undefined)
     throw new Error("No token provided");
-  // return axios.get("/api/auth/current_user", {
-  //   headers: { authorization: `Bearer ${token}` },
-  // });
-  API.setToken();
-  return axios.get("/api/auth/current_user");
+  return axios.get("/api/auth/current_user", {
+    headers: { authorization: `Bearer ${token}` },
+  });
+  // API.setToken();
+  // return axios.get("/api/auth/current_user");
 }
 
 function* getCurrentUser() {
@@ -173,11 +177,30 @@ function* watchGithubLogin() {
   yield takeLatest(GITHUB_LOGIN_REQUEST, githubLogin);
 }
 
+function logoutAPI() {
+  // localStorage.clear();
+  // return API.call("get", "auth/logout");
+  return axios.get("/api/auth/logout");
+}
+
+// const logoutSaga = createAsyncSaga(logoutUserAsync, logout);
+function* logout() {
+  yield call(logoutAPI);
+  // localStorage.clear();
+  yield put({
+    type: LOGOUT_USER,
+  });
+}
+
+function* watchLogout() {
+  yield takeEvery(LOGOUT_REQUEST, logout);
+}
+
 export default function* userSaga() {
   yield all([
     fork(watchGetCurrentUser),
     fork(watchLocalLogin),
-    // fork(watchGithubLogin),
     fork(watchGithubLogin),
+    fork(watchLogout),
   ]);
 }

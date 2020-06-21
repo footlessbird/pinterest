@@ -7,7 +7,7 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-import { setToken } from "../services/api";
+// import { setToken } from "../services/api";
 import LoginTestForm from "../components/LoginTestForm";
 import { RootState } from "../reducers";
 import GithubLogin from "../components/GithubLogin";
@@ -24,9 +24,6 @@ function App() {
     const loginMethod = localStorage.getItem("loginMethod");
     console.log("loginMethod?? ", loginMethod);
     const token = localStorage.getItem("token");
-    if (token) {
-      setToken();
-    }
 
     if (loginMethod === "local") {
       if (token !== undefined || token !== null || token !== "") {

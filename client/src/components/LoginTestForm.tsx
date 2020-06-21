@@ -26,6 +26,7 @@ function LoginTestForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     dispatch({
       type: LOCAL_LOGIN_REQUEST,
       data: {
