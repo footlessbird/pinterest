@@ -13,24 +13,23 @@ export const setToken = () => {
 };
 */
 
+/*
 export const tokenConfig = () => {
-  //   get token from localstorage
-  // const token = getState().auth.token;
   const token = localStorage.getItem("token");
-  //   headers
+
   const config = {
     headers: {
       "Content-type": "application/json",
     },
   };
 
-  //   if token, add to headers
-  if (token) {
-    config.headers["x-auth-token"] = token;
+  if (!token) {
+    return;
   }
-  console.log("tokenConfig", config);
+  config.headers["authorization"] = `Bearer ${token}`;
   return config;
 };
+*/
 
 export const call = async (method, path, data?, config?) => {
   // const response = await axios[method](`${host}/${path}`, data);

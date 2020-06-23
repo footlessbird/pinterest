@@ -7,5 +7,5 @@ export type PinterestAction = ActionType<typeof actions>;
 export type PinState = {
   loading: boolean;
   error: Error | null;
-  data: TPin[] | TPin | null;
+  data: TPin[] | null;
 };

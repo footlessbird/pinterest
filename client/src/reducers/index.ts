@@ -5,7 +5,7 @@ import pinReducer from "./pin";
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  pin: pinReducer,
+  pins: pinReducer,
 });
 
 export default rootReducer;

@@ -13,6 +13,7 @@ import { RootState } from "../reducers";
 import GithubLogin from "../components/GithubLogin";
 import NavigationMenu from "../components/NavigationMenu";
 import CreatePin from "../components/CreatePin";
+import Pins from "./Pins";
 
 function App() {
   const dispatch = useDispatch();
@@ -60,6 +61,7 @@ function App() {
         <LoginTestForm />
         <CreatePin />
         <Switch>
+          <Route exact path="/" render={() => <Pins />} />
           <Route path="/githublogin" component={GithubLogin} />
         </Switch>
       </Router>

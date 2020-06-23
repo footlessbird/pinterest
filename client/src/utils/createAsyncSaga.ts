@@ -6,6 +6,7 @@ import { AsyncActionCreatorBuilder, PayloadAction } from "typesafe-actions";
   action.payload 를 그대로 파라미터로 넣어주도록 설정합니다.
   만약에 여러가지 종류의 값을 파라미터로 넣어야 한다면 객체 형태로 만들어줘야 합니다.
 */
+
 type PromiseCreatorFunction<P, T> =
   | ((payload: P) => Promise<T>)
   | (() => Promise<T>);
