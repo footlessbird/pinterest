@@ -14,6 +14,7 @@ type PromiseCreatorFunction<P, T> =
 // action 이 payload 를 갖고 있는지 확인합니다.
 // __ is __ 문법은 Type guard 라고 부릅니다 https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-guards-and-type-assertions
 function isPayloadAction<P>(action: any): action is PayloadAction<string, P> {
+  console.log("action.payload??", action.payload);
   return action.payload !== undefined;
 }
 
@@ -26,11 +27,14 @@ export default function createAsyncSaga<T1, P1, T2, P2, T3, P3>(
   >,
   promiseCreator: PromiseCreatorFunction<P1, P2>
 ) {
-  return function* saga(action: ReturnType<typeof asyncActionCreator.request>) {
+  return function* saga(
+    action?: ReturnType<typeof asyncActionCreator.request>
+  ) {
     try {
       const result = isPayloadAction<P1>(action)
         ? yield call(promiseCreator, action.payload)
         : yield call(promiseCreator);
+
       yield put(asyncActionCreator.success(result));
     } catch (err) {
       yield put(asyncActionCreator.failure(err));
@@ -60,11 +64,12 @@ export default function createAsyncSaga<
   successFunc?: any,
   failureFunc?: any
 ) {
-  return function* saga(action: ReturnType<typeof asyncAction.request>) {
+  return function* saga(action?: ReturnType<typeof asyncAction.request>) {
     try {
       const result: SuccessPayload = yield call(
         asyncFunction,
         (action as any).payload
+        // action.payload
       ); // api 호출 이때 파라미터는 request()에서 받은 값으로 전달
       yield put(asyncAction.success(result)); // success  액션함수를 dispatch 하여 api결과값 반환
       if (successFunc) {

@@ -61,7 +61,8 @@ function App() {
         <LoginTestForm />
         <CreatePin />
         <Switch>
-          <Route exact path="/" render={() => <Pins />} />
+          {/* <Route exact path="/" render={() => <Pins />} /> */}
+          <Route exact path="/" component={Pins} />
           <Route path="/githublogin" component={GithubLogin} />
         </Switch>
       </Router>

@@ -22,8 +22,10 @@ const createPin = async (req, res, next) => {
 };
 
 const getPins = async (req, res, next) => {
+  console.log("getPins called");
   try {
     const pins = await Pin.find();
+    console.log("pins from getPins??", pins);
     return res.status(200).json(pins);
   } catch (err) {
     return next({

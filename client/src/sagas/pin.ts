@@ -7,6 +7,7 @@ import {
 import { takeEvery, takeLatest, all, fork } from "redux-saga/effects";
 import createAsyncSaga from "../utils/createAsyncSaga";
 import API from "../services/api";
+import Axios from "axios";
 
 function createPin(data) {
   console.log("createPin data??", data);
@@ -26,9 +27,11 @@ export function* watchCreatePin() {
 
 function getAllPins() {
   return API.call("get", "pins");
+  // return Axios.get('/api/pins')
 }
 
 const getAllPinsSaga = createAsyncSaga(getAllPinsAsync, getAllPins);
+
 export function* watchGetAllPins() {
   yield takeEvery(GET_ALL_PINS_REQUEST, getAllPinsSaga);
 }

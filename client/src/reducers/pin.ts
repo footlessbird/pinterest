@@ -8,39 +8,77 @@ import {
   GET_ALL_PINS_REQUEST,
   GET_ALL_PINS_SUCCESS,
   GET_ALL_PINS_FAILURE,
-  TPin,
 } from "../actions";
 
 const initialState: PinState = {
   loading: false,
   error: null,
-  data: null,
+  data: [],
 };
 
+export default (state: PinState = initialState, action: PinterestAction) => {
+  return produce(state, (draft) => {
+    switch (action.type) {
+      case CREATE_PIN_REQUEST: {
+        (draft.loading = true), (draft.error = null);
+        break;
+      }
+      case CREATE_PIN_SUCCESS: {
+        (draft.loading = false),
+          (draft.error = null),
+          draft.data?.unshift(action.payload);
+        break;
+      }
+      case CREATE_PIN_FAILURE: {
+        (draft.loading = false), (draft.error = action.payload);
+        break;
+      }
+      case GET_ALL_PINS_REQUEST: {
+        (draft.loading = true), (draft.error = null);
+        break;
+      }
+      case GET_ALL_PINS_SUCCESS: {
+        (draft.loading = false),
+          (draft.error = null),
+          (draft.data = action.payload);
+        break;
+      }
+      case GET_ALL_PINS_FAILURE: {
+        (draft.loading = false), (draft.error = action.payload);
+        break;
+      }
+      default:
+        break;
+    }
+  });
+};
+
+/*
 const pinReducer = createReducer<PinState, PinterestAction>(initialState, {
   [CREATE_PIN_REQUEST]: (state) => ({
     ...state,
     loading: true,
     error: null,
-    data: null,
+    data: [],
   }),
-  [CREATE_PIN_SUCCESS]: (state, action) => ({
-    ...state,
-    loading: false,
-    error: null,
-    data: action.payload,
-  }),
+
+  [CREATE_PIN_SUCCESS]: (state, action) => produce(state, draft => {
+      draft.loading = false,
+      draft.error = null,
+      draft.data?.unshift(action.payload);
+    }),
+
   [CREATE_PIN_FAILURE]: (state, action) => ({
     ...state,
     loading: false,
     error: action.payload,
-    data: null,
+    data: [],
   }),
   [GET_ALL_PINS_REQUEST]: (state) => ({
     ...state,
     loading: true,
     error: null,
-    data: null,
+    data: [],
   }),
   [GET_ALL_PINS_SUCCESS]: (state, action) => ({
     ...state,
@@ -52,8 +90,9 @@ const pinReducer = createReducer<PinState, PinterestAction>(initialState, {
     ...state,
     loading: false,
     error: action.payload,
-    data: null,
+    data: [],
   }),
 });
+*/
 
-export default pinReducer;
+// export default pinReducer;

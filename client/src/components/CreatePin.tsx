@@ -12,6 +12,8 @@ function CreatePin() {
     imgDescription: "",
   });
 
+  const { imgLink, imgDescription } = values;
+
   const handleChange = (e) => {
     setValues({
       ...values,
@@ -20,11 +22,13 @@ function CreatePin() {
   };
 
   const handleSubmit = (e) => {
+    if (imgLink === "" || imgDescription === "") {
+      alert("You must enter all fields.");
+      return;
+    }
     e.preventDefault();
     dispatch(createPinAsync.request(values));
   };
-
-  const { imgLink, imgDescription } = values;
 
   return (
     <div>
