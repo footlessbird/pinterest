@@ -20,31 +20,36 @@ export default (state: PinState = initialState, action: PinterestAction) => {
   return produce(state, (draft) => {
     switch (action.type) {
       case CREATE_PIN_REQUEST: {
-        (draft.loading = true), (draft.error = null);
+        draft.loading = true;
+        draft.error = null;
         break;
       }
       case CREATE_PIN_SUCCESS: {
-        (draft.loading = false),
-          (draft.error = null),
-          draft.data?.unshift(action.payload);
+        draft.loading = false;
+        draft.error = null;
+        // draft.data?.unshift(action.payload);
+        draft.data?.push(action.payload);
         break;
       }
       case CREATE_PIN_FAILURE: {
-        (draft.loading = false), (draft.error = action.payload);
+        draft.loading = true;
+        draft.error = null;
         break;
       }
       case GET_ALL_PINS_REQUEST: {
-        (draft.loading = true), (draft.error = null);
+        draft.loading = true;
+        draft.error = null;
         break;
       }
       case GET_ALL_PINS_SUCCESS: {
-        (draft.loading = false),
-          (draft.error = null),
-          (draft.data = action.payload);
+        draft.loading = false;
+        draft.error = null;
+        draft.data = action.payload;
         break;
       }
       case GET_ALL_PINS_FAILURE: {
-        (draft.loading = false), (draft.error = action.payload);
+        draft.loading = false;
+        draft.error = action.payload;
         break;
       }
       default:
