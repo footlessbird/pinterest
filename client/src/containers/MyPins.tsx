@@ -1,24 +1,23 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector, connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { Redirect } from "react-router-dom";
 import { RootState } from "../reducers";
-import { getAllPinsAsync } from "../actions";
+import { getMyPinsAsync } from "../actions";
 
-function Pins() {
+function MyPins() {
   const dispatch = useDispatch();
   const pins = useSelector((state: RootState) => state.pins);
-
   useEffect(() => {
-    dispatch(getAllPinsAsync.request(""));
+    dispatch(getMyPinsAsync.request(""));
   }, []);
-  console.log("pin data??", pins.data);
-  console.log("what is type of pins.data??", typeof pins.data);
+  console.log("MyPins??", pins);
 
   return (
     <div>
-      <h1>Pins</h1>
+      My Pins
       <ul>{pins.data && pins.data.map((pin) => <li>{pin.imgLink}</li>)}</ul>
     </div>
   );
 }
 
-export default Pins;
+export default MyPins;

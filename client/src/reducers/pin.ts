@@ -8,6 +8,9 @@ import {
   GET_ALL_PINS_REQUEST,
   GET_ALL_PINS_SUCCESS,
   GET_ALL_PINS_FAILURE,
+  GET_MY_PINS_REQUEST,
+  GET_MY_PINS_SUCCESS,
+  GET_MY_PINS_FAILURE,
 } from "../actions";
 
 const initialState: PinState = {
@@ -94,6 +97,24 @@ const pinReducer = createReducer<PinState, PinterestAction>(initialState, {
     }),
 
   [GET_ALL_PINS_FAILURE]: (state, action) =>
+    produce(state, (draft) => {
+      draft.loading = false;
+      draft.error = action.payload;
+    }),
+
+  [GET_MY_PINS_REQUEST]: (state) =>
+    produce(state, (draft) => {
+      draft.loading = true;
+      draft.error = null;
+    }),
+
+  [GET_MY_PINS_SUCCESS]: (state, action) =>
+    produce(state, (draft) => {
+      draft.loading = false;
+      draft.data = action.payload;
+    }),
+
+  [GET_MY_PINS_FAILURE]: (state, action) =>
     produce(state, (draft) => {
       draft.loading = false;
       draft.error = action.payload;

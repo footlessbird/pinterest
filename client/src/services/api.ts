@@ -33,8 +33,12 @@ export const tokenConfig = () => {
 
 export const call = async (method, path, data?, config?) => {
   // const response = await axios[method](`${host}/${path}`, data);
-
-  const response = await axios[method](`/api/${path}`, data, config);
+  let response;
+  if (method === "get") {
+    response = await axios[method](`/api/${path}`, config);
+  } else {
+    response = await axios[method](`/api/${path}`, data, config);
+  }
   return response.data;
 };
 

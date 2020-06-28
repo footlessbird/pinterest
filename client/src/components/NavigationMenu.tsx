@@ -32,7 +32,10 @@ function NavigationMenu({ auth }) {
             </div>,
             <div className="nav-auth">
               {isAuthenticated && user ? (
-                <button onClick={handleLogout}>Logout</button>
+                [
+                  <button onClick={handleLogout}>Logout</button>,
+                  <Link to="/mypins">My Pins</Link>,
+                ]
               ) : (
                 <button>Login</button>
               )}

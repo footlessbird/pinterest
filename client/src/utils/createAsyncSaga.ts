@@ -7,6 +7,7 @@ import { AsyncActionCreatorBuilder, PayloadAction } from "typesafe-actions";
   만약에 여러가지 종류의 값을 파라미터로 넣어야 한다면 객체 형태로 만들어줘야 합니다.
 */
 
+// Argument of type '() => Promise<AxiosResponse<any>> | undefined' is not assignable to parameter of type 'PromiseCreatorFunction<string, TPin[] | undefined>'.
 type PromiseCreatorFunction<P, T> =
   | ((payload: P) => Promise<T>)
   | (() => Promise<T>);

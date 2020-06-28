@@ -3,11 +3,13 @@ import {
   CREATE_PIN_REQUEST,
   GET_ALL_PINS_REQUEST,
   getAllPinsAsync,
+  GET_MY_PINS_REQUEST,
+  getMyPinsAsync,
 } from "../actions";
 import { takeEvery, takeLatest, all, fork } from "redux-saga/effects";
 import createAsyncSaga from "../utils/createAsyncSaga";
 import API from "../services/api";
-import Axios from "axios";
+import axios from "axios";
 
 function createPin(data) {
   console.log("createPin data??", data);
@@ -36,7 +38,22 @@ export function* watchGetAllPins() {
   yield takeEvery(GET_ALL_PINS_REQUEST, getAllPinsSaga);
 }
 
+function getMyPins() {
+  const token = localStorage.getItem("token");
+  // if (!token) return;
+  return API.call("get", "pins/user", "", {
+    headers: { authorization: `Bearer ${token}` },
+  });
+}
+
+const getMyPinsSaga = createAsyncSaga(getMyPinsAsync, getMyPins);
+
+export function* watchGetMypins() {
+  yield takeEvery(GET_MY_PINS_REQUEST, getMyPinsSaga);
+}
+
 export default function* pinSaga() {
   yield all([fork(watchCreatePin)]);
   yield all([fork(watchGetAllPins)]);
+  yield all([fork(watchGetMypins)]);
 }
