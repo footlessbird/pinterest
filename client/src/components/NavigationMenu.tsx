@@ -24,17 +24,21 @@ function NavigationMenu({ auth }) {
           <div>Loading..</div>
         ) : (
           [
-            <div className="nav-brand">
+            <div key="nav-brand" className="nav-brand">
               <Link to="/">Home</Link>
               {/* {isAuthenticated && user ? (
                 <h1>Welcome {user.username}</h1>
               ) : null} */}
             </div>,
-            <div className="nav-auth">
+            <div key="nav-auth" className="nav-auth">
               {isAuthenticated && user ? (
                 [
-                  <button onClick={handleLogout}>Logout</button>,
-                  <Link to="/mypins">My Pins</Link>,
+                  <button key="logout-button" onClick={handleLogout}>
+                    Logout
+                  </button>,
+                  <Link key="my-pins" to="/mypins">
+                    My Pins
+                  </Link>,
                 ]
               ) : (
                 <button>Login</button>

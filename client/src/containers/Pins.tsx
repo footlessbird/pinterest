@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector, connect } from "react-redux";
 import { RootState } from "../reducers";
-import { getAllPinsAsync } from "../actions";
+import { getAllPinsAsync, TPin } from "../actions";
+import Pin from "./Pin";
 
 function Pins() {
   const dispatch = useDispatch();
@@ -16,7 +17,10 @@ function Pins() {
   return (
     <div>
       <h1>Pins</h1>
-      <ul>{pins.data && pins.data.map((pin) => <li>{pin.imgLink}</li>)}</ul>
+      {/* <ul>{pins.data && pins.data.map((pin) => <li>{pin.imgLink}</li>)}</ul> */}
+      <ul>
+        {pins.data && pins.data.map((pin) => <Pin key={pin._id} pin={pin} />)}
+      </ul>
     </div>
   );
 }

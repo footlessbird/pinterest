@@ -89,6 +89,8 @@ function* localLogin(action) {
 
   try {
     const result = yield call(localLoginAPI, action.data);
+    console.log("localLoginUserId??", result.data.user.id);
+    localStorage.setItem("loggedInUserId", result.data.user.id);
     localStorage.setItem("loginMethod", "local");
     localStorage.setItem("token", result.data.token);
 
@@ -157,6 +159,7 @@ function* githubLogin() {
   try {
     const result = yield call(githubLoginAPI);
     console.log("getGithubUser", result.data);
+    localStorage.setItem("loggedInUserId", result.data.user.id);
     localStorage.setItem("loginMethod", "github");
     localStorage.setItem("token", result.data.token);
 

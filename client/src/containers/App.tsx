@@ -65,7 +65,6 @@ function App() {
           {/* <Route exact path="/" render={() => <Pins />} /> */}
           <Route exact path="/" component={Pins} />
           <Route path="/githublogin" component={GithubLogin} />
-          {/* <Route path="/mypins" component={MyPins} /> */}
           <Route
             path="/mypins"
             render={() => (isAuthenticated ? <MyPins /> : <Redirect to="/" />)}

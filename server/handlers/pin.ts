@@ -24,7 +24,7 @@ const createPin = async (req, res, next) => {
 const getPins = async (req, res, next) => {
   console.log("getPins called");
   try {
-    const pins = await Pin.find();
+    const pins = await Pin.find().populate("user", ["id", "username"]);
     console.log("pins from getPins??", pins);
     return res.status(200).json(pins);
   } catch (err) {
@@ -48,7 +48,7 @@ const save = async (req, res, next) => {
       await pin.save();
       return res.status(200).json(pin);
     } else {
-      res.json(400).json({ message: "Already pinned." });
+      res.status(400).json({ message: "Already pinned." });
     }
   } catch (err) {
     return next({
@@ -63,9 +63,10 @@ const usersPins = async (req, res, next) => {
   const condition = "savedBy." + userId;
   try {
     // db.inventory.find({ $or: [{ quantity: { $lt: 20 } }, { price: 10 }] });
+
     const pins = await Pin.find({
       $or: [{ [condition]: { $exists: true } }, { user: userId }],
-    });
+    }).populate("user", ["id", "username"]);
     return res.status(200).json(pins);
   } catch (err) {
     return next({
