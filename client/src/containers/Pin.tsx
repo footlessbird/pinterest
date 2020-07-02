@@ -39,13 +39,7 @@ function Pin({ pin }) {
     <li>
       <img src={imgLink} alt={imgDescription} />
       <div>{user.username}</div>
-      {/* {loggedInUserId &&
-      savedBy &&
-      Object.keys(savedBy).includes(loggedInUserId) ? (
-        <button onClick={() => console.log("Remove")}>Remove</button>
-      ) : (
-        <button onClick={handleSave}>Save</button>
-      )} */}
+
       {pinButton()}
     </li>
   );

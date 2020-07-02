@@ -58,6 +58,46 @@ const save = async (req, res, next) => {
   }
 };
 
+const deletePin = async (req, res, next) => {
+  // 핀의 유저 프로퍼티랑 현재 로그인된 유저랑 같은지 체크
+  // 같다면 (내가 생성한 핀) findByIdndRemove로 핀 삭제
+  // 같지 않다면 (남의 핀을 다른 유저로써 저장) delete pin.savedBy[req.user._id]로 유저프로퍼티 삭제
+  const thisUser = req.user.id;
+
+  console.log("thisUser??", typeof thisUser);
+  const pinId = req.params.id.toString();
+  try {
+    const pin = await Pin.findById(pinId);
+    if (!pin) throw new Error("No pin found.");
+    if (pin.user.equals(req.user._id)) {
+      await pin.remove();
+      return res
+        .status(200)
+        .json({ message: "Pin has been successfully deleted." });
+    } else {
+      const savedBy = Object.keys(pin.savedBy);
+      console.log("savedBy??", savedBy);
+      const savedByThisUser = savedBy && savedBy.includes(thisUser);
+      console.log("savedByThisUser??", savedByThisUser);
+      if (savedByThisUser) {
+        delete pin.savedBy[thisUser];
+        pin.markModified("savedBy");
+        await pin.save();
+        return res
+          .status(200)
+          .json({ message: "Your saved pin successfully deleted." });
+      } else {
+        throw new Error("Not authorized.");
+      }
+    }
+  } catch (err) {
+    return next({
+      status: 400,
+      message: err.message,
+    });
+  }
+};
+
 const usersPins = async (req, res, next) => {
   const userId = req.user._id;
   const condition = "savedBy." + userId;
@@ -76,4 +116,4 @@ const usersPins = async (req, res, next) => {
   }
 };
 
-export default { createPin, getPins, save, usersPins };
+export default { createPin, getPins, save, usersPins, deletePin };
