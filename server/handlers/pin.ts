@@ -37,6 +37,7 @@ const getPins = async (req, res, next) => {
 
 const save = async (req, res, next) => {
   const pinId = req.params.id.toString();
+  const userId = req.user._id;
   try {
     const pin = await Pin.findById(pinId);
     if (pin.user.equals(req.user._id)) {
@@ -47,6 +48,14 @@ const save = async (req, res, next) => {
       pin.markModified("savedBy");
       await pin.save();
       return res.status(200).json(pin);
+
+      // return res
+      //   .status(200)
+      //   .json({
+      //     message: "You have successfully saved the pin.",
+      //     pinId,
+      //     userId,
+      //   });
     } else {
       res.status(400).json({ message: "Already pinned." });
     }
@@ -73,7 +82,7 @@ const deletePin = async (req, res, next) => {
       await pin.remove();
       return res
         .status(200)
-        .json({ message: "Pin has been successfully deleted." });
+        .json({ message: "Pin has been successfully deleted.", pinId });
     } else {
       const savedBy = Object.keys(pin.savedBy);
       console.log("savedBy??", savedBy);
@@ -83,9 +92,10 @@ const deletePin = async (req, res, next) => {
         delete pin.savedBy[thisUser];
         pin.markModified("savedBy");
         await pin.save();
-        return res
-          .status(200)
-          .json({ message: "Your saved pin successfully deleted." });
+        return res.status(200).json({
+          message: "Your saved pin successfully deleted.",
+          pinId,
+        });
       } else {
         throw new Error("Not authorized.");
       }

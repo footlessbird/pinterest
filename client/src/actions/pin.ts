@@ -7,7 +7,18 @@ export type TPin = {
   user: string;
   imgLink: string;
   imgDescription: string;
-  savedBy?: object;
+  savedBy: object;
+};
+
+export type TDeleteSuccessObj = {
+  message: string;
+  pinId: string;
+};
+
+export type TSaveSuccessObj = {
+  message: string;
+  pinId: string;
+  userId: string;
 };
 
 export const CREATE_PIN_REQUEST = "CREATE_PIN_REQUEST";
@@ -25,6 +36,10 @@ export const GET_MY_PINS_FAILURE = "GET_MY_PINS_FAILURE";
 export const SAVE_PIN_REQUEST = "SAVE_PIN_REQUEST";
 export const SAVE_PIN_SUCCESS = "SAVE_PIN_SUCCESS";
 export const SAVE_PIN_FAILURE = "SAVE_PIN_FAILURE";
+
+export const DELETE_PIN_REQUEST = "DELETE_PIN_REQUEST";
+export const DELETE_PIN_SUCCESS = "DELETE_PIN_SUCCESS";
+export const DELETE_PIN_FAILURE = "DELETE_PIN_FAILURE";
 
 export const createPinAsync = createAsyncAction(
   CREATE_PIN_REQUEST,
@@ -48,4 +63,11 @@ export const savePinAsync = createAsyncAction(
   SAVE_PIN_REQUEST,
   SAVE_PIN_SUCCESS,
   SAVE_PIN_FAILURE
+  // )<string, TSaveSuccessObj, AxiosError>();
 )<string, TPin, AxiosError>();
+
+export const deletePinAsync = createAsyncAction(
+  DELETE_PIN_REQUEST,
+  DELETE_PIN_SUCCESS,
+  DELETE_PIN_FAILURE
+)<string, TDeleteSuccessObj, AxiosError>();

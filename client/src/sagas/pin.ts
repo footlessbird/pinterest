@@ -7,6 +7,8 @@ import {
   getMyPinsAsync,
   SAVE_PIN_REQUEST,
   savePinAsync,
+  DELETE_PIN_REQUEST,
+  deletePinAsync,
 } from "../actions";
 import { takeEvery, takeLatest, all, fork } from "redux-saga/effects";
 import createAsyncSaga from "../utils/createAsyncSaga";
@@ -64,13 +66,27 @@ function savePin(id) {
 
 const savePinSaga = createAsyncSaga(savePinAsync, savePin);
 
-export function* watchSavepin() {
+export function* watchSavePin() {
   yield takeEvery(SAVE_PIN_REQUEST, savePinSaga);
+}
+
+function deletePin(id) {
+  const token = localStorage.getItem("token");
+  return API.call("delete", `pins/${id}`, {
+    headers: { authorization: `bearer ${token}` },
+  });
+}
+
+const deletePinSaga = createAsyncSaga(deletePinAsync, deletePin);
+
+export function* watchDeletePin() {
+  yield takeLatest(DELETE_PIN_REQUEST, deletePinSaga);
 }
 
 export default function* pinSaga() {
   yield all([fork(watchCreatePin)]);
   yield all([fork(watchGetAllPins)]);
   yield all([fork(watchGetMypins)]);
-  yield all([fork(watchSavepin)]);
+  yield all([fork(watchSavePin)]);
+  yield all([fork(watchDeletePin)]);
 }
