@@ -1,0 +1,32 @@
+body {
+  padding: 0.5rem 0;
+  position: sticky;
+}
+
+a {
+  margin-right: 1rem;
+}
+
+.nav-container {
+  display: grid;
+  align-items: center;
+  /* justify-content: space-evenly; */
+  grid-template-rows: 2;
+  /* grid-template-columns: repeat(3, 1fr); */
+  /* gap: 10px; */
+}
+.nav-brand {
+  /* grid-column-start: 1; */
+  /* grid-column-end: 4; */
+  margin: 0 auto;
+  margin-bottom: 0.5rem;
+}
+.logo {
+  width: 24px;
+  height: 24px;
+}
+
+.nav-auth {
+  margin: 0 auto;
+  text-align: center;
+}

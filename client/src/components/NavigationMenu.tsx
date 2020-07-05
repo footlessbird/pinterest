@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { LOGOUT_USER } from "../actions";
 // import { logoutUserAsync } from "../actions";
+import { ReactComponent as PinterestLogo } from "../assets/badgeRGB.svg";
 
 function NavigationMenu({ auth }) {
   const { isLoading, isAuthenticated, user } = auth;
@@ -19,34 +20,33 @@ function NavigationMenu({ auth }) {
 
   return (
     <nav>
-      <div className="nav-wrapper">
-        {isLoading ? (
-          <div>Loading..</div>
-        ) : (
-          [
-            <div key="nav-brand" className="nav-brand">
-              <Link to="/">Home</Link>
-              {/* {isAuthenticated && user ? (
-                <h1>Welcome {user.username}</h1>
-              ) : null} */}
-            </div>,
-            <div key="nav-auth" className="nav-auth">
-              {isAuthenticated && user ? (
-                [
-                  <button key="logout-button" onClick={handleLogout}>
-                    Logout
-                  </button>,
-                  <Link key="my-pins" to="/mypins">
-                    My Pins
-                  </Link>,
-                ]
-              ) : (
-                <button>Login</button>
-              )}
-            </div>,
-          ]
-        )}
-        <div className="nav-content"></div>
+      <div className="nav-container">
+        <div key="nav-brand" className="nav-brand">
+          <Link to="/">
+            <PinterestLogo className="logo" />
+          </Link>
+        </div>
+        <div className="nav-auth">
+          <Link to="/" className="btn navigation">
+            Home
+          </Link>
+          {isAuthenticated && user ? (
+            [
+              <Link className="btn navigation" key="my-pins" to="/mypins">
+                My Pins
+              </Link>,
+              <button
+                className="btn navigation"
+                key="logout-button"
+                onClick={handleLogout}
+              >
+                Log Out
+              </button>,
+            ]
+          ) : (
+            <button className="btn navigation">Log In</button>
+          )}
+        </div>
       </div>
     </nav>
   );
