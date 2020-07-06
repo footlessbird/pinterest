@@ -15,6 +15,7 @@ import NavigationMenu from "../components/NavigationMenu";
 import CreatePin from "../components/CreatePin";
 import Pins from "./Pins";
 import MyPins from "./MyPins";
+import Register from "../components/Register";
 
 function App() {
   const dispatch = useDispatch();
@@ -59,12 +60,13 @@ function App() {
     <div>
       <Router>
         <NavigationMenu auth={auth} />
-        <LoginTestForm />
+        {/* <LoginTestForm /> */}
         <CreatePin />
         <Switch>
           {/* <Route exact path="/" render={() => <Pins />} /> */}
           <Route exact path="/" component={Pins} />
           <Route path="/githublogin" component={GithubLogin} />
+          <Route path="/register" component={Register} />
           <Route
             path="/mypins"
             render={() => (isAuthenticated ? <MyPins /> : <Redirect to="/" />)}

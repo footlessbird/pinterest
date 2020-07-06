@@ -42,13 +42,16 @@ function LoginTestForm() {
     <div>
       {/* <form onSubmit={() => dispatch(loginUserAsync.request(values))}> */}
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="email"
-          value={email}
-          name="email"
-          onChange={handleChange}
-        />
+        <label>
+          Email
+          <input
+            type="text"
+            placeholder="email"
+            value={email}
+            name="email"
+            onChange={handleChange}
+          />
+        </label>
         <input
           type="password"
           placeholder="password"

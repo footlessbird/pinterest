@@ -5,7 +5,7 @@
   background-color: transparent;
   text-align: center;
   font-size: 18px;
-  padding: 1rem; /* 호버링 효과 박스 크기 */
+  padding: 0.8rem; /* 호버링 효과 박스 크기 */
 }
 .navigation:hover {
   background-color: #f1f3f5;
