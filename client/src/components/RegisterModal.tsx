@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import Modal from "react-modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,17 +7,13 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { LOCAL_LOGIN_REQUEST } from "../actions";
 import { useModal } from "../utils/useModal";
-import RegisterModal from "./RegisterModal";
+import LoginModal from "./LoginModal";
 
-function LoginModal({ isOpen, onRequestClose }) {
-  console.log("loginModal", isOpen);
+function RegisterModal({ isOpen, onRequestClose }) {
+  console.log("registerModal", isOpen);
   const { showModal, handleOpenModal, handleCloseModal } = useModal();
+
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   return () => {
-  //     showModal.loginModal = false;
-  //   };
-  // }, [showModal]);
   const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = (data) => {
@@ -37,7 +33,7 @@ function LoginModal({ isOpen, onRequestClose }) {
       <div className="inner-container">
         <div className="local-login">
           <div className="item">
-            <h2>Welcome to PPinterestt</h2>
+            <h2>Find new ideas to try</h2>
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="item">
@@ -62,7 +58,7 @@ function LoginModal({ isOpen, onRequestClose }) {
               <label>Password</label>
               <input
                 type="password"
-                placeholder="password"
+                placeholder="Create a password"
                 name="password"
                 ref={register({
                   required: "Please enter your password.",
@@ -77,7 +73,7 @@ function LoginModal({ isOpen, onRequestClose }) {
               )}
             </div>
             <div className="item">
-              <button type="submit">Log in</button>
+              <button type="submit">Sign up</button>
             </div>
           </form>
         </div>
@@ -93,14 +89,14 @@ function LoginModal({ isOpen, onRequestClose }) {
         <div className="item">
           <a
             onClick={() => {
-              handleOpenModal("signup");
+              handleOpenModal("login");
             }}
           >
             Need an account? Sign up now
           </a>
 
-          <RegisterModal
-            isOpen={showModal.signupModal}
+          <LoginModal
+            isOpen={showModal.loginModal}
             onRequestClose={handleCloseModal}
           />
         </div>
@@ -109,4 +105,4 @@ function LoginModal({ isOpen, onRequestClose }) {
   );
 }
 
-export default LoginModal;
+export default RegisterModal;

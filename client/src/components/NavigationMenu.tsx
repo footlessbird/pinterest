@@ -5,12 +5,18 @@ import { LOGOUT_USER } from "../actions";
 // import { logoutUserAsync } from "../actions";
 import { ReactComponent as PinterestLogo } from "../assets/badgeRGB.svg";
 import LoginModal from "./LoginModal";
+import RegisterModal from "./RegisterModal";
+import { useModal } from "../utils/useModal";
 
 function NavigationMenu({ auth }) {
   const { isLoading, isAuthenticated, user } = auth;
   console.log("isAuthenticated? ", isAuthenticated);
-
+  const { showModal, handleOpenModal, handleCloseModal } = useModal();
   const dispatch = useDispatch();
+
+  // useEffect(() => {}, [showModal]);
+
+  /*
   const [showModal, setShowModal] = useState(false);
 
   const handleOpenModal = () => {
@@ -20,6 +26,7 @@ function NavigationMenu({ auth }) {
   const handleCloseModal = () => {
     setShowModal(false);
   };
+  */
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -43,22 +50,43 @@ function NavigationMenu({ auth }) {
           {isAuthenticated && user
             ? [
                 <Link className="btn navigation" key="my-pins" to="/mypins">
-                  My Pins
+                  My pins
                 </Link>,
                 <button
                   className="btn navigation"
                   key="logout-button"
                   onClick={handleLogout}
                 >
-                  Log Out
+                  Log out
                 </button>,
               ]
             : [
-                <button className="btn navigation" onClick={handleOpenModal}>
-                  Log In
+                <button
+                  className="btn navigation"
+                  onClick={() => handleOpenModal("login")}
+                >
+                  Log in
                 </button>,
                 <LoginModal
-                  isOpen={showModal}
+                  isOpen={
+                    showModal.signupModal
+                      ? (showModal.loginModal = false)
+                      : !!showModal.loginModal
+                  }
+                  onRequestClose={handleCloseModal}
+                />,
+                <button
+                  className="btn navigation"
+                  onClick={() => handleOpenModal("signup")}
+                >
+                  Sign up
+                </button>,
+                <RegisterModal
+                  isOpen={
+                    showModal.loginModal
+                      ? (showModal.signupModal = false)
+                      : !!showModal.signupModal
+                  }
                   onRequestClose={handleCloseModal}
                 />,
               ]}

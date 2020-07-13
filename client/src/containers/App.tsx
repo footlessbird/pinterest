@@ -16,11 +16,15 @@ import CreatePin from "../components/CreatePin";
 import Pins from "./Pins";
 import MyPins from "./MyPins";
 import Register from "../components/Register";
+import LoginModal from "../components/LoginModal";
+import RegisterModal from "../components/RegisterModal";
+// import { useModal } from "../utils/useModal";
 
 function App() {
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.auth);
   const { isLoading, isAuthenticated, user } = auth;
+  // const { showModal, handleOpenModal, handleCloseModal } = useModal();
 
   useEffect(() => {
     // dispatch(getUserAsync.request());
@@ -66,7 +70,10 @@ function App() {
           {/* <Route exact path="/" render={() => <Pins />} /> */}
           <Route exact path="/" component={Pins} />
           <Route path="/githublogin" component={GithubLogin} />
-          <Route path="/register" component={Register} />
+          {/* <Route path="/register" component={Register} /> */}
+          {/* <Route path="/login" component={LoginModal} /> */}
+          {/* <Route path="/register" component={RegisterModal} /> */}
+
           <Route
             path="/mypins"
             render={() => (isAuthenticated ? <MyPins /> : <Redirect to="/" />)}

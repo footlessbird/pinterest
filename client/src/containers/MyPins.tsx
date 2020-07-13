@@ -15,7 +15,7 @@ function MyPins() {
 
   return (
     <div>
-      My Pins
+      My pins
       {/* <ul>{pins.data && pins.data.map((pin) => <li>{pin.imgLink}</li>)}</ul> */}
       <ul>{pins.data && pins.data.map((pin) => <Pin pin={pin} />)}</ul>
     </div>
