@@ -35,7 +35,7 @@ label {
 }
 .item label {
   text-align: left;
-  margin-left: 4mm;
+  /* margin-left: 4mm; */
 }
 .local-login input {
   border-radius: 16px;

@@ -53,6 +53,7 @@
     ]
   },
   "devDependencies": {
+    "@welldone-software/why-did-you-render": "^4.2.6",
     "http-proxy-middleware": "^1.0.4"
   }
 }

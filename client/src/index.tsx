@@ -1,3 +1,4 @@
+// import "./wdyr";
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
@@ -9,17 +10,17 @@ import createSagaMiddleware from "redux-saga";
 import rootReducer from "./reducers";
 import rootSaga from "./sagas";
 
-// const enhancer =
-//   (window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"] as typeof compose) || compose;
 const sagaMiddleware = createSagaMiddleware();
-
+const middlewares = [sagaMiddleware];
 const store = createStore(
   rootReducer,
-  compose(
-    applyMiddleware(sagaMiddleware),
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
-      (window as any).__REDUX_DEVTOOLS_EXTENSION__()
-  )
+  process.env.NODE_ENV === "development"
+    ? compose(
+        applyMiddleware(sagaMiddleware),
+        (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
+          (window as any).__REDUX_DEVTOOLS_EXTENSION__()
+      )
+    : compose(applyMiddleware(...middlewares))
 );
 
 sagaMiddleware.run(rootSaga);

@@ -15,10 +15,6 @@ import NavigationMenu from "../components/NavigationMenu";
 import CreatePin from "../components/CreatePin";
 import Pins from "./Pins";
 import MyPins from "./MyPins";
-import Register from "../components/Register";
-import LoginModal from "../components/LoginModal";
-import RegisterModal from "../components/RegisterModal";
-// import { useModal } from "../utils/useModal";
 
 function App() {
   const dispatch = useDispatch();
@@ -70,7 +66,7 @@ function App() {
           {/* <Route exact path="/" render={() => <Pins />} /> */}
           <Route exact path="/" component={Pins} />
           <Route path="/githublogin" component={GithubLogin} />
-          {/* <Route path="/register" component={Register} /> */}
+
           {/* <Route path="/login" component={LoginModal} /> */}
           {/* <Route path="/register" component={RegisterModal} /> */}
 

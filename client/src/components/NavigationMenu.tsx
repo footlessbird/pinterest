@@ -4,29 +4,22 @@ import { Link } from "react-router-dom";
 import { LOGOUT_USER } from "../actions";
 // import { logoutUserAsync } from "../actions";
 import { ReactComponent as PinterestLogo } from "../assets/badgeRGB.svg";
+
+import Modal from "react-modal";
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
 import { useModal } from "../utils/useModal";
 
 function NavigationMenu({ auth }) {
   const { isLoading, isAuthenticated, user } = auth;
-  console.log("isAuthenticated? ", isAuthenticated);
-  const { showModal, handleOpenModal, handleCloseModal } = useModal();
+  // console.log("isAuthenticated? ", isAuthenticated);
+  const {
+    showModal,
+    setShowModal,
+    handleOpenModal,
+    handleCloseModal,
+  } = useModal();
   const dispatch = useDispatch();
-
-  // useEffect(() => {}, [showModal]);
-
-  /*
-  const [showModal, setShowModal] = useState(false);
-
-  const handleOpenModal = () => {
-    setShowModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-  */
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -67,28 +60,34 @@ function NavigationMenu({ auth }) {
                 >
                   Log in
                 </button>,
-                <LoginModal
-                  isOpen={
-                    showModal.signupModal
-                      ? (showModal.loginModal = false)
-                      : !!showModal.loginModal
-                  }
+                <Modal
+                  className="modal"
+                  overlayClassName="overlay"
+                  isOpen={showModal.loginModal}
                   onRequestClose={handleCloseModal}
-                />,
+                >
+                  <LoginModal openSignup={handleOpenModal} />
+                  {/* <button onClick={() => handleOpenModal("signup")}>
+                    No account? Sign up
+                  </button> */}
+                </Modal>,
                 <button
                   className="btn navigation"
                   onClick={() => handleOpenModal("signup")}
                 >
                   Sign up
                 </button>,
-                <RegisterModal
-                  isOpen={
-                    showModal.loginModal
-                      ? (showModal.signupModal = false)
-                      : !!showModal.signupModal
-                  }
+                <Modal
+                  className="modal"
+                  overlayClassName="overlay"
+                  isOpen={showModal.signupModal}
                   onRequestClose={handleCloseModal}
-                />,
+                >
+                  <RegisterModal openLogin={handleOpenModal} />
+                  {/* <button onClick={() => handleOpenModal("login")}>
+                    Already a member? Log in
+                  </button> */}
+                </Modal>,
               ]}
         </div>
       </div>
