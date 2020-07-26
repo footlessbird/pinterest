@@ -23,6 +23,8 @@ import {
   GITHUB_LOGIN_FAILURE,
   LOGOUT_REQUEST,
   LOGOUT_USER,
+  REGISTER_USER_SUCCESS,
+  REGISTER_USER_FAILURE,
 } from "../actions";
 import createAsyncSaga from "../utils/createAsyncSaga";
 import API from "../services/api";
@@ -199,11 +201,37 @@ function* watchLogout() {
   yield takeEvery(LOGOUT_REQUEST, logout);
 }
 
+function signupAPI(signupData) {
+  console.log("signupData?? ", signupData);
+  const { email, password } = signupData;
+  return axios.post("/api/auth/register", { email, password });
+}
+
+function* signup(action) {
+  try {
+    const result = yield call(signupAPI, action.data);
+    yield put({
+      type: REGISTER_USER_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: REGISTER_USER_FAILURE,
+      error: err,
+    });
+  }
+}
+
+function* watchRegister() {
+  yield takeLatest(REGISTER_USER_REQUEST, signup);
+}
+
 export default function* userSaga() {
   yield all([
     fork(watchGetCurrentUser),
     fork(watchLocalLogin),
     fork(watchGithubLogin),
     fork(watchLogout),
+    fork(watchRegister),
   ]);
 }

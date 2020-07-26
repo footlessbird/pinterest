@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { useForm } from "react-hook-form";
-import { LOCAL_LOGIN_REQUEST } from "../actions";
+import { REGISTER_USER_REQUEST } from "../actions";
 
 function RegisterModal({ openLogin }) {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ function RegisterModal({ openLogin }) {
   const onSubmit = (data) => {
     const { email, password } = data;
     console.log(email, password);
-    dispatch({ type: LOCAL_LOGIN_REQUEST, data: { email, password } });
+    dispatch({ type: REGISTER_USER_REQUEST, data: { email, password } });
   };
 
   return (
@@ -59,7 +59,9 @@ function RegisterModal({ openLogin }) {
             )}
           </div>
           <div className="item">
-            <button type="submit">Sign up</button>
+            <button className="gen-btn" type="submit">
+              Sign up
+            </button>
           </div>
         </form>
       </div>

@@ -44,8 +44,7 @@ function LoginModal({ openSignup }) {
             <label>Password</label>
             <input
               type="password"
-              // placeholder="password"
-              placeholder="Create a password"
+              placeholder="password"
               name="password"
               ref={register({
                 required: "Please enter your password.",
@@ -60,7 +59,9 @@ function LoginModal({ openSignup }) {
             )}
           </div>
           <div className="item">
-            <button type="submit">Log in</button>
+            <button className="gen-btn" type="submit">
+              Log in
+            </button>
           </div>
         </form>
       </div>
@@ -74,7 +75,13 @@ function LoginModal({ openSignup }) {
       </div>
       {/* <hr /> */}
       <div className="item">
-        <a onClick={() => openSignup("signup")}>Need an account? Sign up now</a>
+        <a
+          onClick={() => {
+            openSignup("signup");
+          }}
+        >
+          Need an account? Sign up now
+        </a>
       </div>
     </div>
   );

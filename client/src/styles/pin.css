@@ -1,0 +1,24 @@
+.pin {
+  max-width: 252px;
+  margin: 10px;
+  cursor: zoom-in;
+}
+.pin button {
+  visibility: hidden;
+}
+.pin:hover button {
+  visibility: visible;
+}
+.pin-btn-wrapper {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.pin-image {
+  border-radius: 8px;
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  border: 0;
+}

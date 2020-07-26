@@ -46,7 +46,7 @@ label {
 .local-login input:hover {
   border: solid 2px rgb(208, 208, 208);
 }
-.local-login button {
+/* .local-login button {
   padding: 0.5rem;
   background-color: var(--red);
   color: white;
@@ -55,10 +55,10 @@ label {
   font-size: 16px;
   border: none;
   width: 232px;
-}
-.local-login button:hover {
+} */
+/* .local-login button:hover {
   background-color: #c92a2a;
-}
+} */
 .or {
   font-style: italic;
   font-weight: 700;

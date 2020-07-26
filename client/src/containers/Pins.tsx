@@ -3,10 +3,16 @@ import { useDispatch, useSelector, connect } from "react-redux";
 import { RootState } from "../reducers";
 import { getAllPinsAsync, TPin } from "../actions";
 import Pin from "./Pin";
+import Masonry from "react-masonry-component";
 
 function Pins() {
   const dispatch = useDispatch();
   const pins = useSelector((state: RootState) => state.pins);
+
+  const masonryOptions = {
+    transitionDuration: 0,
+    fitWidth: true, // center masonry
+  };
 
   useEffect(() => {
     dispatch(getAllPinsAsync.request(""));
@@ -15,12 +21,14 @@ function Pins() {
   console.log("what is type of pins.data??", typeof pins.data);
 
   return (
-    <div>
-      <h1>Pins</h1>
-      {/* <ul>{pins.data && pins.data.map((pin) => <li>{pin.imgLink}</li>)}</ul> */}
-      <ul>
+    <div className="pins">
+      <Masonry
+        className="pins-container"
+        elementType={"ul"}
+        options={masonryOptions}
+      >
         {pins.data && pins.data.map((pin) => <Pin key={pin._id} pin={pin} />)}
-      </ul>
+      </Masonry>
     </div>
   );
 }

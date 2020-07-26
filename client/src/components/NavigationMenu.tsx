@@ -37,16 +37,16 @@ function NavigationMenu({ auth }) {
           </Link>
         </div>
         <div className="nav-auth">
-          <Link to="/" className="btn navigation">
+          <Link to="/" className="nav-btn navigation">
             Home
           </Link>
           {isAuthenticated && user
             ? [
-                <Link className="btn navigation" key="my-pins" to="/mypins">
+                <Link className="nav-btn navigation" key="my-pins" to="/mypins">
                   My pins
                 </Link>,
                 <button
-                  className="btn navigation"
+                  className="nav-btn navigation"
                   key="logout-button"
                   onClick={handleLogout}
                 >
@@ -55,7 +55,7 @@ function NavigationMenu({ auth }) {
               ]
             : [
                 <button
-                  className="btn navigation"
+                  className="nav-btn navigation"
                   onClick={() => handleOpenModal("login")}
                 >
                   Log in
@@ -72,7 +72,7 @@ function NavigationMenu({ auth }) {
                   </button> */}
                 </Modal>,
                 <button
-                  className="btn navigation"
+                  className="nav-btn navigation"
                   onClick={() => handleOpenModal("signup")}
                 >
                   Sign up

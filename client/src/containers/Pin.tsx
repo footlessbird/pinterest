@@ -44,25 +44,36 @@ function Pin({ pin }) {
       }
       */
       if (user._id === loggedInUserId) {
-        return <button onClick={handleDelete}>Remove</button>;
+        return (
+          <button className="pin-btn" onClick={handleDelete}>
+            Remove
+          </button>
+        );
       } else if (savedBy && Object.keys(savedBy).includes(loggedInUserId)) {
         if (currentUrl === "http://localhost:3000/mypins") {
-          return <button onClick={handleDelete}>Unsave</button>;
+          return (
+            <button className="pin-btn" onClick={handleDelete}>
+              Unsave
+            </button>
+          );
         } else {
           return null;
         }
       } else {
-        return <button onClick={handleSave}>Save</button>;
+        return (
+          <button className="pin-btn" onClick={handleSave}>
+            Save
+          </button>
+        );
       }
     }
   };
 
   return (
-    <li>
-      <img src={imgLink} alt={imgDescription} />
+    <li className="pin">
+      <img className="pin-image" src={imgLink} alt={imgDescription} />
       <div>{user.username}</div>
-
-      {pinButton()}
+      <div className="pin-btn-wrapper">{pinButton()}</div>
     </li>
   );
 }
