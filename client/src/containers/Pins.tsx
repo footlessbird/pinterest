@@ -29,6 +29,9 @@ function Pins() {
       >
         {pins.data && pins.data.map((pin) => <Pin key={pin._id} pin={pin} />)}
       </Masonry>
+      <div>
+        <div className="create-btn">+</div>
+      </div>
     </div>
   );
 }
