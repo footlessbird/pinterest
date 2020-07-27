@@ -9,6 +9,7 @@ a {
 
 .nav-container {
   display: grid;
+
   align-items: center;
   /* justify-content: space-evenly; */
   grid-template-rows: 2;

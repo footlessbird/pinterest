@@ -4,10 +4,19 @@ import { RootState } from "../reducers";
 import { getAllPinsAsync, TPin } from "../actions";
 import Pin from "./Pin";
 import Masonry from "react-masonry-component";
+import Modal from "react-modal";
+import { useModal } from "../utils/useModal";
+import CreatePinModal from "../components/CreatePinModal";
 
 function Pins() {
   const dispatch = useDispatch();
   const pins = useSelector((state: RootState) => state.pins);
+  const {
+    showModal,
+    setShowModal,
+    handleOpenModal,
+    handleCloseModal,
+  } = useModal();
 
   const masonryOptions = {
     transitionDuration: 0,
@@ -30,7 +39,20 @@ function Pins() {
         {pins.data && pins.data.map((pin) => <Pin key={pin._id} pin={pin} />)}
       </Masonry>
       <div>
-        <div className="create-btn">+</div>
+        <button
+          className="create-btn"
+          onClick={() => handleOpenModal("create")}
+        >
+          +
+        </button>
+        <Modal
+          className="modal"
+          overlayClassName="overlay"
+          isOpen={showModal.createModal}
+          onRequestClose={handleCloseModal}
+        >
+          <CreatePinModal openCreatePin={handleOpenModal} />
+        </Modal>
       </div>
     </div>
   );

@@ -46,6 +46,28 @@ label {
 .local-login input:hover {
   border: solid 2px rgb(208, 208, 208);
 }
+
+.local-login textarea {
+  border-radius: 16px;
+  border: solid 2px rgb(221, 221, 221);
+  padding: 10px;
+  width: 208px;
+  font-size: 11px;
+  resize: none;
+  overflow-y: scroll;
+}
+
+.local-login textarea:hover {
+  border: solid 2px rgb(208, 208, 208);
+}
+
+/* .pin-description {
+} */
+
+.image-preview img {
+  max-width: 250px;
+}
+
 /* .local-login button {
   padding: 0.5rem;
   background-color: var(--red);
