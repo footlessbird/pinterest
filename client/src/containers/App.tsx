@@ -61,10 +61,10 @@ function App() {
       <Router>
         <NavigationMenu auth={auth} />
         {/* <LoginTestForm /> */}
-        <CreatePin />
+        {/* <CreatePin /> */}
         <Switch>
-          {/* <Route exact path="/" render={() => <Pins />} /> */}
-          <Route exact path="/" component={Pins} />
+          <Route exact path="/" render={() => <Pins auth={auth} />} />
+          {/* <Route exact path="/" component={Pins} /> */}
           <Route path="/githublogin" component={GithubLogin} />
 
           {/* <Route path="/login" component={LoginModal} /> */}

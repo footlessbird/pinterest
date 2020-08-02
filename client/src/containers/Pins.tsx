@@ -8,7 +8,9 @@ import Modal from "react-modal";
 import { useModal } from "../utils/useModal";
 import CreatePinModal from "../components/CreatePinModal";
 
-function Pins() {
+function Pins({ auth }) {
+  const { isLoading, isAuthenticated, user } = auth;
+
   const dispatch = useDispatch();
   const pins = useSelector((state: RootState) => state.pins);
   const {
@@ -38,22 +40,24 @@ function Pins() {
       >
         {pins.data && pins.data.map((pin) => <Pin key={pin._id} pin={pin} />)}
       </Masonry>
-      <div>
-        <button
-          className="create-btn"
-          onClick={() => handleOpenModal("create")}
-        >
-          +
-        </button>
-        <Modal
-          className="modal"
-          overlayClassName="overlay"
-          isOpen={showModal.createModal}
-          onRequestClose={handleCloseModal}
-        >
-          <CreatePinModal openCreatePin={handleOpenModal} />
-        </Modal>
-      </div>
+      {isAuthenticated ? (
+        <div>
+          <button
+            className="create-btn"
+            onClick={() => handleOpenModal("create")}
+          >
+            +
+          </button>
+          <Modal
+            className="modal"
+            overlayClassName="overlay"
+            isOpen={showModal.createModal}
+            onRequestClose={handleCloseModal}
+          >
+            <CreatePinModal openCreatePin={handleOpenModal} />
+          </Modal>
+        </div>
+      ) : null}
     </div>
   );
 }

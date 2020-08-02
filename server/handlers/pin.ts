@@ -3,6 +3,7 @@ import { PinModel } from "../models/pin";
 
 const createPin = async (req, res, next) => {
   const { imgLink, imgDescription } = req.body;
+
   try {
     const user = req.user;
     const newPin: PinModel = await Pin.create({
