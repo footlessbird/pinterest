@@ -5,17 +5,10 @@ import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { useForm } from "react-hook-form";
 import defaultImage from "../assets/defaultImage.png";
 import { createPinAsync } from "../actions";
-import { useModal } from "../utils/useModal";
 
-function CreatePinModal({ openCreatePin }) {
+function CreatePinModal({ openCreatePin, onClose }) {
   // const DEFAULT_IMAGE =
   //   "https://748073e22e8db794416a-cc51ef6b37841580002827d4d94d19b6.ssl.cf3.rackcdn.com/not-found.png";
-  const {
-    showModal,
-    setShowModal,
-    handleOpenModal,
-    handleCloseModal,
-  } = useModal();
 
   const dispatch = useDispatch();
   const [pinImg, setPinImg] = useState(defaultImage);
@@ -51,6 +44,7 @@ function CreatePinModal({ openCreatePin }) {
 
     // dispatch(createPinAsync.request(data));
     dispatch(createPinAsync.request(pinData));
+    onClose();
   };
   console.log("pinImg??", pinImg);
   return (

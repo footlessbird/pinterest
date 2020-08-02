@@ -54,7 +54,10 @@ function Pins({ auth }) {
             isOpen={showModal.createModal}
             onRequestClose={handleCloseModal}
           >
-            <CreatePinModal openCreatePin={handleOpenModal} />
+            <CreatePinModal
+              onClose={handleCloseModal}
+              openCreatePin={handleOpenModal}
+            />
           </Modal>
         </div>
       ) : null}
