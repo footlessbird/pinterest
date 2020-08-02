@@ -9,10 +9,13 @@ import Modal from "react-modal";
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
 import { useModal } from "../utils/useModal";
+import { useToasts } from "react-toast-notifications";
 
 function NavigationMenu({ auth }) {
   const { isLoading, isAuthenticated, user } = auth;
   // console.log("isAuthenticated? ", isAuthenticated);
+  const { addToast } = useToasts();
+
   const {
     showModal,
     setShowModal,
@@ -26,6 +29,10 @@ function NavigationMenu({ auth }) {
     // dispatch(logoutUserAsync.request(null));
     // localStorage.clear(); // 바로 지워짐
     dispatch({ type: LOGOUT_USER });
+    addToast("See you again 🙋🏻‍♀️", {
+      appearance: "success",
+      autoDismiss: true,
+    });
   };
 
   return (
@@ -66,7 +73,10 @@ function NavigationMenu({ auth }) {
                   isOpen={showModal.loginModal}
                   onRequestClose={handleCloseModal}
                 >
-                  <LoginModal openSignup={handleOpenModal} />
+                  <LoginModal
+                    openSignup={handleOpenModal}
+                    onClose={handleCloseModal}
+                  />
                   {/* <button onClick={() => handleOpenModal("signup")}>
                     No account? Sign up
                   </button> */}
@@ -83,7 +93,10 @@ function NavigationMenu({ auth }) {
                   isOpen={showModal.signupModal}
                   onRequestClose={handleCloseModal}
                 >
-                  <RegisterModal openLogin={handleOpenModal} />
+                  <RegisterModal
+                    openLogin={handleOpenModal}
+                    onClose={handleCloseModal}
+                  />
                   {/* <button onClick={() => handleOpenModal("login")}>
                     Already a member? Log in
                   </button> */}

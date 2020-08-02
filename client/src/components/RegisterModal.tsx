@@ -4,15 +4,25 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { useForm } from "react-hook-form";
 import { REGISTER_USER_REQUEST } from "../actions";
+import { useToasts } from "react-toast-notifications";
 
-function RegisterModal({ openLogin }) {
+function RegisterModal({ openLogin, onClose }) {
   const dispatch = useDispatch();
   const { register, handleSubmit, errors } = useForm();
+  const { addToast } = useToasts();
 
   const onSubmit = (data) => {
-    const { email, password } = data;
-    console.log(email, password);
-    dispatch({ type: REGISTER_USER_REQUEST, data: { email, password } });
+    const { email, username, password } = data;
+    console.log(email, username, password);
+    dispatch({
+      type: REGISTER_USER_REQUEST,
+      data: { email, username, password },
+    });
+    addToast(`Thank you for signing up! Now you can log in`, {
+      appearance: "success",
+      autoDismiss: true,
+    });
+    onClose();
   };
 
   return (
@@ -38,6 +48,28 @@ function RegisterModal({ openLogin }) {
             />
             {errors.email && (
               <h6 className="login-error">{errors.email.message}</h6>
+            )}
+          </div>
+          <div className="item">
+            <label>Username</label>
+            <input
+              type="text"
+              name="username"
+              placeholder="Jane"
+              ref={register({
+                required: "Please enter username.",
+                minLength: {
+                  value: 3,
+                  message: "Username must be at least 3 characters.",
+                },
+                // pattern: {
+                //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                //   message: "Invalid email.",
+                // },
+              })}
+            />
+            {errors.username && (
+              <h6 className="login-error">{errors.username.message}</h6>
             )}
           </div>
           <div className="item">

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { savePinAsync, deletePinAsync } from "../actions";
 import { RootState } from "../reducers";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 function Pin({ pin }) {
   const dispatch = useDispatch();
@@ -71,7 +72,13 @@ function Pin({ pin }) {
 
   return (
     <li className="pin">
-      <img className="pin-image" src={imgLink} alt={imgDescription} />
+      <LazyLoadImage
+        className="pin-image"
+        alt={imgDescription}
+        effect="blur"
+        src={imgLink}
+      />
+      {/* <img className="pin-image" src={imgLink} alt={imgDescription} /> */}
       <div>{user.username}</div>
       <div className="pin-btn-wrapper">{pinButton()}</div>
     </li>

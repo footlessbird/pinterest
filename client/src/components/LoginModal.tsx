@@ -4,15 +4,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { useForm } from "react-hook-form";
 import { LOCAL_LOGIN_REQUEST } from "../actions";
+import { useToasts } from "react-toast-notifications";
 
-function LoginModal({ openSignup }) {
+function LoginModal({ openSignup, onClose }) {
   const dispatch = useDispatch();
   const { register, handleSubmit, errors } = useForm();
+  const { addToast } = useToasts();
 
   const onSubmit = (data) => {
     const { email, password } = data;
     console.log(email, password);
     dispatch({ type: LOCAL_LOGIN_REQUEST, data: { email, password } });
+    // addToast("Logged in Successfully", { appearance: "success" });
+    addToast(`Logged in successfully 💃🏼`, {
+      appearance: "success",
+      autoDismiss: true,
+    });
+    onClose();
   };
 
   return (

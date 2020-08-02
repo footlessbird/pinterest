@@ -5,6 +5,7 @@ import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { useForm } from "react-hook-form";
 import defaultImage from "../assets/defaultImage.png";
 import { createPinAsync } from "../actions";
+import { useToasts } from "react-toast-notifications";
 
 function CreatePinModal({ openCreatePin, onClose }) {
   // const DEFAULT_IMAGE =
@@ -19,6 +20,7 @@ function CreatePinModal({ openCreatePin, onClose }) {
   const { register, watch, handleSubmit, errors } = useForm();
   // const watchImg = watch("image", "");
   const watchImg = watch("image", pinImg);
+  const { addToast } = useToasts();
 
   // const watchAllFields = watch(); // when pass nothing as argument, you are watching everything
 
@@ -44,6 +46,10 @@ function CreatePinModal({ openCreatePin, onClose }) {
 
     // dispatch(createPinAsync.request(data));
     dispatch(createPinAsync.request(pinData));
+    addToast(`Created successfully 😎`, {
+      appearance: "success",
+      autoDismiss: true,
+    });
     onClose();
   };
   console.log("pinImg??", pinImg);

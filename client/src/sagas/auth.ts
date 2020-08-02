@@ -203,8 +203,8 @@ function* watchLogout() {
 
 function signupAPI(signupData) {
   console.log("signupData?? ", signupData);
-  const { email, password } = signupData;
-  return axios.post("/api/auth/register", { email, password });
+  const { email, username, password } = signupData;
+  return axios.post("/api/auth/register", { email, username, password });
 }
 
 function* signup(action) {
