@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
@@ -9,6 +10,7 @@ import { RootState } from "../reducers";
 import { removeError } from "../actions/index";
 
 function RegisterModal({ openLogin, onClose }) {
+  const history = useHistory();
   const auth = useSelector((state: RootState) => state.auth);
   const authError = useSelector((state: RootState) => state.error);
   console.log("authError", authError);
@@ -160,10 +162,20 @@ function RegisterModal({ openLogin, onClose }) {
       <div className="or">
         <label>OR</label>
       </div>
-      <div className="item github-oauth">
-        <a href="/api/auth/github">
-          <FontAwesomeIcon icon={faGithub} /> Continue with Github
-        </a>
+      {/* <div className="item github-oauth"> */}
+      <div className="item">
+        <button
+          className="oauth-btn"
+          // onClick={() => history.push("/api/auth/github")}
+          onClick={() => window.location.replace("/api/auth/github")}
+        >
+          {/* <a href="/api/auth/github"> */}
+          {/* <FontAwesomeIcon icon={faGithub} /> Continue with Github */}
+          {/* </a> */}
+          <span>
+            <FontAwesomeIcon icon={faGithub} /> Continue with Github
+          </span>
+        </button>
       </div>
       {/* <hr /> */}
       <div className="item">

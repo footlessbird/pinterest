@@ -8,7 +8,7 @@
   padding: 0.8rem; /* 호버링 효과 박스 크기 */
 }
 .navigation:hover {
-  background-color: #f1f3f5;
+  background-color: var(--gray);
   border-radius: 30px;
 }
 .navigation:active {
@@ -18,6 +18,7 @@
 }
 
 .gen-btn {
+  cursor: pointer;
   padding: 0.5rem;
   background-color: var(--red);
   color: white;
@@ -30,6 +31,22 @@
 
 .gen-btn:hover {
   background-color: var(--redhover);
+}
+
+.oauth-btn {
+  cursor: pointer;
+  padding: 0.5rem;
+  background-color: var(--gray);
+  color: black;
+  border-radius: 30px;
+  text-align: center;
+  font-size: 16px;
+  border: none;
+  width: 232px;
+}
+
+.oauth-btn:hover {
+  background-color: var(--grayhover);
 }
 
 .pin-btn {
