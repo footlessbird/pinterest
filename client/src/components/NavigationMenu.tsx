@@ -12,10 +12,10 @@ import { useModal } from "../utils/useModal";
 import { useToasts } from "react-toast-notifications";
 
 function NavigationMenu({ auth }) {
-  const { isLoading, isAuthenticated, user } = auth;
+  const { isLoading, isAuthenticated, user, error } = auth;
   // console.log("isAuthenticated? ", isAuthenticated);
   const { addToast } = useToasts();
-
+  console.log("navigation err", error);
   const {
     showModal,
     setShowModal,

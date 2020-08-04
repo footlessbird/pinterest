@@ -25,6 +25,8 @@ import {
   LOGOUT_USER,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FAILURE,
+  REMOVE_ERROR,
+  ADD_ERROR,
 } from "../actions";
 import createAsyncSaga from "../utils/createAsyncSaga";
 import API from "../services/api";
@@ -102,9 +104,11 @@ function* localLogin(action) {
       data: result.data,
     });
   } catch (err) {
+    console.log("localLogin err", err.response.data);
     yield put({
       type: LOCAL_LOGIN_FAILURE,
-      error: err,
+      // error: err,
+      error: err.response.data,
     });
   }
 }
@@ -208,6 +212,7 @@ function signupAPI(signupData) {
 }
 
 function* signup(action) {
+  /*
   try {
     const result = yield call(signupAPI, action.data);
     yield put({
@@ -217,8 +222,33 @@ function* signup(action) {
   } catch (err) {
     yield put({
       type: REGISTER_USER_FAILURE,
-      error: err,
+      // error: err,
+      error: err.response.data,
     });
+  }
+  */
+  try {
+    const result = yield call(signupAPI, action.data);
+    yield all([
+      put({
+        type: REGISTER_USER_SUCCESS,
+        data: result.data,
+      }),
+      put({
+        type: REMOVE_ERROR,
+      }),
+    ]);
+  } catch (err) {
+    yield all([
+      put({
+        type: REGISTER_USER_FAILURE,
+        error: err.response.data,
+      }),
+      put({
+        type: ADD_ERROR,
+        error: err.response.data,
+      }),
+    ]);
   }
 }
 
