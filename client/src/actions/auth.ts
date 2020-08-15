@@ -27,11 +27,7 @@ export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const LOGOUT_FAILURE = "LOGOUT_FAILURE";
 
-/*
-export const GET_GITHUB_USER_REQUEST = "GET_GITHUB_USER_REQUEST";
-export const GET_GITHUB_USER_SUCCESS = "GET_GITHUB_USER_SUCCESS";
-export const GET_GITHUB_USER_FAILURE = "GET_GITHUB_USER_SUCCESS";
-*/
+export const RESET_REGISTER_SUCCESS = "RESET_REGISTER_SUCCESS";
 
 export type TUser = {
   githubId?: string;
@@ -40,11 +36,12 @@ export type TUser = {
   pins: string[];
 };
 
+/*
 export const getUserAsync = createAsyncAction(
   GET_CURRENT_USER_REQUEST,
   GET_CURRENT_USER_SUCCESS,
   GET_CURRENT_USER_FAILURE
-)<undefined, TUser, AxiosError>(); // <요청, 성공, 실패>
+)<string, TUser, AxiosError>(); // <요청, 성공, 실패>
 
 export const loginUserAsync = createAsyncAction(
   LOCAL_LOGIN_REQUEST,
@@ -58,12 +55,13 @@ export const registerUserAsync = createAsyncAction(
   REGISTER_USER_FAILURE
 )<object, TUser, AxiosError>();
 
-/*
+
 export const logoutUserAsync = createAsyncAction(
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_FAILURE
 )<null, null, AxiosError>(); // logoutUserAsync.request() 들어갈 인자가 없으므로 undefined
-*/
+
 
 export const logoutUser = createAction(LOGOUT_USER)();
+*/

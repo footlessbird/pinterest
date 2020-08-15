@@ -9,6 +9,7 @@ import {
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FAILURE,
+  RESET_REGISTER_SUCCESS,
   LOCAL_LOGIN_REQUEST,
   LOCAL_LOGIN_SUCCESS,
   LOCAL_LOGIN_FAILURE,
@@ -20,10 +21,22 @@ import {
   LOGOUT_FAILURE,
   LOGOUT_USER,
 } from "../actions";
+import { AuthState, PinterestAction } from "../actions/types";
 
+/*
 const initialState = {
   isLoading: false,
   isAuthenticated: false,
+  isSuccessful: false,
+  user: null,
+  error: null,
+};
+*/
+
+const initialState: AuthState = {
+  isLoading: false,
+  isAuthenticated: false,
+  isSuccessful: false,
   user: null,
   error: null,
 };
@@ -63,6 +76,7 @@ const userReducer = createReducer(INITIAL_STATE, {
 });
 */
 
+/*
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_CURRENT_USER_REQUEST:
@@ -154,6 +168,8 @@ export default (state = initialState, action) => {
         ...state,
         isLoading: true,
         isAuthenticated: false,
+        error: null,
+        isSuccessful: true,
       };
 
     case REGISTER_USER_SUCCESS:
@@ -161,6 +177,7 @@ export default (state = initialState, action) => {
         ...state,
         isLoading: false,
         error: null,
+        isSuccessful: true,
       };
 
     case REGISTER_USER_FAILURE:
@@ -168,9 +185,102 @@ export default (state = initialState, action) => {
         ...state,
         isLoading: false,
         error: action.error,
+        isSuccessful: false,
       };
 
     default:
       return state;
   }
+};
+*/
+
+export default (state = initialState, action) => {
+  return produce(state, (draft) => {
+    switch (action.type) {
+      case GET_CURRENT_USER_REQUEST: {
+        draft.isLoading = true;
+        draft.isAuthenticated = false;
+        break;
+      }
+      case GET_CURRENT_USER_SUCCESS: {
+        draft.isLoading = false;
+        draft.isAuthenticated = true;
+        draft.user = action.data;
+        break;
+      }
+      case GET_CURRENT_USER_FAILURE: {
+        draft.isAuthenticated = false;
+        draft.user = null;
+        draft.error = action.error;
+        break;
+      }
+      case LOCAL_LOGIN_REQUEST: {
+        draft.isLoading = true;
+        draft.isAuthenticated = false;
+        break;
+      }
+      case LOCAL_LOGIN_SUCCESS: {
+        draft.isLoading = false;
+        draft.user = action.data;
+        draft.error = null;
+        break;
+      }
+      case LOCAL_LOGIN_FAILURE: {
+        draft.isLoading = false;
+        draft.user = null;
+        draft.error = action.error;
+        break;
+      }
+      case GITHUB_LOGIN_REQUEST: {
+        draft.isLoading = true;
+        draft.isAuthenticated = false;
+        break;
+      }
+      case GITHUB_LOGIN_SUCCESS: {
+        draft.isLoading = false;
+        draft.user = action.data;
+        draft.error = null;
+        break;
+      }
+      case GITHUB_LOGIN_FAILURE: {
+        draft.isLoading = false;
+        draft.user = null;
+        draft.error = action.error;
+        break;
+      }
+      case LOGOUT_USER: {
+        localStorage.clear();
+        draft.isLoading = false;
+        draft.isAuthenticated = false;
+        draft.error = null;
+        draft.user = null;
+        break;
+      }
+      case REGISTER_USER_REQUEST: {
+        draft.isLoading = true;
+        draft.isSuccessful = false;
+        draft.error = null;
+        break;
+      }
+      case REGISTER_USER_SUCCESS: {
+        draft.isLoading = false;
+        draft.isSuccessful = true;
+        draft.error = null;
+        break;
+      }
+      case REGISTER_USER_FAILURE: {
+        draft.isLoading = false;
+        draft.isSuccessful = false;
+        draft.error = action.error;
+        break;
+      }
+      case RESET_REGISTER_SUCCESS: {
+        draft.isSuccessful = false;
+        draft.error = null;
+      }
+      default: {
+        break;
+      }
+    }
+  });
 };

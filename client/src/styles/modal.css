@@ -77,7 +77,8 @@
   border: solid 2px rgb(208, 208, 208);
 } */
 .modal-content {
-  width: 280px;
+  /* width: 280px; */
+  width: 282px;
 }
 
 .modal-content textarea {

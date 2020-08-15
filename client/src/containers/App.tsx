@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserAsync, GET_CURRENT_USER_REQUEST, TUser } from "../actions";
+import { GET_CURRENT_USER_REQUEST } from "../actions";
 import {
   BrowserRouter as Router,
   Route,

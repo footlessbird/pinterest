@@ -8,9 +8,6 @@ import {
 } from "redux-saga/effects";
 
 import {
-  getUserAsync,
-  loginUserAsync,
-  registerUserAsync,
   GET_CURRENT_USER_REQUEST,
   LOCAL_LOGIN_REQUEST,
   REGISTER_USER_REQUEST,
@@ -234,9 +231,11 @@ function* signup(action) {
         type: REGISTER_USER_SUCCESS,
         data: result.data,
       }),
-      put({
-        type: REMOVE_ERROR,
-      }),
+      // 회원가입 모달에서 회원가입이 정상적으로 처리되면 다시 렌더링될 때
+      // 에러를 초기화하는 로직이 useEffect에 있어서 굳이 불필요
+      // put({
+      //   type: REMOVE_ERROR,
+      // }),
     ]);
   } catch (err) {
     yield all([

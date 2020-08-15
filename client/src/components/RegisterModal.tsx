@@ -1,20 +1,19 @@
-import React, { useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { useForm } from "react-hook-form";
-import { REGISTER_USER_REQUEST } from "../actions";
+import { REGISTER_USER_REQUEST, RESET_REGISTER_SUCCESS } from "../actions";
 import { useToasts } from "react-toast-notifications";
 import { RootState } from "../reducers";
 import { removeError } from "../actions/index";
 
 function RegisterModal({ openLogin, onClose }) {
-  const history = useHistory();
   const auth = useSelector((state: RootState) => state.auth);
   const authError = useSelector((state: RootState) => state.error);
+
   console.log("authError", authError);
-  const { isLoading, isAuthenticated, user, error } = auth;
+  const { isLoading, isAuthenticated, user, error, isSuccessful } = auth;
 
   const dispatch = useDispatch();
   const { register, handleSubmit, errors } = useForm();
@@ -23,21 +22,41 @@ function RegisterModal({ openLogin, onClose }) {
 
   useEffect(() => {
     dispatch(removeError()); // 모달이 열릴 때 이전 오류 메세지 초기화해서 보이지 않도록
-  }, []);
+    dispatch({ type: RESET_REGISTER_SUCCESS }); // 모달이 열릴 때 이전 isSuccessful 초기화하여 다시 새로이 회원가입할 수 있도록 설정
+    if (isSuccessful) {
+      addToast(`Thank you for signing up! Now you can log in`, {
+        appearance: "success",
+        autoDismiss: true,
+      });
+      onClose();
+    } else {
+      return;
+    }
+  }, [isSuccessful]);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const { email, username, password } = data;
     console.log(email, username, password);
+    // 이전 에러가 있다면 제거
+    // if (authError.error && authError.error.message) {
+    //   console.log("에러 로그 발견 이전 에러기록 삭제");
+    //   dispatch(removeError());
+    // }
     dispatch({
       type: REGISTER_USER_REQUEST,
       data: { email, username, password },
     });
-    /* excute when no error
-    addToast(`Thank you for signing up! Now you can log in`, {
-      appearance: "success",
-      autoDismiss: true,
-    });
-    onClose();
+
+    /*
+    if (isSuccessful) {
+      addToast(`Thank you for signing up! Now you can log in`, {
+        appearance: "success",
+        autoDismiss: true,
+      });
+      onClose();
+    } else {
+      return;
+    }
     */
   };
 
@@ -51,6 +70,9 @@ function RegisterModal({ openLogin, onClose }) {
           {authError.error ? (
             <h6 className="form-error">{authError.error.message}</h6>
           ) : null}
+          {/* {error && error.message ? (
+            <h6 className="form-error">{error.message}</h6>
+          ) : null} */}
         </div>
         {/* {error ? <h6 className="form-error">{error.message}</h6> : null} */}
         {/* {authError.error ? (

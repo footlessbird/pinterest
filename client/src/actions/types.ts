@@ -1,6 +1,7 @@
 import * as actions from "./index";
 import { ActionType } from "typesafe-actions";
 import { TPin } from "./pin";
+import { TUser } from "./auth";
 
 export type PinterestAction = ActionType<typeof actions>;
 
@@ -10,4 +11,12 @@ export type PinState = {
   // data: TPin[] | null | undefined;
   // data: TPin[] | (TPin | TPin[])[];
   data: TPin[];
+};
+
+export type AuthState = {
+  isLoading: boolean;
+  isAuthenticated: boolean;
+  isSuccessful: boolean;
+  user: TUser | null;
+  error: Error | null;
 };

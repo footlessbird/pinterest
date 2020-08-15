@@ -6,7 +6,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 
 function Pin({ pin }) {
   const dispatch = useDispatch();
-  console.log("Pin belongs to this url", window.location.href);
+  // console.log("Pin belongs to this url", window.location.href);
   // console.log("Pin component rerendered");
   // console.log("pinId from Pin", pin);
   // const auth = useSelector((state: RootState) => state.auth);
@@ -27,9 +27,9 @@ function Pin({ pin }) {
     dispatch(deletePinAsync.request(pin._id));
   };
 
-  console.log("user._id", user._id);
-  console.log("loggeInUserId", loggedInUserId);
-  console.log("typeof loggeInUserId", typeof loggedInUserId);
+  // console.log("user._id", user._id);
+  // console.log("loggeInUserId", loggedInUserId);
+  // console.log("typeof loggeInUserId", typeof loggedInUserId);
   const pinButton = () => {
     const currentUrl = window.location.href;
     if (loggedInUserId) {

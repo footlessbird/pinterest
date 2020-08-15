@@ -15,7 +15,7 @@ function NavigationMenu({ auth }) {
   const { isLoading, isAuthenticated, user, error } = auth;
   // console.log("isAuthenticated? ", isAuthenticated);
   const { addToast } = useToasts();
-  console.log("navigation err", error);
+  // console.log("navigation err", error);
   const {
     showModal,
     setShowModal,
@@ -68,6 +68,7 @@ function NavigationMenu({ auth }) {
                   Log in
                 </button>,
                 <Modal
+                  appElement={document.getElementById("root")}
                   className="modal"
                   overlayClassName="overlay"
                   isOpen={showModal.loginModal}
@@ -88,6 +89,7 @@ function NavigationMenu({ auth }) {
                   Sign up
                 </button>,
                 <Modal
+                  appElement={document.getElementById("root")}
                   className="modal"
                   overlayClassName="overlay"
                   isOpen={showModal.signupModal}

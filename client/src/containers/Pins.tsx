@@ -28,8 +28,8 @@ function Pins({ auth }) {
   useEffect(() => {
     dispatch(getAllPinsAsync.request(""));
   }, []);
-  console.log("pin data??", pins.data);
-  console.log("what is type of pins.data??", typeof pins.data);
+  // console.log("pin data??", pins.data);
+  // console.log("what is type of pins.data??", typeof pins.data);
 
   return (
     <div className="pins">

@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-import {
-  loginUserAsync,
-  LOCAL_LOGIN_REQUEST,
-  GITHUB_LOGIN_REQUEST,
-} from "../actions";
+import { LOCAL_LOGIN_REQUEST, GITHUB_LOGIN_REQUEST } from "../actions";
 import { RootState } from "../reducers";
 
 function LoginTestForm() {

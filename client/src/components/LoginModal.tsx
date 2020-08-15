@@ -25,14 +25,24 @@ function LoginModal({ openSignup, onClose }) {
 
   return (
     <div className="inner-container">
-      <div className="local-login">
+      <div className="modal-content">
         <div className="item">
           <h2>Welcome to PPinterest</h2>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="item">
-            <label>Email</label>
+            <p>
+              <label>
+                Email
+                <span>
+                  {errors.email && (
+                    <h6 className="form-error">{errors.email.message}</h6>
+                  )}
+                </span>
+              </label>
+            </p>
             <input
+              className="form-input"
               type="text"
               name="email"
               placeholder="janedoe@email.com"
@@ -44,13 +54,24 @@ function LoginModal({ openSignup, onClose }) {
                 },
               })}
             />
-            {errors.email && (
-              <h6 className="login-error">{errors.email.message}</h6>
-            )}
+            {/* {errors.email && (
+              <h6 className="form-error">{errors.email.message}</h6>
+            )} */}
           </div>
           <div className="item">
-            <label>Password</label>
+            {/* <label>Password</label> */}
+            <p>
+              <label>
+                Password
+                <span>
+                  {errors.password && (
+                    <h6 className="form-error">{errors.password.message}</h6>
+                  )}
+                </span>
+              </label>
+            </p>
             <input
+              className="form-input"
               type="password"
               placeholder="password"
               name="password"
@@ -62,9 +83,9 @@ function LoginModal({ openSignup, onClose }) {
                 },
               })}
             />
-            {errors.password && (
-              <h6 className="login-error">{errors.password.message}</h6>
-            )}
+            {/* {errors.password && (
+              <h6 className="form-error">{errors.password.message}</h6>
+            )} */}
           </div>
           <div className="item">
             <button className="gen-btn" type="submit">
@@ -76,10 +97,20 @@ function LoginModal({ openSignup, onClose }) {
       <div className="or">
         <label>OR</label>
       </div>
-      <div className="item github-oauth">
+      {/* <div className="item github-oauth">
         <a href="/api/auth/github">
           <FontAwesomeIcon icon={faGithub} /> Continue with Github
         </a>
+      </div> */}
+      <div className="item">
+        <button
+          className="oauth-btn"
+          onClick={() => window.location.replace("/api/auth/github")}
+        >
+          <span>
+            <FontAwesomeIcon icon={faGithub} /> Continue with Github
+          </span>
+        </button>
       </div>
       {/* <hr /> */}
       <div className="item">

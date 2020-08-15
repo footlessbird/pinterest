@@ -13,7 +13,6 @@ import {
 import { takeEvery, takeLatest, all, fork } from "redux-saga/effects";
 import createAsyncSaga from "../utils/createAsyncSaga";
 import API from "../services/api";
-import axios from "axios";
 
 function createPin(data) {
   console.log("createPin data??", data);
