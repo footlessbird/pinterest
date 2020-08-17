@@ -42,12 +42,14 @@ passport.use(
       try {
         const user = await User.findOne({ email: email });
         if (!user)
-          return done(null, false, { message: "We could not find the user." });
+          return done(null, false, {
+            message: "Incorrect email account or password.",
+          });
         // This password validation logic should be replaced with User's member function soon
         const result = await bcrypt.compare(password, user.password);
         if (!result) {
           return done(null, false, {
-            message: "Please type correct password.",
+            message: "Incorrect email account or password.",
           });
         } else {
           return done(null, user);

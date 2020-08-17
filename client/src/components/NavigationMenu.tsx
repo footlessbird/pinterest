@@ -6,8 +6,8 @@ import { LOGOUT_USER } from "../actions";
 import { ReactComponent as PinterestLogo } from "../assets/badgeRGB.svg";
 
 import Modal from "react-modal";
-import LoginModal from "./LoginModal";
-import RegisterModal from "./RegisterModal";
+import LoginModal from "../containers/LoginModal";
+import RegisterModal from "../containers/RegisterModal";
 import { useModal } from "../utils/useModal";
 import { useToasts } from "react-toast-notifications";
 

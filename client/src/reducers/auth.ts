@@ -20,6 +20,7 @@ import {
   LOGOUT_SUCCESS,
   LOGOUT_FAILURE,
   LOGOUT_USER,
+  RESET_LOGIN,
 } from "../actions";
 import { AuthState, PinterestAction } from "../actions/types";
 
@@ -200,15 +201,25 @@ export default (state = initialState, action) => {
       case GET_CURRENT_USER_REQUEST: {
         draft.isLoading = true;
         draft.isAuthenticated = false;
+        //
+        draft.user = null;
+        draft.error = null;
+        //
         break;
       }
       case GET_CURRENT_USER_SUCCESS: {
         draft.isLoading = false;
         draft.isAuthenticated = true;
         draft.user = action.data;
+        //
+        draft.error = null;
+        //
         break;
       }
       case GET_CURRENT_USER_FAILURE: {
+        //
+        draft.isLoading = false;
+        //
         draft.isAuthenticated = false;
         draft.user = null;
         draft.error = action.error;
@@ -217,16 +228,32 @@ export default (state = initialState, action) => {
       case LOCAL_LOGIN_REQUEST: {
         draft.isLoading = true;
         draft.isAuthenticated = false;
+        // draft.isSuccessful = false;
+        // 객체의 프로퍼티를 동일하게 설정해 줄 것
+        // 예로 LOCAL_LOGIN_SUCCESS에 draft.user = action.data
+        // 위와 같이 설정 되있다면 요청 또한 draft.user = null
+        // 동일한 객체 프로퍼티를 갖도록
+        // 아래 draft.user = null 이 없다면 로그인 후 화면을 수동으로 새로고침해야 로그인 된 화면으로 바뀜
+        draft.user = null;
+        draft.error = null;
+        //
         break;
       }
       case LOCAL_LOGIN_SUCCESS: {
         draft.isLoading = false;
+        //
+        draft.isAuthenticated = true;
+        // draft.isSuccessful = true;
+        //
         draft.user = action.data;
         draft.error = null;
+
         break;
       }
       case LOCAL_LOGIN_FAILURE: {
         draft.isLoading = false;
+        draft.isAuthenticated = false;
+        // draft.isSuccessful = false;
         draft.user = null;
         draft.error = action.error;
         break;
@@ -234,16 +261,29 @@ export default (state = initialState, action) => {
       case GITHUB_LOGIN_REQUEST: {
         draft.isLoading = true;
         draft.isAuthenticated = false;
+        //
+        // draft.isSuccessful = false;
+        draft.error = null;
+        draft.user = null;
+        //
         break;
       }
       case GITHUB_LOGIN_SUCCESS: {
         draft.isLoading = false;
+        //
+        draft.isAuthenticated = true;
+        // draft.isSuccessful = true;
+        //
         draft.user = action.data;
         draft.error = null;
         break;
       }
       case GITHUB_LOGIN_FAILURE: {
         draft.isLoading = false;
+        //
+        draft.isAuthenticated = false;
+        // draft.isSuccessful = false;
+        //
         draft.user = null;
         draft.error = action.error;
         break;
@@ -258,6 +298,9 @@ export default (state = initialState, action) => {
       }
       case REGISTER_USER_REQUEST: {
         draft.isLoading = true;
+        //
+        draft.isAuthenticated = false;
+        //
         draft.isSuccessful = false;
         draft.error = null;
         break;
@@ -278,6 +321,12 @@ export default (state = initialState, action) => {
         draft.isSuccessful = false;
         draft.error = null;
       }
+      case RESET_LOGIN: {
+        draft.isAuthenticated = false;
+        draft.isSuccessful = false;
+        draft.error = null;
+      }
+
       default: {
         break;
       }

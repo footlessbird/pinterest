@@ -102,11 +102,21 @@ function* localLogin(action) {
     });
   } catch (err) {
     console.log("localLogin err", err.response.data);
-    yield put({
-      type: LOCAL_LOGIN_FAILURE,
-      // error: err,
-      error: err.response.data,
-    });
+    // yield put({
+    //   type: LOCAL_LOGIN_FAILURE,
+    //   // error: err,
+    //   error: err.response.data,
+    // });
+    yield all([
+      put({
+        type: LOCAL_LOGIN_FAILURE,
+        error: err.response.data,
+      }),
+      put({
+        type: ADD_ERROR,
+        error: err.response.data,
+      }),
+    ]);
   }
 }
 

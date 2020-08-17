@@ -1,26 +1,40 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { useForm } from "react-hook-form";
-import { LOCAL_LOGIN_REQUEST } from "../actions";
+import { LOCAL_LOGIN_REQUEST, RESET_LOGIN } from "../actions";
 import { useToasts } from "react-toast-notifications";
+import { RootState } from "../reducers";
+import { removeError } from "../actions/index";
 
 function LoginModal({ openSignup, onClose }) {
+  const auth = useSelector((state: RootState) => state.auth);
+  const authError = useSelector((state: RootState) => state.error);
+  const { isLoading, isAuthenticated, user, error, isSuccessful } = auth;
+
   const dispatch = useDispatch();
   const { register, handleSubmit, errors } = useForm();
   const { addToast } = useToasts();
 
+  useEffect(() => {
+    dispatch(removeError()); // 모달이 열릴 때 이전 오류 메세지 초기화해서 보이지 않도록
+    dispatch({ type: RESET_LOGIN });
+    if (isSuccessful) {
+      addToast(`Logged in successfully 💃🏼`, {
+        appearance: "success",
+        autoDismiss: true,
+      });
+      onClose();
+    } else {
+      return;
+    }
+  }, [isSuccessful]);
+  console.log("isAuthenticated", isSuccessful);
   const onSubmit = (data) => {
     const { email, password } = data;
     console.log(email, password);
     dispatch({ type: LOCAL_LOGIN_REQUEST, data: { email, password } });
-    // addToast("Logged in Successfully", { appearance: "success" });
-    addToast(`Logged in successfully 💃🏼`, {
-      appearance: "success",
-      autoDismiss: true,
-    });
-    onClose();
   };
 
   return (
@@ -28,6 +42,9 @@ function LoginModal({ openSignup, onClose }) {
       <div className="modal-content">
         <div className="item">
           <h2>Welcome to PPinterest</h2>
+          {authError.error ? (
+            <h6 className="form-error">{authError.error.message}</h6>
+          ) : null}
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="item">

@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 import axios from "axios";
+import passport from "passport";
 import qs from "querystring";
 
 import User from "../models/user";
@@ -72,7 +73,7 @@ const githubCallback = async (req, res, next) => {
   }
 
   const userData = await getUserData();
-  // console.log("user??", userData);
+  console.log("user??", userData);
   const { login, id, email } = userData;
 
   try {
@@ -97,15 +98,46 @@ const githubCallback = async (req, res, next) => {
   }
 };
 
+/*
+app.get('/login', function(req, res, next) {
+  passport.authenticate('local', function(err, user, info) {
+    if (err) { return next(err); }
+    if (!user) { return res.redirect('/login'); }
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+      return res.redirect('/users/' + user.username);
+    });
+  })(req, res, next);
+});
+*/
+
 // local login
 const login = (req, res, next) => {
   console.log("login handler called");
-  console.log("login user ", req.user);
-  const user = req.user;
-  if (!user) return res.status(400).send({ message: "User does not exist." });
+  // const user = req.user;
+  // if (!user) return res.status(400).send({ message: "User does not exist." });
   next();
 };
 
+/*
+const login = (req, res, next) => {
+  passport.authenticate("local", function (err, user, info) {
+    // if (err) { return next(err); }
+    // if (!user) { return res.redirect('/login'); }
+    // req.logIn(user, function(err) {
+    //   if (err) { return next(err); }
+    //   return res.redirect('/users/' + user.username);
+    // });
+    console.log("login err", err);
+    console.log("login user", user.id);
+    console.log("login info", info);
+    // req.user = user;
+    if (info) return res.status(422).send({ message: info.message });
+
+    // next();
+  })(req, res, next);
+};
+*/
 const register = async (req, res, next) => {
   console.log("register handler called");
   try {

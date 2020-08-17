@@ -28,6 +28,7 @@ export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const LOGOUT_FAILURE = "LOGOUT_FAILURE";
 
 export const RESET_REGISTER_SUCCESS = "RESET_REGISTER_SUCCESS";
+export const RESET_LOGIN = "RESET_LOGIN";
 
 export type TUser = {
   githubId?: string;
