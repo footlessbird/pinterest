@@ -13,7 +13,8 @@ function RegisterModal({ openLogin, onClose }) {
   const authError = useSelector((state: RootState) => state.error);
 
   console.log("authError", authError);
-  const { isLoading, isAuthenticated, user, error, isSuccessful } = auth;
+  // const { isLoading, isAuthenticated, user, error, isSuccessful } = auth;
+  const { registerUserLoading, registerUserDone, registerUserError } = auth;
 
   const dispatch = useDispatch();
   const { register, handleSubmit, errors } = useForm();
@@ -23,7 +24,8 @@ function RegisterModal({ openLogin, onClose }) {
   useEffect(() => {
     dispatch(removeError()); // 모달이 열릴 때 이전 오류 메세지 초기화해서 보이지 않도록
     dispatch({ type: RESET_REGISTER_SUCCESS }); // 모달이 열릴 때 이전 isSuccessful 초기화하여 다시 새로이 회원가입할 수 있도록 설정
-    if (isSuccessful) {
+    // if (isSuccessful) {
+    if (registerUserDone) {
       addToast(`Thank you for signing up! Now you can log in`, {
         appearance: "success",
         autoDismiss: true,
@@ -32,7 +34,7 @@ function RegisterModal({ openLogin, onClose }) {
     } else {
       return;
     }
-  }, [isSuccessful]);
+  }, [registerUserDone]);
 
   const onSubmit = async (data) => {
     const { email, username, password } = data;

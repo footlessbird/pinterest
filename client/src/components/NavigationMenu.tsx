@@ -12,7 +12,15 @@ import { useModal } from "../utils/useModal";
 import { useToasts } from "react-toast-notifications";
 
 function NavigationMenu({ auth }) {
-  const { isLoading, isAuthenticated, user, error } = auth;
+  // const { isLoading, isAuthenticated, user, error } = auth;
+  const {
+    getCurrentUserLoading,
+    currentUser,
+    getCurrentUserDone,
+    getCurrentUserError,
+    user,
+  } = auth;
+
   // console.log("isAuthenticated? ", isAuthenticated);
   const { addToast } = useToasts();
   // console.log("navigation err", error);
@@ -47,7 +55,7 @@ function NavigationMenu({ auth }) {
           <Link to="/" className="nav-btn navigation">
             Home
           </Link>
-          {isAuthenticated && user
+          {getCurrentUserDone && currentUser
             ? [
                 <Link className="nav-btn navigation" key="my-pins" to="/mypins">
                   My pins

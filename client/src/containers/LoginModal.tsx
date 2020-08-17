@@ -11,7 +11,17 @@ import { removeError } from "../actions/index";
 function LoginModal({ openSignup, onClose }) {
   const auth = useSelector((state: RootState) => state.auth);
   const authError = useSelector((state: RootState) => state.error);
-  const { isLoading, isAuthenticated, user, error, isSuccessful } = auth;
+  // const { isLoading, isAuthenticated, user, error, isSuccessful } = auth;
+  const {
+    localLoginLoading,
+    localLoginUser,
+    localLoginDone,
+    localLoginError,
+    githubLoginLoading,
+    githubLoginUser,
+    githubLoginDone,
+    githubLoginError,
+  } = auth;
 
   const dispatch = useDispatch();
   const { register, handleSubmit, errors } = useForm();
@@ -19,8 +29,9 @@ function LoginModal({ openSignup, onClose }) {
 
   useEffect(() => {
     dispatch(removeError()); // 모달이 열릴 때 이전 오류 메세지 초기화해서 보이지 않도록
-    dispatch({ type: RESET_LOGIN });
-    if (isSuccessful) {
+    // dispatch({ type: RESET_LOGIN });
+    // if (localStorage.getItem("token")) {
+    if (localLoginDone || githubLoginDone) {
       addToast(`Logged in successfully 💃🏼`, {
         appearance: "success",
         autoDismiss: true,
@@ -29,8 +40,14 @@ function LoginModal({ openSignup, onClose }) {
     } else {
       return;
     }
-  }, [isSuccessful]);
-  console.log("isAuthenticated", isSuccessful);
+    // }, [isLoggedin]);
+  }, [localLoginDone]);
+
+  useEffect(() => {}, [githubLoginDone]);
+
+  // console.log("isAuthenticated", isAuthenticated);
+  // console.log("isSuccessful", isSuccessful);
+
   const onSubmit = (data) => {
     const { email, password } = data;
     console.log(email, password);

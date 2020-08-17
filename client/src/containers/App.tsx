@@ -19,15 +19,22 @@ import MyPins from "./MyPins";
 function App() {
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.auth);
-  const { isLoading, isAuthenticated, user } = auth;
+  // const { isLoading, isAuthenticated, user } = auth;
+  const {
+    getCurrentUserLoading,
+    currentUser,
+    getCurrentUserDone,
+    getCurrentUserError,
+  } = auth;
   // const { showModal, handleOpenModal, handleCloseModal } = useModal();
 
   useEffect(() => {
     // dispatch(getUserAsync.request());
+
     const loginMethod = localStorage.getItem("loginMethod");
     console.log("loginMethod?? ", loginMethod);
     const token = localStorage.getItem("token");
-
+    /*
     if (loginMethod === "local") {
       if (token !== undefined || token !== null || token !== "") {
         dispatch({ type: GET_CURRENT_USER_REQUEST });
@@ -53,6 +60,9 @@ function App() {
       }
     } else {
       return;
+    }*/
+    if (loginMethod || token) {
+      dispatch({ type: GET_CURRENT_USER_REQUEST });
     }
   }, []);
 
@@ -72,7 +82,10 @@ function App() {
 
           <Route
             path="/mypins"
-            render={() => (isAuthenticated ? <MyPins /> : <Redirect to="/" />)}
+            // render={() => (isAuthenticated ? <MyPins /> : <Redirect to="/" />)}
+            render={() =>
+              getCurrentUserDone ? <MyPins /> : <Redirect to="/" />
+            }
           />
         </Switch>
       </Router>

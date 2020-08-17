@@ -96,10 +96,17 @@ function* localLogin(action) {
     localStorage.setItem("token", result.data.token);
 
     console.log("local login result", result);
-    yield put({
-      type: LOCAL_LOGIN_SUCCESS,
-      data: result.data,
-    });
+    // yield put({
+    //   type: LOCAL_LOGIN_SUCCESS,
+    //   data: result.data,
+    // });
+    yield all([
+      put({
+        type: LOCAL_LOGIN_SUCCESS,
+        data: result.data,
+      }),
+      put({ type: GET_CURRENT_USER_REQUEST }),
+    ]);
   } catch (err) {
     console.log("localLogin err", err.response.data);
     // yield put({
@@ -176,10 +183,14 @@ function* githubLogin() {
     localStorage.setItem("loginMethod", "github");
     localStorage.setItem("token", result.data.token);
 
-    yield put({
-      type: GITHUB_LOGIN_SUCCESS,
-      data: result.data,
-    });
+    // yield put({
+    //   type: GITHUB_LOGIN_SUCCESS,
+    //   data: result.data,
+    // });
+    yield all([
+      put({ type: GITHUB_LOGIN_SUCCESS, data: result.data }),
+      put({ type: GET_CURRENT_USER_REQUEST }),
+    ]);
   } catch (err) {
     yield put({
       type: GITHUB_LOGIN_FAILURE,

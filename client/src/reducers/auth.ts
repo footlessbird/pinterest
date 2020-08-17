@@ -34,12 +34,35 @@ const initialState = {
 };
 */
 
+// const initialState: AuthState = {
+//   isLoading: false,
+//   isAuthenticated: false,
+//   isSuccessful: false,
+//   user: null,
+//   error: null,
+// };
+
 const initialState: AuthState = {
-  isLoading: false,
-  isAuthenticated: false,
-  isSuccessful: false,
-  user: null,
-  error: null,
+  getCurrentUserLoading: false,
+  currentUser: null,
+  getCurrentUserDone: false,
+  getCurrentUserError: null,
+
+  localLoginLoading: false,
+  localLoginUser: null,
+  localLoginDone: false,
+  localLoginError: null,
+
+  githubLoginLoading: false,
+  githubLoginUser: null,
+  githubLoginDone: false,
+  githubLoginError: null,
+
+  registerUserLoading: false,
+  registerUserDone: false,
+  registerUserError: null,
+
+  // user: null,
 };
 
 /*
@@ -199,6 +222,7 @@ export default (state = initialState, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
       case GET_CURRENT_USER_REQUEST: {
+        /*
         draft.isLoading = true;
         draft.isAuthenticated = false;
         //
@@ -206,8 +230,17 @@ export default (state = initialState, action) => {
         draft.error = null;
         //
         break;
+        */
+        draft.getCurrentUserLoading = true;
+        draft.currentUser = null;
+        draft.getCurrentUserDone = false;
+        draft.getCurrentUserError = null;
+
+        // draft.user = null;
+        break;
       }
       case GET_CURRENT_USER_SUCCESS: {
+        /*
         draft.isLoading = false;
         draft.isAuthenticated = true;
         draft.user = action.data;
@@ -215,8 +248,17 @@ export default (state = initialState, action) => {
         draft.error = null;
         //
         break;
+        */
+        draft.getCurrentUserLoading = false;
+        draft.currentUser = action.data;
+        draft.getCurrentUserDone = true;
+        draft.getCurrentUserError = null;
+
+        // draft.user = action.data;
+        break;
       }
       case GET_CURRENT_USER_FAILURE: {
+        /*
         //
         draft.isLoading = false;
         //
@@ -224,11 +266,21 @@ export default (state = initialState, action) => {
         draft.user = null;
         draft.error = action.error;
         break;
+        */
+        draft.getCurrentUserLoading = false;
+        draft.currentUser = null;
+        draft.getCurrentUserDone = false;
+        draft.getCurrentUserError = action.error;
+
+        // draft.user = null;
+        break;
       }
       case LOCAL_LOGIN_REQUEST: {
+        /*
         draft.isLoading = true;
         draft.isAuthenticated = false;
         // draft.isSuccessful = false;
+
         // 객체의 프로퍼티를 동일하게 설정해 줄 것
         // 예로 LOCAL_LOGIN_SUCCESS에 draft.user = action.data
         // 위와 같이 설정 되있다면 요청 또한 draft.user = null
@@ -238,93 +290,199 @@ export default (state = initialState, action) => {
         draft.error = null;
         //
         break;
+        */
+        draft.localLoginLoading = true;
+        draft.localLoginUser = null;
+        draft.localLoginDone = false;
+        draft.localLoginError = null;
+
+        // draft.user = null;
+        break;
       }
       case LOCAL_LOGIN_SUCCESS: {
+        /*
         draft.isLoading = false;
-        //
+
         draft.isAuthenticated = true;
+        //
         // draft.isSuccessful = true;
         //
         draft.user = action.data;
         draft.error = null;
 
         break;
+        */
+        draft.localLoginLoading = false;
+        draft.localLoginUser = action.data;
+        draft.localLoginDone = true;
+        draft.localLoginError = null;
+
+        // draft.user = action.data;
+        break;
       }
       case LOCAL_LOGIN_FAILURE: {
+        /*
         draft.isLoading = false;
         draft.isAuthenticated = false;
-        // draft.isSuccessful = false;
+        draft.isSuccessful = false;
+
         draft.user = null;
         draft.error = action.error;
+        break;
+        */
+        draft.localLoginLoading = false;
+        draft.localLoginUser = null;
+        draft.localLoginDone = false;
+        draft.localLoginError = action.error;
+
+        // draft.user = null;
         break;
       }
       case GITHUB_LOGIN_REQUEST: {
+        /*
         draft.isLoading = true;
         draft.isAuthenticated = false;
         //
-        // draft.isSuccessful = false;
+        draft.isSuccessful = false;
+
         draft.error = null;
         draft.user = null;
         //
+        break;
+        */
+        draft.githubLoginLoading = true;
+        draft.githubLoginUser = null;
+        draft.githubLoginError = null;
+        draft.githubLoginDone = false;
+
+        // draft.user = null;
         break;
       }
       case GITHUB_LOGIN_SUCCESS: {
+        /*
         draft.isLoading = false;
         //
         draft.isAuthenticated = true;
-        // draft.isSuccessful = true;
+        draft.isSuccessful = true;
         //
+
         draft.user = action.data;
         draft.error = null;
         break;
+        */
+        draft.githubLoginLoading = false;
+        draft.githubLoginUser = action.data;
+        draft.githubLoginDone = true;
+        draft.githubLoginError = null;
+
+        // draft.user = action.data;
+        break;
       }
       case GITHUB_LOGIN_FAILURE: {
+        /*
         draft.isLoading = false;
         //
         draft.isAuthenticated = false;
         // draft.isSuccessful = false;
         //
+
         draft.user = null;
         draft.error = action.error;
         break;
+        */
+        draft.githubLoginLoading = false;
+        draft.githubLoginUser = null;
+        draft.githubLoginDone = false;
+        draft.githubLoginError = action.error;
+
+        // draft.user = null;
+        break;
       }
       case LOGOUT_USER: {
+        /*
         localStorage.clear();
         draft.isLoading = false;
         draft.isAuthenticated = false;
+        //
+        draft.isSuccessful = false;
+        //
         draft.error = null;
         draft.user = null;
         break;
+        */
+        localStorage.clear();
+        draft.currentUser = null;
+        draft.localLoginUser = null;
+        draft.githubLoginUser = null;
+        draft.getCurrentUserError = null;
+        draft.localLoginError = null;
+        draft.githubLoginError = null;
+        draft.localLoginDone = false;
+        draft.githubLoginDone = false;
+
+        // draft.user = null;
+        break;
       }
       case REGISTER_USER_REQUEST: {
+        /*
         draft.isLoading = true;
         //
-        draft.isAuthenticated = false;
+        // draft.isAuthenticated = false;
         //
         draft.isSuccessful = false;
         draft.error = null;
         break;
+        */
+        draft.registerUserLoading = true;
+        draft.registerUserDone = false;
+        draft.registerUserError = null;
+        break;
       }
       case REGISTER_USER_SUCCESS: {
+        /*
         draft.isLoading = false;
         draft.isSuccessful = true;
         draft.error = null;
         break;
+        */
+        draft.registerUserLoading = false;
+        draft.registerUserDone = true;
+        draft.registerUserError = null;
+        break;
       }
       case REGISTER_USER_FAILURE: {
+        /*
         draft.isLoading = false;
         draft.isSuccessful = false;
         draft.error = action.error;
         break;
+        */
+        draft.registerUserLoading = false;
+        draft.registerUserDone = false;
+        draft.registerUserError = action.error;
+        break;
       }
       case RESET_REGISTER_SUCCESS: {
+        /*
         draft.isSuccessful = false;
         draft.error = null;
+        */
+        draft.registerUserDone = false;
+        draft.registerUserError = null;
+        break;
       }
       case RESET_LOGIN: {
-        draft.isAuthenticated = false;
+        /*
+        draft.isLoading = false;
+        // draft.isAuthenticated = false;
         draft.isSuccessful = false;
         draft.error = null;
+        */
+        draft.localLoginDone = false;
+        draft.githubLoginDone = false;
+        draft.localLoginError = null;
+        draft.githubLoginError = null;
+        break;
       }
 
       default: {
