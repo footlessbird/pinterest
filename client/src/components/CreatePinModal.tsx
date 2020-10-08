@@ -70,6 +70,7 @@ function CreatePinModal({ openCreatePin, onClose }) {
           <div className="item">
             {/* <label>Email</label> */}
             <input
+              className="form-input"
               type="text"
               name="image"
               placeholder="http://www.image.com/photo.jpg"
@@ -104,6 +105,7 @@ function CreatePinModal({ openCreatePin, onClose }) {
               <h6 className="login-error">{errors.password.message}</h6>
             )} */}
             <textarea
+              className="form-input"
               name="description"
               id="description"
               placeholder="Please share a story about this pin."

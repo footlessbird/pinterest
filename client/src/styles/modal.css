@@ -43,6 +43,7 @@
   /* margin-left: 4mm; */
 }
 .form-input {
+  resize: none;
   border-radius: 16px;
   border: solid 2px rgb(221, 221, 221);
   padding: 10px;

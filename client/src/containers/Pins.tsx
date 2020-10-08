@@ -9,7 +9,8 @@ import { useModal } from "../utils/useModal";
 import CreatePinModal from "../components/CreatePinModal";
 
 function Pins({ auth }) {
-  const { isLoading, isAuthenticated, user } = auth;
+  // const { isLoading, isAuthenticated, user } = auth;
+  const { currentUser } = auth;
 
   const dispatch = useDispatch();
   const pins = useSelector((state: RootState) => state.pins);
@@ -40,7 +41,8 @@ function Pins({ auth }) {
       >
         {pins.data && pins.data.map((pin) => <Pin key={pin._id} pin={pin} />)}
       </Masonry>
-      {isAuthenticated ? (
+
+      {currentUser ? (
         <div>
           <button
             className="create-btn"
