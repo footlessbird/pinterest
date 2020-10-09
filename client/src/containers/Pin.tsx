@@ -4,6 +4,10 @@ import { savePinAsync, deletePinAsync } from "../actions";
 import { RootState } from "../reducers";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
+import Modal from "react-modal";
+import { useModal } from "../utils/useModal";
+import PinModal from "./PinModal";
+
 function Pin({ pin }) {
   const dispatch = useDispatch();
   // console.log("Pin belongs to this url", window.location.href);
@@ -16,6 +20,13 @@ function Pin({ pin }) {
   const { user, imgLink, imgDescription, savedBy } = pin;
 
   const loggedInUserId = localStorage.getItem("loggedInUserId");
+  const {
+    showModal,
+    setShowModal,
+    handleOpenModal,
+    handleCloseModal,
+  } = useModal();
+
   const handleSave = (e) => {
     console.log("handleSave");
     e.preventDefault();
@@ -71,17 +82,30 @@ function Pin({ pin }) {
   };
 
   return (
-    <li className="pin">
-      <LazyLoadImage
-        className="pin-image"
-        alt={imgDescription}
-        effect="blur"
-        src={imgLink}
-      />
-      {/* <img className="pin-image" src={imgLink} alt={imgDescription} /> */}
-      <div>{user.username}</div>
-      <div className="pin-btn-wrapper">{pinButton()}</div>
-    </li>
+    <>
+      <button onClick={() => handleOpenModal("pin")}>
+        <li className="pin">
+          <LazyLoadImage
+            className="pin-image"
+            alt={imgDescription}
+            effect="blur"
+            src={imgLink}
+          />
+          {/* <img className="pin-image" src={imgLink} alt={imgDescription} /> */}
+          <div>{user.username}</div>
+          <div className="pin-btn-wrapper">{pinButton()}</div>
+        </li>
+      </button>
+      <Modal
+        appElement={document.getElementById("root")}
+        className="pin-modal"
+        overlayClassName="overlay"
+        isOpen={showModal.pinModal}
+        onRequestClose={handleCloseModal}
+      >
+        <PinModal pin={pin} />
+      </Modal>
+    </>
   );
 }
 

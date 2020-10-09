@@ -5,6 +5,7 @@ export const useModal = () => {
     loginModal: false,
     signupModal: false,
     createModal: false,
+    pinModal: false,
   });
   // console.log("useModal", showModal.loginModal);
   const handleOpenModal = (type) => {
@@ -14,6 +15,7 @@ export const useModal = () => {
         loginModal: true,
         signupModal: false,
         createModal: false,
+        pinModal: false,
       });
     } else if (type === "signup") {
       setShowModal({
@@ -21,6 +23,7 @@ export const useModal = () => {
         loginModal: false,
         signupModal: true,
         createModal: false,
+        pinModal: false,
       });
     } else if (type === "create") {
       setShowModal({
@@ -28,6 +31,15 @@ export const useModal = () => {
         loginModal: false,
         signupModal: false,
         createModal: true,
+        pinModal: false,
+      });
+    } else if (type === "pin") {
+      setShowModal({
+        ...showModal,
+        loginModal: false,
+        signupModal: false,
+        createModal: true,
+        pinModal: true,
       });
     }
   };
@@ -38,6 +50,7 @@ export const useModal = () => {
       loginModal: false,
       signupModal: false,
       createModal: false,
+      pinModal: false,
     });
     // if (type === "login") {
     //   setShowModal({ ...showModal, loginModal: false });
