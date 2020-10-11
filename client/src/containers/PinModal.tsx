@@ -10,6 +10,8 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { RootState } from "../reducers";
 import { removeError } from "../actions/index";
 
+import PinButton from "../components/PinButton";
+
 function PinModal({ pin }) {
   const auth = useSelector((state: RootState) => state.auth);
   const authError = useSelector((state: RootState) => state.error);
@@ -60,11 +62,19 @@ function PinModal({ pin }) {
         effect="blur"
         src={imgLink}
       />
-      {currentUser ? (
+      {/* {currentUser ? (
         <span>
           <button className="pin-modal-btn">Save</button>
         </span>
-      ) : null}
+      ) : null} */}
+      <span>
+        <PinButton
+          pinId={pin._id}
+          userId={user._id}
+          savedBy={savedBy}
+          modal={true}
+        />
+      </span>
     </div>
   );
 }
