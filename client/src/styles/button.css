@@ -87,6 +87,15 @@
   background-color: var(--redhover);
 }
 
+.pin-modal-trigger {
+  border-style: none;
+  background-color: transparent;
+}
+.pin-modal-trigger:hover {
+  background-color: var(--gray);
+  border-radius: 8px;
+}
+
 .pin-modal-btn {
   cursor: pointer;
   padding: 0.5rem;

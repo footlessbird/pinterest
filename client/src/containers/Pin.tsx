@@ -83,7 +83,10 @@ function Pin({ pin }) {
 
   return (
     <>
-      <button onClick={() => handleOpenModal("pin")}>
+      <button
+        className="pin-modal-trigger"
+        onClick={() => handleOpenModal("pin")}
+      >
         <li className="pin">
           <LazyLoadImage
             className="pin-image"
@@ -91,8 +94,7 @@ function Pin({ pin }) {
             effect="blur"
             src={imgLink}
           />
-          {/* <img className="pin-image" src={imgLink} alt={imgDescription} /> */}
-          <div>{user.username}</div>
+          <div className="pin-description">{imgDescription}</div>
           <div className="pin-btn-wrapper">{pinButton()}</div>
         </li>
       </button>

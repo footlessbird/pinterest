@@ -23,6 +23,7 @@ function PinModal({ pin }) {
     githubLoginUser,
     githubLoginDone,
     githubLoginError,
+    currentUser,
   } = auth;
 
   const { user, imgLink, imgDescription, savedBy } = pin;
@@ -59,11 +60,11 @@ function PinModal({ pin }) {
         effect="blur"
         src={imgLink}
       />
-      <span>
-        <button className="pin-modal-btn">Save</button>
-      </span>
-
-      {/* <button className="gen-btn">Save</button> */}
+      {currentUser ? (
+        <span>
+          <button className="pin-modal-btn">Save</button>
+        </span>
+      ) : null}
     </div>
   );
 }

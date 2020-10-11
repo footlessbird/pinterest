@@ -22,22 +22,20 @@
   align-items: center;
 }
 .pin-modal {
-  /* width: 1%; */
   max-width: 1%;
   display: table;
-  /* display: flex; */
-
   border-radius: 8px;
   background-color: white;
-  /* max-width: 800px; */
   max-height: 600px;
   margin: 0 auto;
   margin-top: 2rem;
-  /* display: flex; */
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  background-color: var(--gray);
+  border-radius: 30px;
 }
 .overlay {
   position: fixed;

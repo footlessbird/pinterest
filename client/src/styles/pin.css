@@ -1,6 +1,7 @@
 .pin {
   max-width: 252px;
-  margin: 10px;
+  /* margin: 10px; */
+  margin: 1rem;
   cursor: zoom-in;
 }
 .pin button {
@@ -9,6 +10,25 @@
 .pin:hover button {
   visibility: visible;
 }
+.pin .pin-description {
+  margin: 0 auto;
+  margin-top: 5px;
+  visibility: hidden;
+  width: 150px;
+  height: 20px;
+
+  /* 장문의 텍스트일 경우
+  생략.... 
+  예) 설명... 
+  */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.pin:hover .pin-description {
+  visibility: visible;
+}
+
 .pin-btn-wrapper {
   position: absolute;
   top: 20px;
