@@ -22,14 +22,21 @@ function PinButton({ pinId, userId, savedBy, modal }) {
     if (loggedInUserId) {
       if (userId === loggedInUserId) {
         return (
-          <button className="pin-btn" onClick={handleDelete}>
+          //   <button className="pin-btn" onClick={handleDelete}>
+          <button
+            className={modal ? "pin-modal-btn" : "pin-btn"}
+            onClick={handleDelete}
+          >
             Remove
           </button>
         );
       } else if (savedBy && Object.keys(savedBy).includes(loggedInUserId)) {
         if (currentUrl === "http://localhost:3000/mypins") {
           return (
-            <button className="pin-btn" onClick={handleDelete}>
+            <button
+              className={modal ? "pin-modal-btn" : "pin-btn"}
+              onClick={handleDelete}
+            >
               Unsave
             </button>
           );
@@ -38,7 +45,10 @@ function PinButton({ pinId, userId, savedBy, modal }) {
         }
       } else {
         return (
-          <button className="pin-btn" onClick={handleSave}>
+          <button
+            className={modal ? "pin-modal-btn" : "pin-btn"}
+            onClick={handleSave}
+          >
             Save
           </button>
         );
@@ -47,11 +57,7 @@ function PinButton({ pinId, userId, savedBy, modal }) {
   }
 
   // return <div className="pin-btn-wrapper">{pinButton()}</div>;
-  return (
-    <div className={!modal ? "pin-btn-wrapper" : "pin-modal-btn"}>
-      {pinButton()}
-    </div>
-  );
+  return <div className={!modal ? "pin-btn-wrapper" : ""}>{pinButton()}</div>;
 }
 
 export default PinButton;

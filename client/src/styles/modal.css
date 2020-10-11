@@ -193,7 +193,8 @@
   }
 }
 
-@media (max-width: 439px) {
+/* @media (max-width: 439px) { */
+@media (max-width: 519px) {
   .pin-modal-image {
     max-height: 250px;
   }
