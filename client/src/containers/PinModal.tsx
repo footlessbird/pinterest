@@ -12,7 +12,7 @@ import { removeError } from "../actions/index";
 
 import PinButton from "../components/PinButton";
 
-function PinModal({ pin }) {
+function PinModal({ pin, onClose }) {
   const auth = useSelector((state: RootState) => state.auth);
   const authError = useSelector((state: RootState) => state.error);
 
@@ -73,6 +73,7 @@ function PinModal({ pin }) {
           userId={user._id}
           savedBy={savedBy}
           modal={true}
+          onClose={onClose}
         />
       </span>
     </div>

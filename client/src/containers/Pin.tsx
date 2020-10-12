@@ -84,15 +84,19 @@ function Pin({ pin }) {
           <div className="pin-description">{imgDescription}</div>
           {/* <div className="pin-btn-wrapper">{pinButton()}</div> */}
           {/* <div className="pin-btn-wrapper"> */}
+
           <PinButton
             pinId={pin._id}
             userId={user._id}
             savedBy={savedBy}
             modal={false}
+            onClose={handleCloseModal}
           />
+
           {/* </div> */}
         </li>
       </button>
+
       <Modal
         appElement={document.getElementById("root")}
         className="pin-modal"
@@ -100,7 +104,7 @@ function Pin({ pin }) {
         isOpen={showModal.pinModal}
         onRequestClose={handleCloseModal}
       >
-        <PinModal pin={pin} />
+        <PinModal pin={pin} onClose={handleCloseModal} />
       </Modal>
     </>
   );

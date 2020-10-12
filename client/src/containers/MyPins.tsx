@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
+import Masonry from "react-masonry-component";
+
 import { RootState } from "../reducers";
 import { getMyPinsAsync } from "../actions";
 import Pin from "./Pin";
@@ -13,11 +15,19 @@ function MyPins() {
   }, []);
   console.log("MyPins??", pins);
 
+  const masonryOptions = {
+    transitionDuration: 0,
+    fitWidth: true, // center masonry
+  };
   return (
     <div>
-      My pins
-      {/* <ul>{pins.data && pins.data.map((pin) => <li>{pin.imgLink}</li>)}</ul> */}
-      <ul>{pins.data && pins.data.map((pin) => <Pin pin={pin} />)}</ul>
+      <Masonry
+        className="pins-container"
+        elementType={"ul"}
+        options={masonryOptions}
+      >
+        {pins.data && pins.data.map((pin) => <Pin pin={pin} />)}
+      </Masonry>
     </div>
   );
 }

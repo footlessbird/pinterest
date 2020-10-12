@@ -1,20 +1,31 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { savePinAsync, deletePinAsync } from "../actions";
+import { useModal } from "../utils/useModal";
 
-function PinButton({ pinId, userId, savedBy, modal }) {
+function PinButton({ pinId, userId, savedBy, modal, onClose }) {
   const dispatch = useDispatch();
   const loggedInUserId = localStorage.getItem("loggedInUserId");
+  // const {
+  //   showModal,
+  //   setShowModal,
+  //   handleOpenModal,
+  //   handleCloseModal,
+  // } = useModal();
 
   const handleSave = (e) => {
     console.log("handleSave");
     e.preventDefault();
+    e.stopPropagation();
     dispatch(savePinAsync.request(pinId));
+    onClose();
   };
 
   const handleDelete = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     dispatch(deletePinAsync.request(pinId));
+    onClose();
   };
   const currentUrl = window.location.href;
 
