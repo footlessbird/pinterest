@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { LOGOUT_USER } from "../actions";
@@ -12,7 +12,6 @@ import { useModal } from "../utils/useModal";
 import { useToasts } from "react-toast-notifications";
 
 function NavigationMenu({ auth }) {
-  // const { isLoading, isAuthenticated, user, error } = auth;
   const {
     getCurrentUserLoading,
     currentUser,
@@ -21,9 +20,8 @@ function NavigationMenu({ auth }) {
     user,
   } = auth;
 
-  // console.log("isAuthenticated? ", isAuthenticated);
   const { addToast } = useToasts();
-  // console.log("navigation err", error);
+
   const {
     showModal,
     setShowModal,
@@ -32,7 +30,7 @@ function NavigationMenu({ auth }) {
   } = useModal();
   const dispatch = useDispatch();
 
-  const handleLogout = (e) => {
+  const handleLogout = useCallback((e) => {
     e.preventDefault();
     // dispatch(logoutUserAsync.request(null));
     // localStorage.clear(); // 바로 지워짐
@@ -41,7 +39,7 @@ function NavigationMenu({ auth }) {
       appearance: "success",
       autoDismiss: true,
     });
-  };
+  }, []);
 
   return (
     <nav>
@@ -62,7 +60,7 @@ function NavigationMenu({ auth }) {
                 </Link>,
                 <button
                   className="nav-btn navigation"
-                  key="logout-button"
+                  key="logout-btn"
                   onClick={handleLogout}
                 >
                   Log out
@@ -72,6 +70,7 @@ function NavigationMenu({ auth }) {
                 <button
                   className="nav-btn navigation"
                   onClick={() => handleOpenModal("login")}
+                  key="login-btn"
                 >
                   Log in
                 </button>,
@@ -81,6 +80,7 @@ function NavigationMenu({ auth }) {
                   overlayClassName="overlay"
                   isOpen={showModal.loginModal}
                   onRequestClose={handleCloseModal}
+                  key="login-modal"
                 >
                   <LoginModal
                     openSignup={handleOpenModal}
@@ -93,6 +93,7 @@ function NavigationMenu({ auth }) {
                 <button
                   className="nav-btn navigation"
                   onClick={() => handleOpenModal("signup")}
+                  key="signup-btn"
                 >
                   Sign up
                 </button>,
@@ -102,6 +103,7 @@ function NavigationMenu({ auth }) {
                   overlayClassName="overlay"
                   isOpen={showModal.signupModal}
                   onRequestClose={handleCloseModal}
+                  key="signup-modal"
                 >
                   <RegisterModal
                     openLogin={handleOpenModal}
@@ -118,4 +120,4 @@ function NavigationMenu({ auth }) {
   );
 }
 
-export default NavigationMenu;
+export default memo(NavigationMenu);

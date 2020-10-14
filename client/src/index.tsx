@@ -1,9 +1,9 @@
-// import "./wdyr";
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./containers/App";
 import * as serviceWorker from "./serviceWorker";
+import * as ReactRedux from "react-redux";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import createSagaMiddleware from "redux-saga";
@@ -13,6 +13,18 @@ import { ToastProvider } from "react-toast-notifications";
 
 const sagaMiddleware = createSagaMiddleware();
 const middlewares = [sagaMiddleware];
+
+if (process.env.NODE_ENV === "development") {
+  const whyDidYouRender = require("@welldone-software/why-did-you-render");
+  whyDidYouRender(React, {
+    onlyLogs: true, // only for sandbox logging to look nicer
+    titleColor: "green", // only for sandbox logging to look nicer
+    diffNameColor: "aqua", // only for sandbox logging to look nicer
+    trackAllPureComponents: true,
+    trackExtraHooks: [[require("react-redux/lib"), "useSelector"]],
+  });
+}
+
 const store = createStore(
   rootReducer,
   process.env.NODE_ENV === "development"
@@ -27,13 +39,13 @@ const store = createStore(
 sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <ToastProvider>
-        <App />
-      </ToastProvider>
-    </Provider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <Provider store={store}>
+    <ToastProvider>
+      <App />
+    </ToastProvider>
+  </Provider>,
+  // </React.StrictMode>,
   document.getElementById("root")
 );
 

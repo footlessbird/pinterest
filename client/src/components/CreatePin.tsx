@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 
 import { createPinAsync } from "../actions";
 
@@ -14,21 +13,24 @@ function CreatePin() {
 
   const { imgLink, imgDescription } = values;
 
-  const handleChange = (e) => {
-    setValues({
-      ...values,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const handleChange = useCallback(
+    (e) => {
+      setValues({
+        ...values,
+        [e.target.name]: e.target.value,
+      });
+    },
+    [values]
+  );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = useCallback((e) => {
     if (imgLink === "" || imgDescription === "") {
       alert("You must enter all fields.");
       return;
     }
     e.preventDefault();
     dispatch(createPinAsync.request(values));
-  };
+  }, []);
 
   return (
     <div>

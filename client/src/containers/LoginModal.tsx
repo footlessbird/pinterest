@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
@@ -11,7 +11,7 @@ import { removeError } from "../actions/index";
 function LoginModal({ openSignup, onClose }) {
   const auth = useSelector((state: RootState) => state.auth);
   const authError = useSelector((state: RootState) => state.error);
-  // const { isLoading, isAuthenticated, user, error, isSuccessful } = auth;
+
   const {
     localLoginLoading,
     localLoginUser,
@@ -29,8 +29,7 @@ function LoginModal({ openSignup, onClose }) {
 
   useEffect(() => {
     dispatch(removeError()); // 모달이 열릴 때 이전 오류 메세지 초기화해서 보이지 않도록
-    // dispatch({ type: RESET_LOGIN });
-    // if (localStorage.getItem("token")) {
+
     if (localLoginDone || githubLoginDone) {
       addToast(`Logged in successfully 💃🏼`, {
         appearance: "success",
@@ -45,14 +44,11 @@ function LoginModal({ openSignup, onClose }) {
 
   useEffect(() => {}, [githubLoginDone]);
 
-  // console.log("isAuthenticated", isAuthenticated);
-  // console.log("isSuccessful", isSuccessful);
-
-  const onSubmit = (data) => {
+  const onSubmit = useCallback((data) => {
     const { email, password } = data;
     console.log(email, password);
     dispatch({ type: LOCAL_LOGIN_REQUEST, data: { email, password } });
-  };
+  }, []);
 
   return (
     <div className="inner-container">
@@ -160,4 +156,4 @@ function LoginModal({ openSignup, onClose }) {
   );
 }
 
-export default LoginModal;
+export default memo(LoginModal);

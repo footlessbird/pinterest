@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { memo, useEffect, useMemo } from "react";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { Redirect } from "react-router-dom";
 import Masonry from "react-masonry-component";
 
@@ -9,7 +9,7 @@ import Pin from "./Pin";
 
 function MyPins() {
   const dispatch = useDispatch();
-  const pins = useSelector((state: RootState) => state.pins);
+  const pins = useSelector((state: RootState) => state.pins, shallowEqual);
   useEffect(() => {
     dispatch(getMyPinsAsync.request(""));
   }, []);
@@ -26,10 +26,10 @@ function MyPins() {
         elementType={"ul"}
         options={masonryOptions}
       >
-        {pins.data && pins.data.map((pin) => <Pin pin={pin} />)}
+        {pins.data && pins.data.map((pin) => <Pin pin={pin} key={pin._id} />)}
       </Masonry>
     </div>
   );
 }
 
-export default MyPins;
+export default memo(MyPins);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
@@ -36,31 +36,15 @@ function RegisterModal({ openLogin, onClose }) {
     }
   }, [registerUserDone]);
 
-  const onSubmit = async (data) => {
+  const onSubmit = useCallback((data) => {
     const { email, username, password } = data;
     console.log(email, username, password);
-    // 이전 에러가 있다면 제거
-    // if (authError.error && authError.error.message) {
-    //   console.log("에러 로그 발견 이전 에러기록 삭제");
-    //   dispatch(removeError());
-    // }
+
     dispatch({
       type: REGISTER_USER_REQUEST,
       data: { email, username, password },
     });
-
-    /*
-    if (isSuccessful) {
-      addToast(`Thank you for signing up! Now you can log in`, {
-        appearance: "success",
-        autoDismiss: true,
-      });
-      onClose();
-    } else {
-      return;
-    }
-    */
-  };
+  }, []);
 
   return (
     <div className="inner-container">
@@ -215,4 +199,4 @@ function RegisterModal({ openLogin, onClose }) {
   );
 }
 
-export default RegisterModal;
+export default memo(RegisterModal);

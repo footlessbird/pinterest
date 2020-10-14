@@ -1,3 +1,4 @@
+import { createPrinter } from "typescript";
 import Pin from "../models/pin";
 import { PinModel } from "../models/pin";
 
@@ -24,11 +25,51 @@ const createPin = async (req, res, next) => {
 
 const getPins = async (req, res, next) => {
   console.log("getPins called");
+  console.log("getPins req.query.lasOneId", typeof req.query.lastOneId);
+
+  let lastOneId;
+  if (req.query.lastOneId === "") {
+    lastOneId = null;
+  } else {
+    lastOneId = req.query.lastOneId;
+  }
+
+  console.log("lastOneId", lastOneId);
+
   try {
-    const pins = await Pin.find().populate("user", ["id", "username"]);
-    console.log("pins from getPins??", pins);
-    return res.status(200).json(pins);
+    // const pins = await Pin.find().populate("user", ["id", "username"]);
+    if (lastOneId === null || lastOneId === undefined || lastOneId === "") {
+      const firstPins = await Pin.find({})
+        .sort({ _id: -1 })
+        .limit(10)
+        .populate("user", ["id", "username"]);
+
+      console.log("first pins sending", firstPins);
+      return res.status(200).json(firstPins);
+    } else {
+      const pins = await Pin.find({ _id: { $lt: lastOneId } })
+        .sort({ _id: -1 })
+        .limit(10)
+        .populate("user", ["id", "username"]);
+
+      console.log("after first pins", pins);
+      return res.status(200).json(pins);
+    }
+    // await Pin.find({ _id: { $lt: lastOneId } })
+    //   .sort({ _id: -1 })
+    //   .limit(5)
+    //   .exec(function (err, docs) {
+    //     if (err) {
+    //       console.error(err);
+    //     }
+    //     lastOneId = docs.slice(-1)[0]._id;
+    //     console.log("lastOne 2", lastOneId);
+    //     return res.status(200).json(docs);
+    //   });
+    // console.log("pins from getPins??", pins);
+    // return res.status(200).json(pins);
   } catch (err) {
+    console.error(err);
     return next({
       status: 400,
       message: err.message,

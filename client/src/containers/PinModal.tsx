@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
@@ -8,7 +8,6 @@ import { useToasts } from "react-toast-notifications";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import { RootState } from "../reducers";
-import { removeError } from "../actions/index";
 
 import PinButton from "../components/PinButton";
 
@@ -33,26 +32,6 @@ function PinModal({ pin, onClose }) {
   const dispatch = useDispatch();
   const { register, handleSubmit, errors } = useForm();
   const { addToast } = useToasts();
-
-  /*
-  useEffect(() => {
-    dispatch(removeError()); // 모달이 열릴 때 이전 오류 메세지 초기화해서 보이지 않도록
-    // dispatch({ type: RESET_LOGIN });
-    // if (localStorage.getItem("token")) {
-    if (localLoginDone || githubLoginDone) {
-      addToast(`Logged in successfully 💃🏼`, {
-        appearance: "success",
-        autoDismiss: true,
-      });
-      onClose();
-    } else {
-      return;
-    }
-    // }, [isLoggedin]);
-  }, [localLoginDone]);
-
-  useEffect(() => {}, [githubLoginDone]);
-*/
 
   return (
     <div className="pin-modal-container">
@@ -80,4 +59,4 @@ function PinModal({ pin, onClose }) {
   );
 }
 
-export default PinModal;
+export default memo(PinModal);

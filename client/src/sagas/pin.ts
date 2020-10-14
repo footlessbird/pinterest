@@ -30,9 +30,13 @@ export function* watchCreatePin() {
   yield takeLatest(CREATE_PIN_REQUEST, createPinSaga);
 }
 
-function getAllPins() {
-  return API.call("get", "pins");
-  // return Axios.get('/api/pins')
+function getAllPins(lastOneId) {
+  // return API.call("get", "pins");
+  if (lastOneId === "") {
+    return API.call("get", `pins`);
+  } else {
+    return API.call("get", `pins?lastOneId=${lastOneId}`);
+  }
 }
 
 const getAllPinsSaga = createAsyncSaga(getAllPinsAsync, getAllPins);

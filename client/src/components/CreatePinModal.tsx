@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
@@ -8,57 +8,39 @@ import { createPinAsync } from "../actions";
 import { useToasts } from "react-toast-notifications";
 
 function CreatePinModal({ openCreatePin, onClose }) {
-  // const DEFAULT_IMAGE =
-  //   "https://748073e22e8db794416a-cc51ef6b37841580002827d4d94d19b6.ssl.cf3.rackcdn.com/not-found.png";
-
   const dispatch = useDispatch();
   const [pinImg, setPinImg] = useState(defaultImage);
-  // const [pinImg, setPinImg] = useState(DEFAULT_IMAGE);
-  // const [pinImg, setPinImg] = useState(
-  //   "https://images.pexels.com/photos/3373303/pexels-photo-3373303.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-  // );
   const { register, watch, handleSubmit, errors } = useForm();
-  // const watchImg = watch("image", "");
   const watchImg = watch("image", pinImg);
   const { addToast } = useToasts();
 
-  // const watchAllFields = watch(); // when pass nothing as argument, you are watching everything
-
-  const handleErrorImage = () => {
+  const handleErrorImage = useCallback(() => {
     console.log("handleErrorImage invoked");
     setPinImg(defaultImage);
-    // setPinImg(DEFAULT_IMAGE);
-  };
+  }, []);
 
-  const onSubmit = (data) => {
-    // const { email, password } = data;
-    // console.log(email, password);
-    // dispatch({ type: REGISTER_USER_REQUEST, data: { email, password } });
-    const { image, description } = data;
-    const pinData = { imgLink: image, imgDescription: description };
-    // if (pinImg === DEFAULT_IMAGE) {
-    //   pinData.imgLink = DEFAULT_IMAGE;
-    // }
+  const onSubmit = useCallback(
+    (data) => {
+      const { image, description } = data;
+      const pinData = { imgLink: image, imgDescription: description };
 
-    if (pinImg === defaultImage) {
-      pinData.imgLink = defaultImage;
-    }
+      if (pinImg === defaultImage) {
+        pinData.imgLink = defaultImage;
+      }
 
-    // dispatch(createPinAsync.request(data));
-    dispatch(createPinAsync.request(pinData));
-    addToast(`Created successfully 😎`, {
-      appearance: "success",
-      autoDismiss: true,
-    });
-    onClose();
-  };
-  console.log("pinImg??", pinImg);
+      dispatch(createPinAsync.request(pinData));
+      addToast(`Created successfully 😎`, {
+        appearance: "success",
+        autoDismiss: true,
+      });
+      onClose();
+    },
+    [pinImg]
+  );
+
   return (
     <div className="inner-container">
       <div className="local-login">
-        {/* <div className="item">
-          <h2>New pin</h2>
-        </div> */}
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="item image-preview">
             <img
@@ -68,7 +50,6 @@ function CreatePinModal({ openCreatePin, onClose }) {
             />
           </div>
           <div className="item">
-            {/* <label>Email</label> */}
             <input
               className="form-input"
               type="text"

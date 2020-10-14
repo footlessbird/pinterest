@@ -1,19 +1,23 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector, connect } from "react-redux";
+import React, { useEffect, memo, useCallback } from "react";
+import { useDispatch, useSelector, connect, shallowEqual } from "react-redux";
 import { RootState } from "../reducers";
 import { getAllPinsAsync, TPin } from "../actions";
 import Pin from "./Pin";
 import Masonry from "react-masonry-component";
 import Modal from "react-modal";
+
 import { useModal } from "../utils/useModal";
 import CreatePinModal from "../components/CreatePinModal";
 
-function Pins({ auth }) {
-  // const { isLoading, isAuthenticated, user } = auth;
+// function Pins({ auth }) {
+const Pins = ({ auth }) => {
   const { currentUser } = auth;
 
   const dispatch = useDispatch();
-  const pins = useSelector((state: RootState) => state.pins);
+  const pins = useSelector((state: RootState) => state.pins, shallowEqual);
+  const { hasMorePins, loading } = pins;
+
+  console.log("pins", pins);
   const {
     showModal,
     setShowModal,
@@ -26,11 +30,47 @@ function Pins({ auth }) {
     fitWidth: true, // center masonry
   };
 
+  // useEffect(() => {
+  //   dispatch(getAllPinsAsync.request(""));
+  // },[]);
+
+  // useEffect(() => {
+  //   let lastId = "";
+  //   if (pins.data.length > 0) {
+  //     lastId = pins.data[pins.data.length - 1]._id;
+  //   }
+  //   // const lastId = pins.data[pins.data.length - 1]._id;
+  //   console.log("lastId", lastId);
+  //   setTimeout(() => {
+  //     dispatch(getAllPinsAsync.request(lastId));
+  //     // dispatch(getAllPinsAsync.request(""));
+  //   }, 2000);
+  // }, [pins.data]);
+
+  // infinite scroll
+
+  const onScroll = useCallback(() => {
+    if (
+      window.pageYOffset + document.documentElement.clientHeight >
+      document.documentElement.scrollHeight - 300
+    ) {
+      if (hasMorePins && !loading) {
+        let lastId = pins.data[pins.data.length - 1]._id;
+        dispatch(getAllPinsAsync.request(lastId));
+      }
+    }
+  }, [hasMorePins, pins.data]);
+
   useEffect(() => {
-    dispatch(getAllPinsAsync.request(""));
-  }, []);
-  // console.log("pin data??", pins.data);
-  // console.log("what is type of pins.data??", typeof pins.data);
+    if (pins.data.length <= 0) {
+      dispatch(getAllPinsAsync.request(""));
+    } else {
+      window.addEventListener("scroll", onScroll);
+      return () => {
+        window.removeEventListener("scroll", onScroll);
+      };
+    }
+  }, [hasMorePins, pins.data]);
 
   return (
     <div className="pins">
@@ -65,6 +105,6 @@ function Pins({ auth }) {
       ) : null}
     </div>
   );
-}
+};
 
-export default Pins;
+export default memo(Pins);

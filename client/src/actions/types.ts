@@ -11,6 +11,7 @@ export type PinState = {
   // data: TPin[] | null | undefined;
   // data: TPin[] | (TPin | TPin[])[];
   data: TPin[];
+  hasMorePins: boolean;
 };
 
 // export type AuthState = {
