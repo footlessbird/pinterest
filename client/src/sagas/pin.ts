@@ -10,7 +10,13 @@ import {
   DELETE_PIN_REQUEST,
   deletePinAsync,
 } from "../actions";
-import { takeEvery, takeLatest, all, fork } from "redux-saga/effects";
+import {
+  takeEvery,
+  takeLatest,
+  all,
+  fork,
+  takeLeading,
+} from "redux-saga/effects";
 import createAsyncSaga from "../utils/createAsyncSaga";
 import API from "../services/api";
 
@@ -42,7 +48,8 @@ function getAllPins(lastOneId) {
 const getAllPinsSaga = createAsyncSaga(getAllPinsAsync, getAllPins);
 
 export function* watchGetAllPins() {
-  yield takeEvery(GET_ALL_PINS_REQUEST, getAllPinsSaga);
+  // yield takeLatest(GET_ALL_PINS_REQUEST, getAllPinsSaga);
+  yield takeLeading(GET_ALL_PINS_REQUEST, getAllPinsSaga);
 }
 
 function getMyPins() {
