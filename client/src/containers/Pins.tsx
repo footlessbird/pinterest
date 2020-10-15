@@ -52,8 +52,10 @@ const Pins = ({ firstRender, auth }) => {
 
   const onScroll = useCallback(() => {
     if (
-      window.pageYOffset + document.documentElement.clientHeight >
-      document.documentElement.scrollHeight - 300
+      // window.pageYOffset + document.documentElement.clientHeight >
+      // document.documentElement.scrollHeight - 300
+      window.pageYOffset + document.documentElement.clientHeight ===
+      document.documentElement.scrollHeight
     ) {
       if (hasMorePins && !loading) {
         let lastId = pins.allPins[pins.allPins.length - 1]._id;

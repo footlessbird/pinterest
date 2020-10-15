@@ -14,9 +14,9 @@
   margin: 0 auto;
   margin-top: 1rem;
   visibility: hidden;
-  width: 150px;
+  width: 100px;
   height: 20px;
-
+  text-align: center;
   /* 장문의 텍스트일 경우
   생략.... 
   예) 설명... 
