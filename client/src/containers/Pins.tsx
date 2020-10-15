@@ -1,4 +1,4 @@
-import React, { useEffect, memo, useCallback } from "react";
+import React, { useEffect, memo, useCallback, useState, useMemo } from "react";
 import { useDispatch, useSelector, connect, shallowEqual } from "react-redux";
 import { RootState } from "../reducers";
 import { getAllPinsAsync, TPin } from "../actions";
@@ -8,13 +8,14 @@ import Modal from "react-modal";
 
 import { useModal } from "../utils/useModal";
 import CreatePinModal from "../components/CreatePinModal";
+import { PinState } from "../actions/types";
 
 // function Pins({ auth }) {
-const Pins = ({ auth }) => {
+const Pins = ({ firstRender, auth }) => {
   const { currentUser } = auth;
-
   const dispatch = useDispatch();
   const pins = useSelector((state: RootState) => state.pins, shallowEqual);
+
   const { hasMorePins, loading } = pins;
 
   console.log("pins", pins);
@@ -32,7 +33,7 @@ const Pins = ({ auth }) => {
 
   // useEffect(() => {
   //   dispatch(getAllPinsAsync.request(""));
-  // },[]);
+  // }, []);
 
   // useEffect(() => {
   //   let lastId = "";
@@ -55,22 +56,23 @@ const Pins = ({ auth }) => {
       document.documentElement.scrollHeight - 300
     ) {
       if (hasMorePins && !loading) {
-        let lastId = pins.data[pins.data.length - 1]._id;
+        let lastId = pins.allPins[pins.allPins.length - 1]._id;
         dispatch(getAllPinsAsync.request(lastId));
+      } else {
+        return;
       }
     }
-  }, [hasMorePins, pins.data]);
+  }, [hasMorePins, pins.allPins, loading]);
 
   useEffect(() => {
-    if (pins.data.length <= 0) {
+    if (firstRender === true) {
       dispatch(getAllPinsAsync.request(""));
-    } else {
-      window.addEventListener("scroll", onScroll);
-      return () => {
-        window.removeEventListener("scroll", onScroll);
-      };
     }
-  }, [hasMorePins, pins.data]);
+    window.addEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [hasMorePins, pins.allPins]);
 
   return (
     <div className="pins">
@@ -79,7 +81,8 @@ const Pins = ({ auth }) => {
         elementType={"ul"}
         options={masonryOptions}
       >
-        {pins.data && pins.data.map((pin) => <Pin key={pin._id} pin={pin} />)}
+        {pins.allPins &&
+          pins.allPins.map((pin) => <Pin key={pin._id} pin={pin} />)}
       </Masonry>
 
       {currentUser ? (

@@ -9,11 +9,14 @@ import Pin from "./Pin";
 
 function MyPins() {
   const dispatch = useDispatch();
-  const pins = useSelector((state: RootState) => state.pins, shallowEqual);
+  const myPins = useSelector(
+    (state: RootState) => state.pins.myPins,
+    shallowEqual
+  );
   useEffect(() => {
     dispatch(getMyPinsAsync.request(""));
   }, []);
-  console.log("MyPins??", pins);
+  console.log("MyPins??", myPins);
 
   const masonryOptions = {
     transitionDuration: 0,
@@ -26,7 +29,8 @@ function MyPins() {
         elementType={"ul"}
         options={masonryOptions}
       >
-        {pins.data && pins.data.map((pin) => <Pin pin={pin} key={pin._id} />)}
+        {/* {myPins.allPins && myPins.allPins.map((pin) => <Pin pin={pin} key={pin._id} />)} */}
+        {myPins && myPins.map((pin) => <Pin pin={pin} key={pin._id} />)}
       </Masonry>
     </div>
   );

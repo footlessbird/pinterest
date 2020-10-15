@@ -37,6 +37,7 @@ export function* watchCreatePin() {
 }
 
 function getAllPins(lastOneId) {
+  console.log("getAllPins called");
   // return API.call("get", "pins");
   if (lastOneId === "") {
     return API.call("get", `pins`);

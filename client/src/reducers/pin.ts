@@ -17,12 +17,14 @@ import {
   SAVE_PIN_REQUEST,
   SAVE_PIN_SUCCESS,
   SAVE_PIN_FAILURE,
+  TPin,
 } from "../actions";
 
 const initialState: PinState = {
   loading: false,
   error: null,
-  data: [],
+  allPins: [],
+  myPins: [],
   hasMorePins: true,
 };
 
@@ -38,7 +40,7 @@ const pinReducer = createReducer<PinState, PinterestAction>(initialState, {
       draft.loading = false;
       draft.error = null;
       // draft.data?.unshift(action.payload);
-      draft.data?.push(action.payload);
+      draft.allPins?.push(action.payload);
     }),
 
   [CREATE_PIN_FAILURE]: (state, action) =>
@@ -62,10 +64,8 @@ const pinReducer = createReducer<PinState, PinterestAction>(initialState, {
   [GET_ALL_PINS_SUCCESS]: (state, action) =>
     produce(state, (draft) => {
       draft.loading = false;
-      draft.data = draft.data.concat(action.payload);
-      // console.log("draft.data in reducer", draft.data);
-      // draft.hasMorePins = draft.data.length < 50;
-      draft.hasMorePins = draft.data.length === 10;
+      draft.allPins = draft.allPins.concat(action.payload);
+      draft.hasMorePins = action.payload.length === 10;
     }),
 
   [GET_ALL_PINS_FAILURE]: (state, action) =>
@@ -80,10 +80,16 @@ const pinReducer = createReducer<PinState, PinterestAction>(initialState, {
       draft.error = null;
     }),
 
+  // [GET_MY_PINS_SUCCESS]: (state, action) =>
+  //   produce(state, (draft) => {
+  //     draft.loading = false;
+  //     draft.allPins = action.payload;
+  //   }),
+
   [GET_MY_PINS_SUCCESS]: (state, action) =>
     produce(state, (draft) => {
       draft.loading = false;
-      draft.data = action.payload;
+      draft.myPins = action.payload;
     }),
 
   [GET_MY_PINS_FAILURE]: (state, action) =>
@@ -109,7 +115,9 @@ const pinReducer = createReducer<PinState, PinterestAction>(initialState, {
       );
       if (index) draft.data?.splice(index, 1);
       */
-      draft.data = draft.data?.filter((p) => p._id !== action.payload.pinId);
+      draft.allPins = draft.allPins?.filter(
+        (p) => p._id !== action.payload.pinId
+      );
     }),
   [DELETE_PIN_FAILURE]: (state, action) =>
     produce(state, (draft) => {
@@ -148,8 +156,8 @@ const pinReducer = createReducer<PinState, PinterestAction>(initialState, {
   [SAVE_PIN_SUCCESS]: (state, action) => ({
     ...state,
     loading: false,
-    data: [
-      ...state.data.filter((p) => p._id !== action.payload._id),
+    allPins: [
+      ...state.allPins.filter((p) => p._id !== action.payload._id),
       action.payload,
     ],
     error: null,

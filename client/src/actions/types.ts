@@ -10,7 +10,8 @@ export type PinState = {
   error: Error | null;
   // data: TPin[] | null | undefined;
   // data: TPin[] | (TPin | TPin[])[];
-  data: TPin[];
+  allPins: TPin[];
+  myPins: TPin[];
   hasMorePins: boolean;
 };
 

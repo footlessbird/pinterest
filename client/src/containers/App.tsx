@@ -17,7 +17,8 @@ import MyPins from "./MyPins";
 function App() {
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.auth);
-
+  const [firstRender, setFirstRender] = useState(true);
+  const firstRenderProps = { firstRender };
   const {
     getCurrentUserLoading,
     currentUser,
@@ -32,6 +33,7 @@ function App() {
 
     if (loginMethod || token) {
       dispatch({ type: GET_CURRENT_USER_REQUEST });
+      setFirstRender(false);
     }
   }, []);
 
@@ -40,7 +42,11 @@ function App() {
       <Router>
         <NavigationMenu auth={auth} />
         <Switch>
-          <Route exact path="/" render={() => <Pins auth={auth} />} />
+          <Route
+            exact
+            path="/"
+            render={() => <Pins {...firstRenderProps} auth={auth} />}
+          />
           <Route path="/githublogin" component={GithubLogin} />
           <Route
             path="/mypins"
