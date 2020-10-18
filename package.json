@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "heroku-postbuild": "cd client && NPM_CONFIG_PRODUCTION=false yarn install && yarn run build && cd ../server && NPM_CONFIG_PRODUCTION=false yarn install && yarn run build",
     "client:build": "cd client && yarn build",
     "server:build": "cd server && yarn build",
     "build": "yarn run client:build && yarn run server:build",
     "server": "cd server && yarn start",
-    "dev": "yarn run build && yarn run server"
+    "dev": "yarn run build && yarn run server",
+    "start": "yarn run server"
   },
   "repository": "https://github.com/footlessbird/pinterest-clone.git",
   "author": "footlessbird <arslongavitabrevis0818@gmail.com>",
