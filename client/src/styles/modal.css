@@ -44,6 +44,7 @@
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.45);
+  z-index: 999;
 }
 .inner-container {
   padding: 2rem;
@@ -167,6 +168,12 @@
   background-color: #e9ecef;
 }
 */
+
+.create-modal-error {
+  position: relative;
+  margin-bottom: 0;
+}
+
 .form-error {
   color: var(--red);
   /* text-align: center; */

@@ -43,6 +43,11 @@ function CreatePinModal({ openCreatePin, onClose }) {
       <div className="local-login">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="item image-preview">
+            {/* <span className="create-modal-error">
+              {errors.image && (
+                <h6 className="form-error">{errors.image.message}</h6>
+              )}
+            </span> */}
             <img
               src={pinImg}
               alt="This is the preview of the pin."
@@ -50,6 +55,11 @@ function CreatePinModal({ openCreatePin, onClose }) {
             />
           </div>
           <div className="item">
+            <span className="create-modal-error">
+              {errors.image && (
+                <h6 className="form-error">{errors.image.message}</h6>
+              )}
+            </span>
             <input
               className="form-input"
               type="text"
@@ -57,10 +67,10 @@ function CreatePinModal({ openCreatePin, onClose }) {
               placeholder="http://www.image.com/photo.jpg"
               ref={register({
                 required: "Please provide an image link.",
-                // pattern: {
-                //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                //   message: "Invalid email.",
-                // },
+                pattern: {
+                  value: /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi,
+                  message: "Invalid url.",
+                },
               })}
               onChange={() => setPinImg(watchImg)}
             />
@@ -69,22 +79,11 @@ function CreatePinModal({ openCreatePin, onClose }) {
             )} */}
           </div>
           <div className="item pin-description">
-            {/* <label>Password</label> */}
-            {/* <input
-              type="password"
-              placeholder="Create a password"
-              name="password"
-              ref={register({
-                required: "Please enter your password.",
-                minLength: {
-                  value: 6,
-                  message: "Password must be at least 6 characters.",
-                },
-              })}
-            />
-            {errors.password && (
-              <h6 className="login-error">{errors.password.message}</h6>
-            )} */}
+            <span className="create-modal-error">
+              {errors.description && (
+                <h6 className="form-error">{errors.description.message}</h6>
+              )}
+            </span>
             <textarea
               className="form-input"
               name="description"
@@ -92,10 +91,10 @@ function CreatePinModal({ openCreatePin, onClose }) {
               placeholder="Please share a story about this pin."
               ref={register({
                 required: "Please provide a little story about this pin.",
-                // pattern: {
-                //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                //   message: "Invalid email.",
-                // },
+                minLength: {
+                  value: 5,
+                  message: "This must be at least 5 characters.",
+                },
               })}
             />
           </div>
