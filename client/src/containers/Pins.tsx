@@ -18,8 +18,8 @@ const Pins = ({ firstRender, loginMethod, auth }) => {
 
   const { hasMorePins, loading } = pins;
 
-  console.log("pins", pins);
-  console.log("firstRender", firstRender);
+  // console.log("pins", pins);
+  // console.log("firstRender", firstRender);
   const {
     showModal,
     setShowModal,
@@ -83,8 +83,8 @@ const Pins = ({ firstRender, loginMethod, auth }) => {
         className="pins-container"
         elementType={"ul"}
         options={masonryOptions}
-        disableImagesLoaded={false}
-        updateOnEachImageLoad={false}
+        disableImagesLoaded={true}
+        updateOnEachImageLoad={true}
       >
         {pins.allPins &&
           pins.allPins.map((pin) => <Pin key={pin._id} pin={pin} />)}

@@ -26,7 +26,7 @@ function getJwt(userId) {
 // }
 
 export default function setUserWithToken(req, res, next) {
-  console.log("setUserWithToken req.user", req.user);
+  // console.log("setUserWithToken req.user", req.user);
   passport.authenticate("local", function (err, user, info) {
     if (req.user) {
       const token = getJwt(req.user.id);
@@ -44,7 +44,7 @@ export default function setUserWithToken(req, res, next) {
       // console.log("setUserWithToken info", info);
       const token = getJwt(user.id);
       const { id, email, username } = user;
-      console.log(id, email, username);
+      // console.log(id, email, username);
       if (info) {
         return res.status(400).send({ message: info.message });
       } else {

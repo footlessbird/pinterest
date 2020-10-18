@@ -46,7 +46,7 @@ function LoginModal({ openSignup, onClose }) {
 
   const onSubmit = useCallback((data) => {
     const { email, password } = data;
-    console.log(email, password);
+    // console.log(email, password);
     dispatch({ type: LOCAL_LOGIN_REQUEST, data: { email, password } });
   }, []);
 

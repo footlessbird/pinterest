@@ -24,8 +24,8 @@ const createPin = async (req, res, next) => {
 };
 
 const getPins = async (req, res, next) => {
-  console.log("getPins called");
-  console.log("getPins req.query.lasOneId", typeof req.query.lastOneId);
+  // console.log("getPins called");
+  // console.log("getPins req.query.lasOneId", typeof req.query.lastOneId);
 
   let lastOneId;
   if (req.query.lastOneId === "") {
@@ -34,7 +34,7 @@ const getPins = async (req, res, next) => {
     lastOneId = req.query.lastOneId;
   }
 
-  console.log("lastOneId", lastOneId);
+  // console.log("lastOneId", lastOneId);
 
   try {
     // const pins = await Pin.find().populate("user", ["id", "username"]);
@@ -44,7 +44,7 @@ const getPins = async (req, res, next) => {
         .limit(10)
         .populate("user", ["id", "username"]);
 
-      console.log("first pins sending", firstPins);
+      // console.log("first pins sending", firstPins);
       return res.status(200).json(firstPins);
     } else {
       const pins = await Pin.find({ _id: { $lt: lastOneId } })
@@ -52,7 +52,7 @@ const getPins = async (req, res, next) => {
         .limit(10)
         .populate("user", ["id", "username"]);
 
-      console.log("after first pins", pins);
+      // console.log("after first pins", pins);
       return res.status(200).json(pins);
     }
     // await Pin.find({ _id: { $lt: lastOneId } })
@@ -115,7 +115,7 @@ const deletePin = async (req, res, next) => {
   // 같지 않다면 (남의 핀을 다른 유저로써 저장) delete pin.savedBy[req.user._id]로 유저프로퍼티 삭제
   const thisUser = req.user.id;
 
-  console.log("thisUser??", typeof thisUser);
+  // console.log("thisUser??", typeof thisUser);
   const pinId = req.params.id.toString();
   try {
     const pin = await Pin.findById(pinId);
@@ -127,9 +127,9 @@ const deletePin = async (req, res, next) => {
         .json({ message: "Pin has been successfully deleted.", pinId });
     } else {
       const savedBy = Object.keys(pin.savedBy);
-      console.log("savedBy??", savedBy);
+      // console.log("savedBy??", savedBy);
       const savedByThisUser = savedBy && savedBy.includes(thisUser);
-      console.log("savedByThisUser??", savedByThisUser);
+      // console.log("savedByThisUser??", savedByThisUser);
       if (savedByThisUser) {
         delete pin.savedBy[thisUser];
         pin.markModified("savedBy");

@@ -7,8 +7,8 @@ import qs from "querystring";
 import User from "../models/user";
 
 const currentUser = (req, res, next) => {
-  console.log("currentUser called");
-  console.log("current_user ", req.user);
+  // console.log("currentUser called");
+  // console.log("current_user ", req.user);
   // res.send(req.user);
   res.json(req.user);
 };
@@ -19,7 +19,7 @@ const logout = (req, res) => {
 };
 
 const github = (req, res) => {
-  console.log("***back-end github api called***");
+  // console.log("***back-end github api called***");
   const clientId = process.env.GITHUB_CLIENT_ID;
   res.redirect(
     `https://github.com/login/oauth/authorize?client_id=${clientId}`
@@ -37,8 +37,8 @@ const github = (req, res) => {
 };
 
 const githubCallback = async (req, res, next) => {
-  console.log("***back-end githubCallback called***");
-  console.log("githubCode", req.body.githubCode);
+  // console.log("***back-end githubCallback called***");
+  // console.log("githubCode", req.body.githubCode);
 
   const body = {
     client_id: process.env.GITHUB_CLIENT_ID,
@@ -53,7 +53,7 @@ const githubCallback = async (req, res, next) => {
     opts
   );
   const { access_token } = getAccessToken.data;
-  console.log("token??", access_token);
+  // console.log("token??", access_token);
 
   const uri = `https://api.github.com/user`;
   const auth = `bearer ${access_token}`;
@@ -73,7 +73,7 @@ const githubCallback = async (req, res, next) => {
   }
 
   const userData = await getUserData();
-  console.log("user??", userData);
+  // console.log("user??", userData);
   const { login, id, email } = userData;
 
   try {
@@ -93,7 +93,7 @@ const githubCallback = async (req, res, next) => {
       next();
     }
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     next(err);
   }
 };
@@ -113,7 +113,7 @@ app.get('/login', function(req, res, next) {
 
 // local login
 const login = (req, res, next) => {
-  console.log("login handler called");
+  // console.log("login handler called");
   // const user = req.user;
   // if (!user) return res.status(400).send({ message: "User does not exist." });
   next();
@@ -139,7 +139,7 @@ const login = (req, res, next) => {
 };
 */
 const register = async (req, res, next) => {
-  console.log("register handler called");
+  // console.log("register handler called");
   try {
     const { email, username, password } = req.body;
     if (!email || !password)

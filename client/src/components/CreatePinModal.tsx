@@ -15,7 +15,7 @@ function CreatePinModal({ openCreatePin, onClose }) {
   const { addToast } = useToasts();
 
   const handleErrorImage = useCallback(() => {
-    console.log("handleErrorImage invoked");
+    // console.log("handleErrorImage invoked");
     setPinImg(defaultImage);
   }, []);
 

@@ -14,7 +14,6 @@ import { ToastProvider } from "react-toast-notifications";
 const sagaMiddleware = createSagaMiddleware();
 const middlewares = [sagaMiddleware];
 
-/*
 if (process.env.NODE_ENV === "development") {
   const whyDidYouRender = require("@welldone-software/why-did-you-render");
   whyDidYouRender(React, {
@@ -25,14 +24,15 @@ if (process.env.NODE_ENV === "development") {
     trackExtraHooks: [[require("react-redux/lib"), "useSelector"]],
   });
 }
-*/
+
 const store = createStore(
   rootReducer,
   process.env.NODE_ENV === "development"
     ? compose(
         applyMiddleware(sagaMiddleware),
-        (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
-          (window as any).__REDUX_DEVTOOLS_EXTENSION__()
+        ((window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
+          (window as any).__REDUX_DEVTOOLS_EXTENSION__()) ||
+          compose(applyMiddleware(...middlewares))
       )
     : compose(applyMiddleware(...middlewares))
 );

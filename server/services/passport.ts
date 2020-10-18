@@ -16,7 +16,7 @@ passport.use(
   // payload from "const token = jwt.sign({ id: userId }, process.env.SECRET, "
   // assuming "jwt.sign({id: userId})" registerd in the payload object
   new JwtStrategy(jwtOptions, async function (payload, done) {
-    console.log("jwt payload", payload);
+    // console.log("jwt payload", payload);
 
     try {
       const user = await User.findById(payload.id);
@@ -37,8 +37,8 @@ passport.use(
       passwordField: "password",
     },
     async function (email, password, done) {
-      console.log("email from the client", email);
-      console.log("password from the client", password);
+      // console.log("email from the client", email);
+      // console.log("password from the client", password);
       try {
         const user = await User.findOne({ email: email });
         if (!user)

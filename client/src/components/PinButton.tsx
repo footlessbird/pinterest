@@ -14,7 +14,7 @@ function PinButton({ pinId, userId, savedBy, modal, onClose }) {
   // } = useModal();
 
   const handleSave = (e) => {
-    console.log("handleSave");
+    // console.log("handleSave");
     e.preventDefault();
     e.stopPropagation();
     dispatch(savePinAsync.request(pinId));

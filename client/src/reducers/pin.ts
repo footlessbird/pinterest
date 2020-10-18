@@ -108,7 +108,7 @@ const pinReducer = createReducer<PinState, PinterestAction>(initialState, {
       // items: state.items.filter(item => item._id !== action.payload)
       // const index = draft.mainPosts.findIndex(v => v.id === action.data);
       // draft.mainPosts.splice(index, 1);
-      console.log("delete pin success", action.payload);
+      // console.log("delete pin success", action.payload);
       /*
       const index = draft.data?.findIndex(
         (p) => p._id === action.payload.pinId

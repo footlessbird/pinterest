@@ -15,7 +15,7 @@ type PromiseCreatorFunction<P, T> =
 // action 이 payload 를 갖고 있는지 확인합니다.
 // __ is __ 문법은 Type guard 라고 부릅니다 https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-guards-and-type-assertions
 function isPayloadAction<P>(action: any): action is PayloadAction<string, P> {
-  console.log("action.payload??", action.payload);
+  // console.log("action.payload??", action.payload);
   return action.payload !== undefined;
 }
 

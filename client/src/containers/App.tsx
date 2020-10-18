@@ -16,7 +16,7 @@ import MyPins from "./MyPins";
 import LoginModal from "./LoginModal";
 
 function App() {
-  console.log("app rendered");
+  // console.log("app rendered");
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.auth);
   const [firstRender, setFirstRender] = useState(true);
@@ -31,7 +31,7 @@ function App() {
 
   useEffect(() => {
     // const loginMethod = localStorage.getItem("loginMethod");
-    console.log("loginMethod?? ", loginMethod);
+    // console.log("loginMethod?? ", loginMethod);
     const token = localStorage.getItem("token");
 
     if (loginMethod || token) {

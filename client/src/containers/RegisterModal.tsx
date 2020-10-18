@@ -12,13 +12,13 @@ function RegisterModal({ openLogin, onClose }) {
   const auth = useSelector((state: RootState) => state.auth);
   const authError = useSelector((state: RootState) => state.error);
 
-  console.log("authError", authError);
+  // console.log("authError", authError);
   // const { isLoading, isAuthenticated, user, error, isSuccessful } = auth;
   const { registerUserLoading, registerUserDone, registerUserError } = auth;
 
   const dispatch = useDispatch();
   const { register, handleSubmit, errors } = useForm();
-  console.log("useForm err", errors);
+  // console.log("useForm err", errors);
   const { addToast } = useToasts();
 
   useEffect(() => {
@@ -38,7 +38,7 @@ function RegisterModal({ openLogin, onClose }) {
 
   const onSubmit = useCallback((data) => {
     const { email, username, password } = data;
-    console.log(email, username, password);
+    // console.log(email, username, password);
 
     dispatch({
       type: REGISTER_USER_REQUEST,

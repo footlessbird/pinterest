@@ -90,12 +90,12 @@ function* localLogin(action) {
 
   try {
     const result = yield call(localLoginAPI, action.data);
-    console.log("localLoginUserId??", result.data.user.id);
+    // console.log("localLoginUserId??", result.data.user.id);
     localStorage.setItem("loggedInUserId", result.data.user.id);
     localStorage.setItem("loginMethod", "local");
     localStorage.setItem("token", result.data.token);
 
-    console.log("local login result", result);
+    // console.log("local login result", result);
     // yield put({
     //   type: LOCAL_LOGIN_SUCCESS,
     //   data: result.data,
@@ -108,7 +108,7 @@ function* localLogin(action) {
       put({ type: GET_CURRENT_USER_REQUEST }),
     ]);
   } catch (err) {
-    console.log("localLogin err", err.response.data);
+    // console.log("localLogin err", err.response.data);
     // yield put({
     //   type: LOCAL_LOGIN_FAILURE,
     //   // error: err,
@@ -161,9 +161,9 @@ function* watchGithubLogin() {
 */
 
 function githubLoginAPI() {
-  console.log("getGithubUserAPI called");
+  // console.log("getGithubUserAPI called");
   const githubCode = { githubCode: localStorage.getItem("code") };
-  console.log("code is ", githubCode);
+  // console.log("code is ", githubCode);
   if (!githubCode) {
     throw new Error("could not retrive a code from Github");
   } else {
@@ -178,7 +178,7 @@ function githubLoginAPI() {
 function* githubLogin() {
   try {
     const result = yield call(githubLoginAPI);
-    console.log("getGithubUser", result.data);
+    // console.log("getGithubUser", result.data);
     localStorage.setItem("loggedInUserId", result.data.user.id);
     localStorage.setItem("loginMethod", "github");
     localStorage.setItem("token", result.data.token);
@@ -224,7 +224,7 @@ function* watchLogout() {
 }
 
 function signupAPI(signupData) {
-  console.log("signupData?? ", signupData);
+  // console.log("signupData?? ", signupData);
   const { email, username, password } = signupData;
   return axios.post("/api/auth/register", { email, username, password });
 }

@@ -21,7 +21,7 @@ import createAsyncSaga from "../utils/createAsyncSaga";
 import API from "../services/api";
 
 function createPin(data) {
-  console.log("createPin data??", data);
+  // console.log("createPin data??", data);
 
   const token = localStorage.getItem("token");
   return API.call("post", "pins", data, {
@@ -37,7 +37,7 @@ export function* watchCreatePin() {
 }
 
 function getAllPins(lastOneId) {
-  console.log("getAllPins called");
+  // console.log("getAllPins called");
   // return API.call("get", "pins");
   if (lastOneId === "") {
     return API.call("get", `pins`);
@@ -68,7 +68,7 @@ export function* watchGetMypins() {
 }
 
 function savePin(id) {
-  console.log("pinId??", id);
+  // console.log("pinId??", id);
   const token = localStorage.getItem("token");
   return API.call("post", `pins/${id}`, id, {
     headers: { authorization: `bearer ${token}` },

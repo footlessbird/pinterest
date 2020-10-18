@@ -16,7 +16,7 @@ function MyPins() {
   useEffect(() => {
     dispatch(getMyPinsAsync.request(""));
   }, []);
-  console.log("MyPins??", myPins);
+  // console.log("MyPins??", myPins);
 
   const masonryOptions = {
     transitionDuration: 0,
