@@ -13,12 +13,15 @@ import GithubLogin from "../components/GithubLogin";
 import NavigationMenu from "../components/NavigationMenu";
 import Pins from "./Pins";
 import MyPins from "./MyPins";
+import LoginModal from "./LoginModal";
 
 function App() {
+  console.log("app rendered");
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.auth);
   const [firstRender, setFirstRender] = useState(true);
   const firstRenderProps = { firstRender };
+  const loginMethod = localStorage.getItem("loginMethod");
   const {
     getCurrentUserLoading,
     currentUser,
@@ -27,14 +30,14 @@ function App() {
   } = auth;
 
   useEffect(() => {
-    const loginMethod = localStorage.getItem("loginMethod");
+    // const loginMethod = localStorage.getItem("loginMethod");
     console.log("loginMethod?? ", loginMethod);
     const token = localStorage.getItem("token");
 
     if (loginMethod || token) {
       dispatch({ type: GET_CURRENT_USER_REQUEST });
-      setFirstRender(false);
     }
+    setFirstRender(false);
   }, []);
 
   return (
@@ -45,7 +48,13 @@ function App() {
           <Route
             exact
             path="/"
-            render={() => <Pins {...firstRenderProps} auth={auth} />}
+            render={() => (
+              <Pins
+                {...firstRenderProps}
+                loginMethod={loginMethod}
+                auth={auth}
+              />
+            )}
           />
           <Route path="/githublogin" component={GithubLogin} />
           <Route

@@ -11,7 +11,7 @@ import CreatePinModal from "../components/CreatePinModal";
 import { PinState } from "../actions/types";
 
 // function Pins({ auth }) {
-const Pins = ({ firstRender, auth }) => {
+const Pins = ({ firstRender, loginMethod, auth }) => {
   const { currentUser } = auth;
   const dispatch = useDispatch();
   const pins = useSelector((state: RootState) => state.pins, shallowEqual);
@@ -19,6 +19,7 @@ const Pins = ({ firstRender, auth }) => {
   const { hasMorePins, loading } = pins;
 
   console.log("pins", pins);
+  console.log("firstRender", firstRender);
   const {
     showModal,
     setShowModal,
@@ -52,10 +53,10 @@ const Pins = ({ firstRender, auth }) => {
 
   const onScroll = useCallback(() => {
     if (
-      // window.pageYOffset + document.documentElement.clientHeight >
-      // document.documentElement.scrollHeight - 300
-      window.pageYOffset + document.documentElement.clientHeight ===
-      document.documentElement.scrollHeight
+      window.pageYOffset + document.documentElement.clientHeight >
+      document.documentElement.scrollHeight - 300
+      // window.pageYOffset + document.documentElement.clientHeight ===
+      // document.documentElement.scrollHeight
     ) {
       if (hasMorePins && !loading) {
         let lastId = pins.allPins[pins.allPins.length - 1]._id;

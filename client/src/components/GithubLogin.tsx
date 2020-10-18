@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { parse, stringify } from "querystring";
 import { useDispatch } from "react-redux";
+import { getAllPinsAsync } from "../actions";
 
 import { GITHUB_LOGIN_REQUEST } from "../actions";
 
@@ -14,6 +15,7 @@ function GithubLogin(props) {
     localStorage.setItem("code", code as string);
     console.log("code?? ", code);
     dispatch({ type: GITHUB_LOGIN_REQUEST });
+    dispatch(getAllPinsAsync.request(""));
     props.history.replace("/");
   }, []);
   return null;
