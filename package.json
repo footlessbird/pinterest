@@ -2,6 +2,10 @@
   "name": "pinterest-clone",
   "version": "1.0.0",
   "main": "index.js",
+  "engines": {
+    "node": "13.8.0",
+    "npm": "6.13.7"
+  },
   "scripts": {
     "heroku-postbuild": "cd client && NPM_CONFIG_PRODUCTION=false yarn install && yarn run build && cd ../server && NPM_CONFIG_PRODUCTION=false yarn install && yarn run build",
     "client:build": "cd client && yarn build",
