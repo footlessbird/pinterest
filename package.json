@@ -10,7 +10,6 @@
     "heroku-postbuild": "cd client && NPM_CONFIG_PRODUCTION=false yarn install && yarn run build && cd ../server && NPM_CONFIG_PRODUCTION=false yarn install && yarn run build",
     "client": "cd client && yarn start",
     "server": "cd server && yarn start",
-    "dev": "yarn run build && yarn run server",
     "start": "yarn run server"
   },
   "repository": "https://github.com/footlessbird/pinterest-clone.git",
