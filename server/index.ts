@@ -22,11 +22,11 @@ app.use(cors());
 app.use(passport.initialize());
 // app.use(passport.session());
 
-app.get("/", (req, res) => {
-  res.json({
-    hello: "pinterest clone server",
-  });
-});
+// app.get("/", (req, res) => {
+//   res.json({
+//     hello: "pinterest clone server",
+//   });
+// });
 
 app.use("/api/auth", routes.auth);
 app.use("/api/pins", routes.pin);
