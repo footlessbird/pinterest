@@ -7,9 +7,7 @@
     "npm": "6.13.7"
   },
   "scripts": {
-    "client:build": "cd client && yarn build",
-    "server:build": "cd server && yarn build",
-    "build": "yarn run client:build && yarn run server:build",
+    "heroku-postbuild": "cd client && NPM_CONFIG_PRODUCTION=false yarn install && yarn run build && cd ../server && NPM_CONFIG_PRODUCTION=false yarn install && yarn run build",
     "client": "cd client && yarn start",
     "server": "cd server && yarn start",
     "start": "yarn run server"
