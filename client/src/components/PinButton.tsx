@@ -42,7 +42,7 @@ function PinButton({ pinId, userId, savedBy, modal, onClose }) {
           </button>
         );
       } else if (savedBy && Object.keys(savedBy).includes(loggedInUserId)) {
-        if (currentUrl === "https://ppinterest.herokuapp.com/mypins") {
+        if (currentUrl.includes("mypins")) {
           return (
             <button
               className={modal ? "pin-modal-btn" : "pin-btn"}

@@ -83,8 +83,6 @@ const Pins = ({ firstRender, loginMethod, auth }) => {
         className="pins-container"
         elementType={"ul"}
         options={masonryOptions}
-        disableImagesLoaded={true}
-        updateOnEachImageLoad={true}
       >
         {pins.allPins &&
           pins.allPins.map((pin) => <Pin key={pin._id} pin={pin} />)}
