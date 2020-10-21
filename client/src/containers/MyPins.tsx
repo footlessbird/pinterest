@@ -19,7 +19,7 @@ function MyPins() {
   // console.log("MyPins??", myPins);
 
   const masonryOptions = {
-    transitionDuration: 0,
+    // transitionDuration: 0,
     fitWidth: true, // center masonry
   };
   return (

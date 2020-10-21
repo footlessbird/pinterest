@@ -31,7 +31,7 @@ function PinButton({ pinId, userId, savedBy, modal, onClose }) {
 
   function pinButton() {
     if (loggedInUserId) {
-      if (userId === loggedInUserId) {
+      if (userId == loggedInUserId) {
         return (
           //   <button className="pin-btn" onClick={handleDelete}>
           <button
