@@ -10,9 +10,10 @@ export type PinState = {
   error: Error | null;
   // data: TPin[] | null | undefined;
   // data: TPin[] | (TPin | TPin[])[];
-  allPins: TPin[];
-  myPins: TPin[];
+  data: TPin[]
   hasMorePins: boolean;
+  countPins: number
+  totalPins: TPin[]
 };
 
 // export type AuthState = {
