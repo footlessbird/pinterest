@@ -28,7 +28,7 @@ const Pins = ({ firstRender, loginMethod, auth }) => {
   } = useModal();
 
   const masonryOptions = {
-    transitionDuration: 0,
+    // transitionDuration: 0,
     fitWidth: true, // center masonry
   };
 
