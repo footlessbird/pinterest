@@ -72,8 +72,9 @@ function* watchGetCurrentUser() {
 // local login
 function localLoginAPI(loginData) {
   // return API.call("post", `auth/login`, loginData);
-  const { email, password } = loginData;
-  return axios.post("/api/auth/login", { email, password });
+  // const { email, password } = loginData;
+  // return axios.post("/api/auth/login", { email, password });
+  return axios.post("/api/auth/login", loginData);
 }
 
 function* localLogin(action) {
