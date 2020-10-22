@@ -31,7 +31,7 @@ cd sever && yarn install
 ```
 
 ENV
->In server directory, place .env file with the following contents
+>In server directory, place .env file with the following contents.
 ```
 MONGODB_URI=<Mongo Connection URI>
 PORT=<Port to run server>
