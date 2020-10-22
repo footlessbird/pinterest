@@ -21,7 +21,6 @@
 Cloning repository
 ```
 git clone https://github.com/footlessbird/pinterest.git
-cd A_Directory_You_Set
 ```
 
 Installing packages 
