@@ -41,6 +41,9 @@ GITHUB_CLIENT_SECRET=< Get from GitHub Developer API >
 GITHUB_CALLBACK_URL=<Redirection address after GitHub Verifies account> 
 ```
 ***Please note that callback url should not be deeper url shape.***
-e.g. `http://localhost:5000/auth/github/callback` ***(bad)***
-     `http://localhost:5000/github/` ***(good)***
+e.g.
+```
+http://localhost:5000/auth/github/callback (bad)
+http://localhost:5000/github (good)
+```
 
