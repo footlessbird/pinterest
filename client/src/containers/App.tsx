@@ -30,8 +30,7 @@ function App() {
   } = auth;
 
   useEffect(() => {
-    // const loginMethod = localStorage.getItem("loginMethod");
-    // console.log("loginMethod?? ", loginMethod);
+    const loginMethod = localStorage.getItem("loginMethod");
     const token = localStorage.getItem("token");
 
     if (loginMethod || token) {
@@ -48,13 +47,7 @@ function App() {
           <Route
             exact
             path="/"
-            render={() => (
-              <Pins
-                {...firstRenderProps}
-                loginMethod={loginMethod}
-                auth={auth}
-              />
-            )}
+            render={() => <Pins {...firstRenderProps} auth={auth} />}
           />
           <Route path="/githublogin" component={GithubLogin} />
           <Route

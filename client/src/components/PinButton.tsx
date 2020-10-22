@@ -30,9 +30,7 @@ function PinButton({ pinId, userId, savedBy, modal, onClose }) {
   const currentUrl = window.location.href;
 
   function pinButton() {
-    console.log("loggedInUserId", loggedInUserId);
     if (loggedInUserId) {
-      console.log("userId", typeof userId);
       if (userId == loggedInUserId) {
         return (
           <button

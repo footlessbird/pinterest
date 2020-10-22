@@ -8,18 +8,14 @@ import Modal from "react-modal";
 
 import { useModal } from "../utils/useModal";
 import CreatePinModal from "../components/CreatePinModal";
-import { PinState } from "../actions/types";
 
-// function Pins({ auth }) {
-const Pins = ({ firstRender, loginMethod, auth }) => {
+function Pins({ auth, firstRender }) {
   const { currentUser } = auth;
   const dispatch = useDispatch();
   const pins = useSelector((state: RootState) => state.pins, shallowEqual);
 
   const { hasMorePins, loading } = pins;
 
-  // console.log("pins", pins);
-  // console.log("firstRender", firstRender);
   const {
     showModal,
     setShowModal,
@@ -32,40 +28,20 @@ const Pins = ({ firstRender, loginMethod, auth }) => {
     fitWidth: true, // center masonry
   };
 
-  // useEffect(() => {
-  //   dispatch(getAllPinsAsync.request(""));
-  // }, []);
-
-  // useEffect(() => {
-  //   let lastId = "";
-  //   if (pins.data.length > 0) {
-  //     lastId = pins.data[pins.data.length - 1]._id;
-  //   }
-  //   // const lastId = pins.data[pins.data.length - 1]._id;
-  //   console.log("lastId", lastId);
-  //   setTimeout(() => {
-  //     dispatch(getAllPinsAsync.request(lastId));
-  //     // dispatch(getAllPinsAsync.request(""));
-  //   }, 2000);
-  // }, [pins.data]);
-
   // infinite scroll
-
   const onScroll = useCallback(() => {
     if (
       window.pageYOffset + document.documentElement.clientHeight >
       document.documentElement.scrollHeight - 300
-      // window.pageYOffset + document.documentElement.clientHeight ===
-      // document.documentElement.scrollHeight
     ) {
       if (hasMorePins && !loading) {
-        let lastId = pins.allPins[pins.allPins.length - 1]._id;
+        let lastId = pins.data[pins.data.length - 1]._id;
         dispatch(getAllPinsAsync.request(lastId));
       } else {
         return;
       }
     }
-  }, [hasMorePins, pins.allPins, loading]);
+  }, [hasMorePins, pins.data, loading]);
 
   useEffect(() => {
     if (firstRender === true) {
@@ -75,7 +51,7 @@ const Pins = ({ firstRender, loginMethod, auth }) => {
     return () => {
       window.removeEventListener("scroll", onScroll);
     };
-  }, [hasMorePins, pins.allPins]);
+  }, [hasMorePins, pins.data]);
 
   return (
     <div className="pins">
@@ -84,8 +60,7 @@ const Pins = ({ firstRender, loginMethod, auth }) => {
         elementType={"ul"}
         options={masonryOptions}
       >
-        {pins.allPins &&
-          pins.allPins.map((pin) => <Pin key={pin._id} pin={pin} />)}
+        {pins.data && pins.data.map((pin) => <Pin key={pin._id} pin={pin} />)}
       </Masonry>
 
       {currentUser ? (
@@ -111,6 +86,6 @@ const Pins = ({ firstRender, loginMethod, auth }) => {
       ) : null}
     </div>
   );
-};
+}
 
 export default memo(Pins);
