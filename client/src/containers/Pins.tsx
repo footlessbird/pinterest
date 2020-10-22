@@ -60,7 +60,10 @@ function Pins({ auth, firstRender }) {
         elementType={"ul"}
         options={masonryOptions}
       >
-        {pins.data && pins.data.map((pin) => <Pin key={pin._id} pin={pin} />)}
+        {pins.data && pins.data.length < pins.countPins
+          ? pins.totalPins.map((pin) => <Pin key={pin._id} pin={pin} />)
+          : pins.data &&
+            pins.data.map((pin) => <Pin key={pin._id} pin={pin} />)}
       </Masonry>
 
       {currentUser ? (
