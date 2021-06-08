@@ -17,7 +17,7 @@
     "@types/react-redux": "^7.1.9",
     "@types/redux-saga": "^0.10.5",
     "axios": "^0.21.1",
-    "immer": "^6.0.9",
+    "immer": "^8.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hook-form": "^6.0.1",
